@@ -10,7 +10,7 @@ import ProductDetail from "./ProductDetail";
 export default function Home() {
   const [products, setProducts] = useState<product[]>([]);
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch("/products")
       .then((res) => {
         return res.json();
       })
