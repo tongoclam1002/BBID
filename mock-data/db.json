@@ -1,0 +1,8 @@
+{
+    "products": [
+        {"id": 1, "name":"Combo gà rán A", "img":"img/fastfood.jpg", "price": 100000},
+        {"id": 2, "name":"Combo văn phòng B", "img":"img/combo.jpg", "price": 120000},
+        {"id": 3, "name":"Trà sữa trân châu đen", "img":"img/milktea.jpg", "price": 50000},
+        {"id": 4, "name":"Sầu riêng 5 ri", "img":"img/fruit.jpg", "price": 180000}
+    ]
+}
