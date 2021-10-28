@@ -2,22 +2,94 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { product } from "../../models/product.model";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
-export default function ProductDetail() {
+export default function Payment() {
   const { id }: any = useParams();
   const [product, setProduct] = useState<product>();
+  const instance = axios.create({
+    baseURL: "https://test-payment.momo.vn",
+    headers: {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+    },
+  });
+
+  const PROXY_URL = "http://localhost:5000/";
+  const URL = "/v2/gateway/api/create";
+
+  const requestOptions = {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text/plain, */*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+    mode: "no-cors" as RequestMode,
+    body: JSON.stringify({
+      partnerCode: "MOMOH6JY20211027",
+      partnerName: "Linh Dev",
+      storeId: "211027230728f0a394d",
+      requestType: "captureWallet",
+      ipnUrl: "https://momo.vn",
+      redirectUrl: "https://momo.vn",
+      orderId: "MM1540456472575",
+      amount: 150000,
+      lang: "vi",
+      orderInfo: "SDKteam",
+      requestId: "MM1540456472575",
+      extraData: "",
+      signature:
+        "24d859b2314758365424aebd7cc16ce60b4106ecdc05abbd0fd2cf7297fab0d6",
+    }),
+  };
+
   useEffect(() => {
-    fetch("/mock-data/db.json")
-      .then((res) => {
-        return res.json();
+    axios({
+        headers: {
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
+          },
+
+        method: 'post',
+        url: URL,
+        data: {
+            "partnerCode": "MOMOH6JY20211027",
+            "partnerName" : "Linh Dev",
+            "storeId" : "211027230728f0a394d",
+            "requestType": "captureWallet",
+            "ipnUrl": "https://momo.vn",
+            "redirectUrl": "https://momo.vn",
+            "orderId": "MM1540456472575",
+            "amount": 150000,
+            "lang":  "vi",
+            "orderInfo": "SDKteam",
+            "requestId": "MM1540456472575",
+            "extraData": "",
+            "signature": "24d859b2314758365424aebd7cc16ce60b4106ecdc05abbd0fd2cf7297fab0d6"
+          }
       })
-      .then((data) =>
-        data.filter((item) => {
-          return item.id == id;
-        })
-      )
-      .then((matched) => {
-        setProduct(matched[0]);
+      .then(response => {
+
+            console.log(response);
+          })
+      .catch(err => console.log(err));
+    fetch(URL, requestOptions)
+      .then(function (response) {
+        return response;
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (e) {
+        console.log(e);
       });
   }, []);
   return (

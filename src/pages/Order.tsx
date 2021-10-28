@@ -7,14 +7,19 @@ export default function ProductDetail() {
   const { id }: any = useParams();
   const [product, setProduct] = useState<product>();
   useEffect(() => {
-    fetch("/products/"+id)
+    fetch("/mock-data/db.json")
       .then((res) => {
         return res.json();
       })
-      .then((data) => {
-        setProduct(data);
-      });
-  }, []);
+      .then((data) =>
+      data.filter((item) => {
+        return item.id == id;
+      })
+    )
+    .then((matched) => {
+      setProduct(matched[0]);
+    });
+}, []);
   return (
     <div className="row">
     <div className="col-12">
@@ -92,11 +97,11 @@ export default function ProductDetail() {
         <div className="form-check">
           <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"/>
           <label className="form-check-label" htmlFor="gridRadios2">
-            Thanh toán bằng ví
+            Thanh toán bằng ví Momo
           </label>
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" checked/>
+          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" defaultChecked/>
           <label className="form-check-label" htmlFor="gridRadios3">
             Thanht toán COD
           </label>
@@ -117,6 +122,7 @@ export default function ProductDetail() {
         </p>
       </div>
       <p className="form-group text-center"><NavLink className="btn btn-primary green" to="success" role="button">Xác nhận đặt hàng</NavLink></p>
+      {/* <p className="form-group text-center"><NavLink className="btn btn-primary green" to={`payment/${id}`} role="button">Xác nhận đặt hàng</NavLink></p> */}
     </div>
   </div>
   );
