@@ -25,9 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "json-server": "json-server --watch mock-data/db.json --port 5000",
-    "dev": "concurrently \"npm start\" \"npm run json-server\""
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -49,9 +47,6 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.2",
-    "@types/qrcode.react": "^1.0.2",
-    "concurrently": "^6.3.0",
-    "json-server": "^0.17.0"
-  },
-  "proxy": "https://test-payment.momo.vn/"
+    "@types/qrcode.react": "^1.0.2"
+  }
 }

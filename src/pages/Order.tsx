@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { product } from "../../models/product.model";
 import {NavLink} from "react-router-dom";
+import { getDetail } from "../api/product";
 
 export default function ProductDetail() {
   const { id }: any = useParams();
   const [product, setProduct] = useState<product>();
+  const [isMomo, setIsMomo]= useState(false);
   useEffect(() => {
-    fetch("/mock-data/db.json")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) =>
-      data.filter((item) => {
-        return item.id == id;
-      })
-    )
-    .then((matched) => {
-      setProduct(matched[0]);
+    getDetail(id).then((data: product) => {
+      setProduct(data);
     });
-}, []);
+  }, []);
+
+  function changeMethod() {
+    setIsMomo(!isMomo);
+  }
+
   return (
     <div className="row">
     <div className="col-12">
@@ -88,20 +86,20 @@ export default function ProductDetail() {
       </div>
       <div className="box-order">
         <p className="form-group"><strong>Hình thức thanh toán</strong></p>
-        <div className="form-check">
+        {/* <div className="form-check">
           <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" />
           <label className="form-check-label" htmlFor="gridRadios1">
             Thanh toán bằng thẻ
           </label>
-        </div>
+        </div> */}
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"/>
+          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" onChange={changeMethod}/>
           <label className="form-check-label" htmlFor="gridRadios2">
             Thanh toán bằng ví Momo
           </label>
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" defaultChecked/>
+          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" defaultChecked onChange={changeMethod}/>
           <label className="form-check-label" htmlFor="gridRadios3">
             Thanht toán COD
           </label>
@@ -121,8 +119,8 @@ export default function ProductDetail() {
           <span className="float-right"><strong className="is_red">770,000đ</strong></span>
         </p>
       </div>
-      <p className="form-group text-center"><NavLink className="btn btn-primary green" to="success" role="button">Xác nhận đặt hàng</NavLink></p>
-      {/* <p className="form-group text-center"><NavLink className="btn btn-primary green" to={`payment/${id}`} role="button">Xác nhận đặt hàng</NavLink></p> */}
+      {!isMomo && <p className="form-group text-center"><NavLink className="btn btn-primary green" to="success" role="button">Xác nhận đặt hàng</NavLink></p>}
+      {isMomo && <p className="form-group text-center"><NavLink className="btn btn-primary green" to={`payment/${id}`} role="button">Xác nhận đặt hàng</NavLink></p>}
     </div>
   </div>
   );
