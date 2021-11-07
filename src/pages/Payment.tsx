@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-
-import { product } from "../../models/product.model";
 import axios from "axios";
-// import { getDetail } from "../helper/api";
 import { useParams } from "react-router";
 import { HmacSHA256 } from "crypto-js";
+import { product } from "../interfaces/product.interface";
+import Api from "../services/api";
+import Configuration from "../services/configuration";
 
 export default function Payment(props) {
+  const api = new Api();
+  const config = new Configuration();
   const { id }: any = useParams();
   const [product, setProduct] = useState<product>();
   const MOMO_SECRECT_KEY = process.env.MOMO_SECRECT_KEY;
@@ -36,7 +38,63 @@ export default function Payment(props) {
     );
   }
   useEffect(() => {
+    api.get(config.GET_PRODUCT_DETAIL_URL + id).then((data: product) => {
+      setProduct(data);
+      let randomId = generateUUID();
+      let request = {
+        partnerCode: "MOMOH6JY20211027",
+        partnerName: "Linh Dev",
+        storeId: "211027230728f0a394d",
+        requestType: "captureWallet",
+        ipnUrl: "https://momo.vn",
+        redirectUrl: process.env.REACT_APP_MOMO_REDIRECT_URL,
+        orderId: randomId,
+        amount: data.price,
+        lang: "vi",
+        orderInfo: data.name,
+        requestId: randomId,
+        extraData: "",
+        signature: "",
+      };
+      let signature = HmacSHA256(
+        "accessKey=" +
+          process.env.REACT_APP_MOMO_ACCESS_KEY +
+          "&amount=" +
+          request.amount +
+          "&extraData=&ipnUrl=https://momo.vn&orderId=" +
+          request.orderId +
+          "&orderInfo=" +
+          request.orderInfo +
+          "&partnerCode=" +
+          request.partnerCode +
+          "&redirectUrl=" +
+          request.redirectUrl +
+          "&requestId=" +
+          request.requestId +
+          "&requestType=" +
+          request.requestType,
+        "" + process.env.REACT_APP_MOMO_SECRECT_KEY
+      ).toString();
+      request.signature = signature;
+      console.log(request);
+      axios({
+        headers: {
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+        },
 
+        method: "post",
+        url: URL,
+        data: request,
+      })
+        .then((response) => {
+          window.location.assign(response.data.payUrl);
+          console.log(response.data.payUrl);
+        })
+        .catch((err) => console.log(err));
+    });
   }, []);
 
   const URL = "https://test-payment.momo.vn/v2/gateway/api/create";

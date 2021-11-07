@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { product } from "../../models/product.model";
+import { product } from "../interfaces/product.interface";
 import { NavLink } from "react-router-dom";
 import Api from "../services/api";
 import Configuration from "../services/configuration";

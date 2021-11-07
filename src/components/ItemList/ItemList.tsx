@@ -1,7 +1,7 @@
 export default function ItemList(props: Props) {
   return (
     <>
-      <h4>Khu ăn uống</h4>
+      <h4>{props.title}</h4>
       <div className="box-list-main product clearfix">
         <ul>
           {props.children}

@@ -1,39 +1,31 @@
 import { useEffect, useState } from "react";
 import Carousel from "../components/Carousel/Carousel";
 import ItemList from "../components/ItemList/ItemList";
-import Product from "../components/Product/Product";
 import Section from "../components/Section/Section";
-import { product } from "../../models/product.model";
+import StoreItem from "../components/StoreItem/StoreItem";
+import { store } from "../interfaces/store.interface";
 import Api from "../services/api";
 import Configuration from "../services/configuration";
 
 export default function Home() {
   const api = new Api();
   const config = new Configuration();
-  const [products, setProducts] = useState<product[]>([]);
+  const [stores, setStores] = useState<store[]>([]);
 
   useEffect(() => {
-    api.get(config.GET_ALL_PRODUCT_URL).then((products) => {
-      setProducts(products);
+    api.get(config.GET_ALL_STORE_URL).then((stores) => {
+      setStores(stores);
     });
   }, []);
 
   return (
     <>
       <Carousel />
-      <Section title="Khu Ẩm Thực">
-        <ItemList title="Khu ăn uống">
-          {products &&
-            products.map((product) => (
-              <Product
-                key={product.productId}
-                productId={product.productId}
-                name={product.name}
-                price={product.price}
-                image={product.image}
-                description={product.description}
-                storeId={product.storeId}
-              />
+      <Section title="Khu Mua Sắm">
+        <ItemList title="Thời trang và phụ kiện">
+          {stores &&
+            stores.map((store) => (
+              <StoreItem image={store.logo} storeId={store.storeId} name={store.name}/>
             ))}
         </ItemList>
       </Section>
