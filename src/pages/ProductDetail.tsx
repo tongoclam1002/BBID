@@ -2,16 +2,21 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { product } from "../../models/product.model";
 import { NavLink } from "react-router-dom";
-import { getDetail } from "../api/product";
+import Api from "../services/api";
+import Configuration from "../services/configuration";
 
 export default function ProductDetail() {
+  const api = new Api();
+  const config = new Configuration();
   const { id }: any = useParams();
   const [product, setProduct] = useState<product>();
+
   useEffect(() => {
-    getDetail(id).then((data: product) => {
-      setProduct(data);
+    api.get(config.GET_PRODUCT_DETAIL_URL + id).then((product) => {
+      setProduct(product);
     });
   }, []);
+
   return (
     <>
       {product && (
@@ -21,7 +26,7 @@ export default function ProductDetail() {
               <p className="box-product-img">
                 <img
                   alt="logo1"
-                  src={`${process.env.PUBLIC_URL}/${product?.img}`}
+                  src={`${process.env.PUBLIC_URL}/${product?.image}`}
                 />
               </p>
             </div>
@@ -46,7 +51,12 @@ export default function ProductDetail() {
                 </span>
               </h4>
               <p className="title">
-                <strong>{product?.price.toLocaleString("vi-VN")}đ</strong>
+                <strong>
+                  {product.price > 0
+                    ? product.price.toLocaleString("vi-VN")
+                    : 0}
+                  đ
+                </strong>
               </p>
               <p>
                 <a className="link-showdhide" href="#test">
@@ -82,7 +92,7 @@ export default function ProductDetail() {
                   className="btn btn-primary green is-bigger"
                   href="#test"
                   role="button"
-                  to={`/order/${product?.id}`}
+                  to={`/order/${product?.productId}`}
                 >
                   Mua ngay
                 </NavLink>

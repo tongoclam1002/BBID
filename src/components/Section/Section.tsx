@@ -1,4 +1,4 @@
-export default function Section(props: sectionProps) {
+export default function Section(props: Props) {
   return (
     <>
       <div className="heading">
@@ -9,7 +9,7 @@ export default function Section(props: sectionProps) {
   );
 }
 
-interface sectionProps {
+interface Props {
     children?: React.ReactNode;
     title: string;
   }

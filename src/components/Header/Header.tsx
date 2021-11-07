@@ -1,6 +1,6 @@
 import {NavLink} from "react-router-dom";
 
-export default function Header(props: headerProps) {
+export default function Header() {
     return (
         <div id="header" className="clearfix">
         <div className="box-logo">
@@ -24,8 +24,4 @@ export default function Header(props: headerProps) {
         </div>
       </div>
     )
-}
-
-interface headerProps {
-
 }

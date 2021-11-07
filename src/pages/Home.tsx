@@ -4,19 +4,17 @@ import ItemList from "../components/ItemList/ItemList";
 import Product from "../components/Product/Product";
 import Section from "../components/Section/Section";
 import { product } from "../../models/product.model";
-import { get } from "../api/product";
+import Api from "../services/api";
+import Configuration from "../services/configuration";
 
 export default function Home() {
-  let sign =
-    "storeSlug=MOMOH6JY20211027-211027230728f0a394d&amount=10000&billId=B001221";
-  // let signature = CryptoJS.HmacSHA256(
-  //   sign,
-  //   "KJgseItNjemjI3ywOgL9YqDQyYJAWSyf"
-  // ).toString(CryptoJS.enc.Hex);
+  const api = new Api();
+  const config = new Configuration();
   const [products, setProducts] = useState<product[]>([]);
+
   useEffect(() => {
-    get().then((data:product[]) => {
-      setProducts(data);
+    api.get(config.GET_ALL_PRODUCT_URL).then((products) => {
+      setProducts(products);
     });
   }, []);
 
@@ -28,12 +26,13 @@ export default function Home() {
           {products &&
             products.map((product) => (
               <Product
-                key={product.id}
-                id={product.id}
+                key={product.productId}
+                productId={product.productId}
                 name={product.name}
                 price={product.price}
-                numberOfComments={123}
-                imgUrl={product.img}
+                image={product.image}
+                description={product.description}
+                storeId={product.storeId}
               />
             ))}
         </ItemList>

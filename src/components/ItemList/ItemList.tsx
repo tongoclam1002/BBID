@@ -1,4 +1,4 @@
-export default function ItemList(props: itemListProps) {
+export default function ItemList(props: Props) {
   return (
     <>
       <h4>Khu ăn uống</h4>
@@ -18,7 +18,7 @@ export default function ItemList(props: itemListProps) {
   );
 }
 
-interface itemListProps {
+interface Props {
   children?: React.ReactNode;
   title: string;
 }
