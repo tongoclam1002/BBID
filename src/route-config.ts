@@ -5,6 +5,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 import StoreDetail from "./pages/StoreDetail";
+import Video from "./pages/Video";
 
 const routes = [
     {path: "/", Component:Home, exact: true, title: "Trang chủ"},
@@ -13,7 +14,7 @@ const routes = [
     {path: "/order/:id", Component: Order, exact: true, title: ""},
     {path: "/order/success", Component: OrderSuccess, exact: true},
     {path: "/order/payment/:id", Component: Payment, exact: true, title: ""},
-    {path: "*", Component: NotFound}
+    // {path: "*", Component: NotFound}
 ]
 
 export default routes;

@@ -76,7 +76,7 @@ export default function Payment(props) {
         "" + process.env.REACT_APP_MOMO_SECRECT_KEY
       ).toString();
       request.signature = signature;
-      console.log(request);
+      //console.log(request);
       axios({
         headers: {
           "Access-Control-Allow-Credentials": "true",
