@@ -4,28 +4,28 @@ export default function BreadCrumbs({ crumbs }) {
   // Don't render a single breadcrumb.
   return (
     <div className="box-nav">
-      <ul className="nav">
+      <ol className="breadcrumb">
         {/* Link back to any previous steps of the breadcrumb. */}
         {crumbs.length <= 1 ? (
-          <li className="nav-item">
-            <span className="nav-link">Trang chủ</span>
+          <li className="breadcrumb-item">
+            <span>Trang chủ</span>
           </li>
         ) : (
           crumbs.map(({ title, path }, key) =>
             key + 1 === crumbs.length ? (
-              <li key={key} className="nav-item">
-                <span className="nav-link">{title}</span>
+              <li key={key} className="breadcrumb-item">
+                <span>{title}</span>
               </li>
             ) : (
-              <li key={key} className="nav-item">
-                <Link to={path} className="nav-link">
+              <li key={key} className="breadcrumb-item">
+                <Link to={path}>
                   {title}
                 </Link>
               </li>
             )
           )
         )}
-      </ul>
+      </ol>
     </div>
   );
 }

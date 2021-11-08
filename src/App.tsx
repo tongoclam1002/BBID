@@ -32,11 +32,11 @@ function App() {
                       : path,
                     ...rest,
                   }));
-                console.log(`Generated crumbs for ${props.match.path}`);
-                crumbs.map(({ title, path }) => console.log({ title, path }));
+                //console.log(`Generated crumbs for ${props.match.path}`);
+                // crumbs.map(({ title, path }) => console.log({ title, path }));
                 return (
                   <div key={route.path}>
-                    <BreadCrumbs key={key} crumbs={crumbs} />
+                    <BreadCrumbs key={route.path} crumbs={crumbs} />
                     <route.Component {...props} />
                   </div>
                 );

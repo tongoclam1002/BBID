@@ -8,7 +8,7 @@ import StoreDetail from "./pages/StoreDetail";
 
 const routes = [
     {path: "/", Component:Home, exact: true, title: "Trang chủ"},
-    {path: "/store/:storeId", Component: StoreDetail, exact: true, title: "Danh sách sản phẩm"},
+    {path: "/store/:storeId", Component: StoreDetail, exact: true, title: "Cửa hàng"},
     {path: "/store/:storeId/product/:productId", Component:ProductDetail, exact: true, title: "Chi tiết sản phẩm"},
     {path: "/order/:id", Component: Order, exact: true, title: ""},
     {path: "/order/success", Component: OrderSuccess, exact: true},

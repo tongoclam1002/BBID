@@ -45,7 +45,7 @@ export default function ProductDetail() {
                   </span>
                 </span>
                 <span className="float-right box-link360">
-                  <a className="link360" href="#test" role="button">
+                  <a className="link360" href="http://malldemo.bbid.vn/" role="button" target="_blank">
                     360<sup>o</sup>
                   </a>
                 </span>
@@ -58,19 +58,19 @@ export default function ProductDetail() {
                   đ
                 </strong>
               </p>
-              <p>
+              {/* <p>
                 <a className="link-showdhide" href="#test">
-                  <i className="fas fa-angle-right"></i> Chi tiết
+                  Chi tiết
                 </a>
-              </p>
-              <div className="box-display">
-                <p>Nội dung..</p>
+              </p> */}
+              <div className="">
+                <p>{product.description}</p>
               </div>
-              <p>
-                <a className="link-showdhide" href="#test">
+              {/* <p>
+                <div className="link-showdhide">
                   <i className="fas fa-angle-right"></i> Nổi bật
-                </a>
-              </p>
+                </div>
+              </p> */}
               <div className="box-display">
                 <p>Nội dung..</p>
               </div>
