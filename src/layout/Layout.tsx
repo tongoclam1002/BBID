@@ -8,7 +8,6 @@ export default function Layout(props: layoutProps) {
         <div className="row">
           <div className="col col-12">
             <Header />
-            <BreadCrumbs />
             {props.children}
           </div>
         </div>

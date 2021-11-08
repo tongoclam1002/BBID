@@ -10,14 +10,14 @@ import ProductItem from "../components/ProductItem/ProductItem";
 export default function StoreDetail() {
   const api = new Api();
   const config = new Configuration();
-  const { id }: any = useParams();
+  const { storeId }: any = useParams();
   const [products, setProducts] = useState<product[]>([]);
 
   useEffect(() => {
-    api.get(config.GET_ALL_PRODUCT_URL + "/" + id).then((products) => {
+    api.get(config.GET_ALL_PRODUCT_URL + "/" + storeId).then((products) => {
       setProducts(products);
     });
-  }, []);
+  }, [api.get, config.GET_ALL_PRODUCT_URL, storeId]);
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function StoreDetail() {
                 price={product.price}
                 image={product.image}
                 description={product.description}
-                storeId={product.storeId}
+                storeId={storeId}
               />
             ))}
           </ItemList>

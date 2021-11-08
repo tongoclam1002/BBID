@@ -8,11 +8,11 @@ import Configuration from "../services/configuration";
 export default function ProductDetail() {
   const api = new Api();
   const config = new Configuration();
-  const { id }: any = useParams();
+  const { productId }: any = useParams();
   const [product, setProduct] = useState<product>();
 
   useEffect(() => {
-    api.get(config.GET_PRODUCT_DETAIL_URL + id).then((product) => {
+    api.get(config.GET_PRODUCT_DETAIL_URL + productId).then((product) => {
       setProduct(product);
     });
   }, []);
@@ -26,7 +26,7 @@ export default function ProductDetail() {
               <p className="box-product-img">
                 <img
                   alt="logo1"
-                  src={`${process.env.PUBLIC_URL}/${product?.image}`}
+                  src={product?.image}
                 />
               </p>
             </div>

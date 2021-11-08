@@ -34,7 +34,6 @@ export default class Api implements IApi {
     return this.init()
       .get(url)
       .then((res: any) => {
-        console.log(res);
         if (res.status != "OK") {
           this.handleResponseError(res);
         }

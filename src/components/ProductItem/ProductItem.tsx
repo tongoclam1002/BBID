@@ -4,7 +4,7 @@ import { product } from "../../interfaces/product.interface";
 export default function ProductItem(props: Props) {
   return (
     <li>
-      <NavLink to={`/product/${props.productId}`}>
+      <NavLink to={`/store/${props.storeId}/product/${props.productId}`}>
         <img alt="logo1" src={props.image} className="center-cropped" />
       </NavLink>
       <p className="title">
