@@ -41,7 +41,7 @@ export default function Video() {
           }}
           playsInline
           autoPlay
-          muted={false}
+          muted={true}
           loop
         ></video>
       </div>
