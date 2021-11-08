@@ -26,7 +26,7 @@ export default function ProductDetail() {
               <p className="box-product-img">
                 <img
                   alt="logo1"
-                  src={`${process.env.PUBLIC_URL}/${product?.image}`}
+                  src={product?.image}
                 />
               </p>
             </div>
