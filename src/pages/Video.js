@@ -27,8 +27,7 @@ export default function Video() {
         width: media.width? media.width+"px" : "800px",
         height: media.height? media.height+"px" : "auto",
         overflowY: 'hidden',
-        resize: 'both',
-        margin: '0 auto'
+        resize: 'both'
       }}>
         <video
           id="video-player"
