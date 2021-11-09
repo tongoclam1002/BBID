@@ -31,11 +31,8 @@ html {
 body {
   height: 100%;
   font-family: Arial, sans-serif;
-  background-color: rgb(0, 0, 0);
 }
-#root {
-  background: #fff;
-}
+
 .h1,
 .h2,
 .h3,
@@ -942,7 +939,7 @@ img[usemap] {
   min-width: 137px;
 }
 
-video {
+#video-player {
   position: absolute;
   top: 0px;
   right: 0px;

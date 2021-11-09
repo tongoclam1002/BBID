@@ -6,7 +6,7 @@ $(document).ready(function () {
         $(this).parent().next('.box-display').slideToggle();
         $("i", this).toggleClass("fas fa-angle-right fas fa-angle-down");
     })
-    document.getElementById("video-container").addEventListener("click", (function (e) {
+    document.getElementById("video-player").addEventListener("click", (function (e) {
         document.getElementById("video-player").muted = !document.getElementById("video-player").muted;
     }));
 });
