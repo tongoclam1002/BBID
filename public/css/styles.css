@@ -939,7 +939,7 @@ img[usemap] {
   min-width: 137px;
 }
 
-#video-player {
+#video-player, #image-player {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -948,7 +948,9 @@ img[usemap] {
   max-height: 100%;
   max-width: 100%;
   margin: auto;
+  object-fit: cover;
 }
+
 /* from 1200 and up*/
 @media screen and (min-width: 1200px) {
   #header .box-search input {
