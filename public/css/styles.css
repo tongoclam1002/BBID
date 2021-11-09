@@ -31,6 +31,10 @@ html {
 body {
   height: 100%;
   font-family: Arial, sans-serif;
+  background-color: rgb(0, 0, 0);
+}
+#root {
+  background: #fff;
 }
 .h1,
 .h2,
@@ -930,13 +934,24 @@ img[usemap] {
 }
 
 .center-cropped {
-	object-fit: contain; /* Do not scale the image */
-	object-position: center; /* Center the image within the element */
-	height: 137px;
-	width: 137px;
-	min-height: 137px;
-	min-width: 137px;
-  }
+  object-fit: contain; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 137px;
+  width: 137px;
+  min-height: 137px;
+  min-width: 137px;
+}
+
+video {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  max-height: 100%;
+  max-width: 100%;
+  margin: auto;
+}
 /* from 1200 and up*/
 @media screen and (min-width: 1200px) {
   #header .box-search input {

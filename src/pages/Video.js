@@ -23,27 +23,26 @@ export default function Video() {
 
   return (
     <>
-      <div id="video-container" style={{
+      {/* <div id="video-container" style={{
         width: media.width? media.width+"px" : "800px",
         height: media.height? media.height+"px" : "auto",
         overflowY: 'hidden',
         resize: 'both'
-      }}>
+      }}> */}
         <video
           id="video-player"
-          src={media?.mediaLink}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'initial',
-            pointerEvents: "none"
-          }}
+          // style={{
+          //   width: '100%',
+          //   height: '100%',
+          //   objectFit: 'initial',
+          //   pointerEvents: "none"
+          // }}
           playsInline
           autoPlay
           muted={true}
           loop
-        ></video>
-      </div>
+        ><source src={media?.mediaLink} type="video/mp4"/></video>
+      {/* </div> */}
     </>
   );
 }
