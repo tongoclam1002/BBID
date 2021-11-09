@@ -391,6 +391,7 @@ img[usemap] {
   margin: 0 15px 0 15px;
   font-size: 40px;
   line-height: 40px;
+  color: #000000;
 }
 #header .box-search {
   float: left;
@@ -949,6 +950,21 @@ img[usemap] {
   max-width: 100%;
   margin: auto;
   object-fit: cover;
+}
+
+.ant-skeleton-element .ant-skeleton-image.skeleton-image {
+  height: 200px;
+  width: 200px;
+  border-radius: 16px;
+  background: transparent;
+}
+
+.box-list-main.product .ant-skeleton-avatar {
+  border-radius: 8px;
+}
+
+.box-list-main.product li.skeleton {
+  border: none;
 }
 
 /* from 1200 and up*/

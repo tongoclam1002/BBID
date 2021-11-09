@@ -1,9 +1,9 @@
 import "./App.css";
+import 'antd/dist/antd.css';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Layout from "./layout/Layout";
 import routes from "./route-config";
 import BreadCrumbs from "./components/BreadCrumbs/BreadCrumbs";
-import { Component } from "react";
 import Video from "./pages/Video";
 
 function App() {

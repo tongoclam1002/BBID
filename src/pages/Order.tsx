@@ -63,7 +63,7 @@ export default function ProductDetail() {
                     <img
                       alt="product"
                       width="100"
-                      src={`${process.env.PUBLIC_URL}/${product?.image}`}
+                      src={product?.image}
                     />
                   </td>
                   <td>{product?.name}</td>

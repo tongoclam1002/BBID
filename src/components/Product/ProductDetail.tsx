@@ -1,22 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { product } from "../interfaces/product.interface";
 import { NavLink } from "react-router-dom";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import { product } from "../../interfaces/product.interface";
 
-export default function ProductDetail() {
-  const api = new Api();
-  const config = new Configuration();
-  const { productId }: any = useParams();
-  const [product, setProduct] = useState<product>();
-
-  useEffect(() => {
-    api.get(config.GET_PRODUCT_DETAIL_URL + productId).then((product) => {
-      setProduct(product);
-    });
-  }, []);
-
+export default function ProductDetail({product}) {
   return (
     <>
       {product && (
@@ -58,19 +43,19 @@ export default function ProductDetail() {
                   đ
                 </strong>
               </p>
-              {/* <p>
-                <a className="link-showdhide" href="#test">
-                  Chi tiết
+              <div>
+                <a className="link-showdhide">
+                <i className="fas fa-angle-right"></i> Chi tiết
                 </a>
-              </p> */}
-              <div className="">
+              </div>
+              <div className="box-display">
                 <p>{product.description}</p>
               </div>
-              {/* <p>
-                <div className="link-showdhide">
+              <div>
+                <a className="link-showdhide">
                   <i className="fas fa-angle-right"></i> Nổi bật
-                </div>
-              </p> */}
+                </a>
+              </div>
               <div className="box-display">
                 <p>Nội dung..</p>
               </div>

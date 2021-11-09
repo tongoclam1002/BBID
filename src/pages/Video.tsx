@@ -8,13 +8,13 @@ export default function Video() {
   const videoExtension = ["WEBM", "MPG", "MP2", "MPEG", "MPE", "MPV", "OGG", "MP4", "M4P", "M4V", "AVI", "WMV", "MOV", "QT", "FLV", "SWF", "AVCHD"];
   const imageExtension = ["JPG", "JPEG", "PNG", "GIF"]
   const api = new Api();
-  const { code } = useParams();
+  const { code }: any = useParams();
   const [media, setMedia] = useState({
     mediaLink: "http://kci.bbid.vn/asset/video.mp4",
     height: null,
     width: null
   });
-  const [fileType, setFileType] = useState();
+  const [fileType, setFileType] = useState("");
 
   useEffect(() => {
     api.get(config.GET_ADVERTISE_POSITION + code).then((media) => {
