@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../interfaces/product.interface";
-import Section from "../components/Common/Section";
-import ItemList from "../components/Common/ItemList/ItemList";
-import ProductItem from "../components/Product/ProductItem";
-import { Store } from "../interfaces/store.interface";
-import StoreDetailSketon from "../components/Store/StoreDetailSkeleon";
-import StoreDetail from "../components/Store/StoreDetail";
-import api from "../services/api";
+import { Product } from "../../app/interfaces/product.interface";
+import ItemList from "../../components/ItemList/ItemList";
+import ProductItem from "../Product/ProductItem";
+import { Store } from "../../app/interfaces/store.interface";
+import StoreDetailSketon from "./StoreDetailSkeleon";
+import StoreDetail from "./StoreDetail";
+import api from "../../app/api/api";
+import Section from "../../components/Section";
 
 export default function StorePage() {
   const { storeId } = useParams<{ storeId: string }>();

@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useAppSelector } from "../../redux/configureStore";
+import { useAppSelector } from "../store/configureStore";
 
 export default function Header() {
   const { cart } = useAppSelector(state => state.cart);

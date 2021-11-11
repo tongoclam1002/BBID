@@ -1,8 +1,6 @@
-import { Modal, notification } from "antd";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { request } from "http";
-import { history } from "..";
-import toast from "../helper/toast";
+import { history } from "../..";
+import toast from "../utils/toast";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -22,10 +20,10 @@ axios.interceptors.response.use(response => {
       break;
     case 500:
       toast.error(data.title);
-      // history.push({
-      //   pathname: '/server-error',
-      //   state: {error: data}
-      // }); 
+      history.push({
+        pathname: '/server-error',
+        state: {error: data}
+      }); 
       break;
     default:
       toast.error(data.title);

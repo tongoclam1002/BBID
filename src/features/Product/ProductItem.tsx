@@ -1,10 +1,10 @@
 import { Button } from "antd";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Product } from "../../interfaces/product.interface";
-import { setCart } from "../../redux/cartSlice";
-import { useAppDispatch } from "../../redux/configureStore";
-import api from "../../services/api";
+import { setCart } from "../Cart/cartSlice";
+import { useAppDispatch } from "../../app/store/configureStore";
+import api from "../../app/api/api";
+import { Product } from "../../app/interfaces/product.interface";
 
 export default function ProductItem(props: Props) {
   const [isLoading, setIsLoading] = useState(false);

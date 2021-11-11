@@ -1,8 +1,8 @@
 import Text from "antd/lib/typography/Text";
 import { useState } from "react";
-import { setCart } from "../../redux/cartSlice";
-import { useAppDispatch } from "../../redux/configureStore";
-import api from "../../services/api";
+import { setCart } from "./cartSlice";
+import { useAppDispatch } from "../../app/store/configureStore";
+import api from "../../app/api/api";
 
 export default function CartItem({ item }) {
     const [isLoading, setIsLoading] = useState(false);

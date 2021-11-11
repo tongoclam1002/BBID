@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Carousel from "../components/Common/Carousel";
-import ItemList from "../components/Common/ItemList/ItemList";
-import Section from "../components/Common/Section";
-import StoreItem from "../components/Store/StoreItem";
-import { Store } from "../interfaces/store.interface";
-import api from "../services/api";
+import Carousel from "../../components/Carousel";
+import ItemList from "../../components/ItemList/ItemList";
+import StoreItem from "../Store/StoreItem";
+import { Store } from "../../app/interfaces/store.interface";
+import api from "../../app/api/api";
+import Section from "../../components/Section";
 
 export default function Home() {
   const [stores, setStores] = useState<Store[] | null>([]);

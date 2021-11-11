@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserHistory } from "history";
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './redux/configureStore';
+import { store } from './app/store/configureStore';
 
 export const history = createBrowserHistory();
 

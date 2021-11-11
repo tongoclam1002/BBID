@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../interfaces/product.interface";
-import ProductDetail from "../components/Product/ProductDetail";
-import ProductDetailSkeleton from "../components/Product/ProductDetailSkeleton";
-import api from "../services/api";
+import { Product } from "../../app/interfaces/product.interface";
+import ProductDetail from "./ProductDetail";
+import ProductDetailSkeleton from "./ProductDetailSkeleton";
+import api from "../../app/api/api";
 
 export default function ProductPage() {
   const { productId }: any = useParams();

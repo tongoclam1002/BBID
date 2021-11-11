@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
-import CartItem from "../components/Cart/CartItem";
-import { Cart } from "../interfaces/cart.interface";
-import { useAppSelector } from "../redux/configureStore";
-import api from "../services/api";
+import CartItem from "./CartItem";
+import { useAppSelector } from "../../app/store/configureStore";
+import api from "../../app/api/api";
 
 export default function CartPage() {
   const { cart } = useAppSelector(state => state.cart);

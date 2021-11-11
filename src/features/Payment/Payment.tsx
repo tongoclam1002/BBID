@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { HmacSHA256 } from "crypto-js";
-import { Product } from "../interfaces/product.interface";
-import api from "../services/api";
+import { Product } from "../../app/interfaces/product.interface";
+import api from "../../app/api/api";
 
 export default function Payment(props) {
   const { productId }: any = useParams();

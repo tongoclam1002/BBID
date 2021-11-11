@@ -20,8 +20,7 @@ const successAutoClose = (sec, title, description?) => {
         title: title,
         content: description,
         centered: true,
-        footer: null
-        
+
     });
     setTimeout(() => {
         modal.destroy();

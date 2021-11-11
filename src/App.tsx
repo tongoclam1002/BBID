@@ -1,15 +1,15 @@
 import 'antd/dist/antd.css';
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Layout from "./layout/Layout";
+import Layout from "./app/layout/Layout";
 import routes from "./route-config";
-import BreadCrumbs from "./components/Common/BreadCrumbs";
-import Video from "./pages/Video";
-import NotFound from "./pages/NotFound";
-import { useAppDispatch } from './redux/configureStore';
+import BreadCrumbs from "./app/layout/BreadCrumbs";
+import Video from "./features/VirtualMall/PanelPage";
+import NotFound from "./app/errors/NotFound";
+import { useAppDispatch } from './app/store/configureStore';
 import { useEffect, useState } from 'react';
-import api from './services/api';
-import { setCart } from './redux/cartSlice';
+import api from './app/api/api';
+import { setCart } from './features/Cart/cartSlice';
 
 function App() {
   const dispatch = useAppDispatch();

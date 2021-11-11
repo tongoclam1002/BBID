@@ -1,6 +1,6 @@
 
 
-export default function OrderSuccess() {
+export default function OrderSuccessPage() {
   return (
     <div className="row">
       <div className="col-12">

@@ -1,4 +1,4 @@
-import { Cart } from "../interfaces/cart.interface";
+import { Cart } from "../../app/interfaces/cart.interface";
 import { createSlice } from "@reduxjs/toolkit"
 interface CartState {
     cart: Cart | null

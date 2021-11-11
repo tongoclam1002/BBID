@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../interfaces/product.interface";
+import { Product } from "../../app/interfaces/product.interface";
 import { NavLink } from "react-router-dom";
-import api from "../services/api";
+import api from "../../app/api/api";
 
-export default function ProductDetail() {
+export default function OrderPage() {
   const { productId }: any = useParams();
   const [product, setProduct] = useState<Product>();
   const [isMomo, setIsMomo] = useState(false);

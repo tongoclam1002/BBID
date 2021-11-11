@@ -2,11 +2,11 @@ import { Button, Collapse } from "antd";
 import CollapsePanel from "antd/lib/collapse/CollapsePanel";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import constant from "../../helper/constant";
-import toast from "../../helper/toast";
-import { setCart } from "../../redux/cartSlice";
-import { useAppDispatch } from "../../redux/configureStore";
-import api from "../../services/api";
+import { setCart } from "../Cart/cartSlice";
+import { useAppDispatch } from "../../app/store/configureStore";
+import api from "../../app/api/api";
+import toast from "../../app/utils/toast";
+import constant from "../../app/utils/constant";
 
 export default function ProductDetail({ product }) {
   const [isLoading, setIsLoading] = useState(false);
