@@ -19,24 +19,24 @@ export default function StorePage() {
   useEffect(() => {
     api.Store.details(parseInt(storeId)).then(response => {
       setStore(response.data[0]);
+      api.Product
+        .list(parseInt(storeId))
+        .then(response => {
+          setProducts(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        }).finally(() => {
+          setIsFetchingProducts(false);
+        });
     })
       .catch(error => {
         console.log(error);
       }).finally(() => {
         setIsFetchingStore(false);
       });
-    api.Product
-      .list(parseInt(storeId))
-      .then(response => {
-        setProducts(response.data);        
-      })
-      .catch(error => {
-        console.log(error);
-      }).finally(() => {
-        setIsFetchingProducts(false);
-      });
   }, []);
-
+  
   return (
     <>
       {!isFetchingStore && store ? (

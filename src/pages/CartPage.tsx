@@ -20,7 +20,7 @@ export default function CartPage() {
           <div className="box-cart-left">
             <p className="box-cart-shop clearfix">
               <input type="checkbox" value="" /><a href="#">Rolex</a> <i className="fas fa-angle-right"></i>
-              <span className="float-right"><a href="#">Sửa</a></span>
+              {/* <span className="float-right"><a href="#">Sửa</a></span> */}
             </p>
             <div className="table-responsive">
               <table className="table table-striped table-bordered table-hover">
@@ -32,6 +32,7 @@ export default function CartPage() {
                     <th className="is-type">Loại</th>
                     <th className="is-count">Số lượng</th>
                     <th className="no-break">Tạm tính</th>
+                    <th className="no-break"></th>
                   </tr>
                 </thead>
                 <tbody>

@@ -1,8 +1,30 @@
-import { Collapse } from "antd";
+import { Button, Collapse } from "antd";
 import CollapsePanel from "antd/lib/collapse/CollapsePanel";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import constant from "../../helper/constant";
+import toast from "../../helper/toast";
+import { setCart } from "../../redux/cartSlice";
+import { useAppDispatch } from "../../redux/configureStore";
+import api from "../../services/api";
 
 export default function ProductDetail({ product }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+
+  function handleAddItem(productId: number) {
+    setIsLoading(true);
+    api.Cart.addItem(productId)
+      .then(() =>
+        {
+          toast.successAutoClose(1, constant.ADD_CART_SUCCESS_MESSAGE);
+          api.Cart.get().then(cart => dispatch(setCart(cart.data)))
+        }
+      )
+      .catch(error => console.log(error))
+      .finally(() => setIsLoading(false));
+  }
+
   return (
     <>
       {product && (
@@ -71,9 +93,9 @@ export default function ProductDetail({ product }) {
                 >
                   Mua ngay
                 </NavLink>
-                <a className="icon-cart" href="#test">
-                  <i className="fas fa-cart-plus"></i>
-                </a>
+                <Button className="icon-cart" size="large" icon={<i className="fas fa-cart-plus"></i>} loading={isLoading} onClick={() => handleAddItem(product.productId)} ghost>
+                  
+                </Button>
               </p>
               {/* <p className="box-btn">
                 <a

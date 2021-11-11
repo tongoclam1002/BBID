@@ -1,39 +1,34 @@
-import { notification } from "antd";
+import { Modal, notification } from "antd";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { request } from "http";
 import { history } from "..";
+import toast from "../helper/toast";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-const toast = (type, title, description?) => {
-  notification[type]({
-    message: title,
-    description: description
-  });
-};
-
 axios.interceptors.response.use(response => {
   return response
 }, (error: AxiosError) => {
-  const { data, status } = error.response!;
+  const { data, status } = error.response;
   // console.log(error.response);
   switch (status) {
     case 400:
-      toast('error', data.error);
+      toast.error(data.title);
       break;
     case 401:
-      toast('error', data.error);
+      toast.error(data.title);
       break;
     case 500:
+      toast.error(data.title);
       // history.push({
       //   pathname: '/server-error',
       //   state: {error: data}
       // }); 
       break;
     default:
-      toast('error', data.error);
+      toast.error(data.title);
       break;
   }
   return Promise.reject(error.response);
@@ -63,7 +58,7 @@ const Advertisement = {
 const Cart = {
   get: () => requests.get(`Business/GetCartDetail`),
   addItem: (productId: number, quantity = 1) => requests.post(`Business/AddProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
-  removeItem: (productId: number, quantity = 1) => requests.delete(``)
+  removeItem: (productId: number) => requests.delete(`Business/DeleteProductInCart?cartId=${1}&productId=${productId}`)
 }
 
 const api = {

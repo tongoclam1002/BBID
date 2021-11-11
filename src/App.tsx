@@ -17,9 +17,9 @@ function App() {
 
   useEffect(() => {
     api.Cart.get()
-    .then(response => dispatch(setCart(response.data)))
-    .catch(error => console.log(error))
-    .finally(() => setIsLoading(false));
+      .then(response => dispatch(setCart(response.data)))
+      .catch(error => console.log(error))
+      .finally(() => setIsLoading(false));
   }, [setCart])
 
   return (
@@ -56,7 +56,7 @@ function App() {
         </Route>
       ))}
       <Route path="/video/:code" exact={true}><Video /></Route>
-      <Route><NotFound /></Route>
+      <Route><Layout><NotFound /></Layout></Route>
     </Switch>
   );
 }
