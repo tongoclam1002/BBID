@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { product } from "../interfaces/product.interface";
+import { Product } from "../interfaces/product.interface";
 import { NavLink } from "react-router-dom";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import api from "../services/api";
 
 export default function ProductDetail() {
-  const { id }: any = useParams();
-  const api = new Api();
-  const config = new Configuration();
-  const [product, setProduct] = useState<product>();
+  const { productId }: any = useParams();
+  const [product, setProduct] = useState<Product>();
   const [isMomo, setIsMomo] = useState(false);
 
   useEffect(() => {
-    api.get(config.GET_PRODUCT_DETAIL_URL + id).then((product) => {
-      setProduct(product);
-    });
+    api.Product.details(productId).then(response => setProduct(response.data))
   }, []);
 
   function changeMethod() {
@@ -175,7 +170,7 @@ export default function ProductDetail() {
           <p className="form-group text-center">
             <NavLink
               className="btn btn-primary green"
-              to={`payment/${id}`}
+              to={`payment/${productId}`}
               role="button"
             >
               Xác nhận đặt hàng

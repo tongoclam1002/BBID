@@ -1,55 +1,76 @@
-import axios from "axios";
+import { notification } from "antd";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { request } from "http";
+import { history } from "..";
 
-interface IApi {
-  API_TOKEN: string;
-  CLIENT: string;
-  API_URL: string;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+const responseBody = (response: AxiosResponse) => response.data;
+
+const toast = (type, title, description?) => {
+  notification[type]({
+    message: title,
+    description: description
+  });
+};
+
+axios.interceptors.response.use(response => {
+  return response
+}, (error: AxiosError) => {
+  const { data, status } = error.response!;
+  // console.log(error.response);
+  switch (status) {
+    case 400:
+      toast('error', data.error);
+      break;
+    case 401:
+      toast('error', data.error);
+      break;
+    case 500:
+      // history.push({
+      //   pathname: '/server-error',
+      //   state: {error: data}
+      // }); 
+      break;
+    default:
+      toast('error', data.error);
+      break;
+  }
+  return Promise.reject(error.response);
+})
+
+const requests = {
+  get: (url: string) => axios.get(url).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(responseBody)
 }
 
-export default class Api implements IApi {
-  API_TOKEN = null;
-  CLIENT = null;
-  API_URL = process.env.REACT_APP_API_URL;
-
-  init = () => {
-    let headers = {
-      Accept: "application/json",
-      Authorization: "",
-    };
-
-    if (this.API_TOKEN) {
-      headers.Authorization = `Bearer ${this.API_TOKEN}`;
-    }
-
-    this.CLIENT = axios.create({
-      baseURL: this.API_URL,
-      timeout: 31000,
-      headers: headers,
-    });
-
-    return this.CLIENT;
-  };
-
-  get = (url: string) => {
-    return this.init()
-      .get(url)
-      .then((res: any) => {
-        if (res.status != "OK") {
-          this.handleResponseError(res);
-        }
-        return res.data.data;
-      })
-      .catch((error: any) => {
-        console.log(error);
-        this.handleError(error);
-      });
-  };
-
-  handleResponseError(response) {
-    console.log("HTTP error, status = " + response.data.error);
-  }
-
-  handleError(error) {
-    console.log(error.message);
-  }
+const Product = {
+  list: (storeId: number) => requests.get(`Store/product/${storeId}`),
+  details: (productId: number) => requests.get(`Store/productdetail?productId=${productId}`)
 }
+
+const Store = {
+  list: () => requests.get('Store/GetAllStore'),
+  details: (productId: number) => requests.get(`Store/StoreDetail?storeId=${productId}`)
+}
+
+const Advertisement = {
+  details: (position: string) => requests.get(`Advertise/GetPosition/${position}`)
+}
+
+const Cart = {
+  get: () => requests.get(`Business/GetCartDetail`),
+  addItem: (productId: number, quantity = 1) => requests.post(`Business/AddProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
+  removeItem: (productId: number, quantity = 1) => requests.delete(``)
+}
+
+const api = {
+  Store,
+  Product,
+  Advertisement,
+  Cart
+}
+
+export default api;

@@ -1,14 +1,14 @@
 import ItemListSkeleton from "./ItemListSkeleton";
-import ItemSkeleton from "./ItemSkeleton";
+
 
 export default function ItemList(props: Props) {
+  if (props.isLoading) return <ItemListSkeleton />;
   return (
     <>
       <h4>{props.title}</h4>
       <div className="box-list-main product clearfix">
         <ul>
           {props.children}
-          {props.isFetching && <ItemListSkeleton />}
         </ul>
       </div>
     </>
@@ -18,5 +18,5 @@ export default function ItemList(props: Props) {
 interface Props {
   children?: React.ReactNode;
   title: string;
-  isFetching: boolean;
+  isLoading: boolean;
 }

@@ -1,43 +1,38 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { product } from "../interfaces/product.interface";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
-import Section from "../components/Section/Section";
-import ItemList from "../components/ItemList/ItemList";
+import { Product } from "../interfaces/product.interface";
+import Section from "../components/Common/Section";
+import ItemList from "../components/Common/ItemList/ItemList";
 import ProductItem from "../components/Product/ProductItem";
-import { store } from "../interfaces/store.interface";
+import { Store } from "../interfaces/store.interface";
 import StoreDetailSketon from "../components/Store/StoreDetailSkeleon";
 import StoreDetail from "../components/Store/StoreDetail";
+import api from "../services/api";
 
 export default function StorePage() {
-  const api = new Api();
-  const config = new Configuration();
-  const { storeId }: any = useParams();
-  const [products, setProducts] = useState<product[]>([]);
-  const [store, setStore] = useState<store>(null);
+  const { storeId } = useParams<{ storeId: string }>();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [store, setStore] = useState<Store>(null);
   const [isFetchingStore, setIsFetchingStore] = useState(true);
   const [isFetchingProducts, setIsFetchingProducts] = useState(true);
 
   useEffect(() => {
-    api
-      .get(config.GET_STORE_DETAIL + storeId)
-      .then((store) => {
-        setStore(store[0]);
-        setIsFetchingStore(false);
-      })
-      .catch((error) => {
+    api.Store.details(parseInt(storeId)).then(response => {
+      setStore(response.data[0]);
+    })
+      .catch(error => {
         console.log(error);
+      }).finally(() => {
         setIsFetchingStore(false);
       });
-    api
-      .get(config.GET_ALL_PRODUCT_URL + "/" + storeId)
-      .then((products) => {
-        setProducts(products);
-        setIsFetchingProducts(false);
+    api.Product
+      .list(parseInt(storeId))
+      .then(response => {
+        setProducts(response.data);        
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
+      }).finally(() => {
         setIsFetchingProducts(false);
       });
   }, []);
@@ -65,7 +60,7 @@ export default function StorePage() {
           </div>
           <Section title="Sản phẩm nổi bật">
             {products.length ? (
-              <ItemList title="Khu mua sắm" isFetching={isFetchingProducts}>
+              <ItemList title="Khu mua sắm" isLoading={isFetchingProducts}>
                 {products.map((product) => (
                   <ProductItem
                     key={product.productId}
@@ -74,7 +69,7 @@ export default function StorePage() {
                     price={product.price}
                     image={product.image}
                     description={product.description}
-                    storeId={storeId}
+                    storeId={parseInt(storeId)}
                   />
                 ))}
               </ItemList>
@@ -84,7 +79,7 @@ export default function StorePage() {
           </Section>
         </>
       ) : (
-        <StoreDetailSketon isFetching={isFetchingStore} />
+        <StoreDetailSketon isLoading={isFetchingStore} />
       )}
     </>
   );

@@ -1,10 +1,10 @@
 import { Skeleton } from "antd";
 import { useEffect } from "react";
 
-export default function ProductDetailSkeleton({isFetching}) {
+export default function ProductDetailSkeleton({isLoading}) {
   return (
     <>
-      {isFetching ? (
+      {isLoading ? (
         <div className="box-shop">
           <div className="row">
             <div className="col-md-6 col-sm-5">

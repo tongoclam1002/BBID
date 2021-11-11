@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import api from "../services/api";
 
 export default function Video() {
-  const config = new Configuration();
   const videoExtension = ["WEBM", "MPG", "MP2", "MPEG", "MPE", "MPV", "OGG", "MP4", "M4P", "M4V", "AVI", "WMV", "MOV", "QT", "FLV", "SWF", "AVCHD"];
-  const imageExtension = ["JPG", "JPEG", "PNG", "GIF"]
-  const api = new Api();
+  // const imageExtension = ["JPG", "JPEG", "PNG", "GIF"]
   const { code }: any = useParams();
   const [media, setMedia] = useState({
     mediaLink: "http://kci.bbid.vn/asset/video.mp4",
@@ -17,8 +14,8 @@ export default function Video() {
   const [fileType, setFileType] = useState("");
 
   useEffect(() => {
-    api.get(config.GET_ADVERTISE_POSITION + code).then((media) => {
-      setMedia(media);
+    api.Advertisement.details(code).then((response) => {
+      setMedia(response.data);
       setFileType(media.mediaLink.split('.').pop());
     });
   }, []);

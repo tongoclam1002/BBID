@@ -1,45 +1,35 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { product } from "../interfaces/product.interface";
-import { NavLink } from "react-router-dom";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import { Product } from "../interfaces/product.interface";
 import ProductDetail from "../components/Product/ProductDetail";
-import { Radio, Form, Space, Skeleton, Divider, Switch } from "antd";
 import ProductDetailSkeleton from "../components/Product/ProductDetailSkeleton";
+import api from "../services/api";
 
 export default function ProductPosition() {
-  const api = new Api();
-  const config = new Configuration();
   const { code }: any = useParams();
-  const [product, setProduct] = useState<product>();
-  const [isFetching, setIsFetching] = useState(true);
+  const [product, setProduct] = useState<Product>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get(config.GET_PRODUCT_DETAIL_URL + code)
-      .then((media) => {
-        console.log(media);
-        if (media.productId != null) {
-          api
-            .get(config.GET_PRODUCT_DETAIL_URL + media.productId)
-            .then((product) => {
+    api.Product.details(code).then((response) => {
+        if (response.data.productId != null) {
+          api.Product.details(code).then((product) => {
               setProduct(product);
-              setIsFetching(false);
+              setIsLoading(false);
             });
         }
       })
       .catch((error) => {
         console.log(error);
-        setIsFetching(false);
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <>
-      {product && !isFetching ? (
+      {product && !isLoading ? (
         <ProductDetail product={product} />
-      ) : <ProductDetailSkeleton isFetching={isFetching} />}
+      ) : <ProductDetailSkeleton isLoading={isLoading} />}
     </>
   );
 }

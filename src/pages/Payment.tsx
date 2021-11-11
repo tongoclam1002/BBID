@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { HmacSHA256 } from "crypto-js";
-import { product } from "../interfaces/product.interface";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import { Product } from "../interfaces/product.interface";
+import api from "../services/api";
 
 export default function Payment(props) {
-  const api = new Api();
-  const config = new Configuration();
-  const { id }: any = useParams();
-  const [product, setProduct] = useState<product>();
+  const { productId }: any = useParams();
+  const [product, setProduct] = useState<Product>();
   const MOMO_SECRECT_KEY = process.env.MOMO_SECRECT_KEY;
   function generateUUID() {
     // Public Domain/MIT
@@ -38,8 +35,8 @@ export default function Payment(props) {
     );
   }
   useEffect(() => {
-    api.get(config.GET_PRODUCT_DETAIL_URL + id).then((data: product) => {
-      setProduct(data);
+    api.Product.details(productId).then((response) => {
+      setProduct(response.data);
       let randomId = generateUUID();
       let request = {
         partnerCode: "MOMOH6JY20211027",
@@ -49,9 +46,9 @@ export default function Payment(props) {
         ipnUrl: "https://momo.vn",
         redirectUrl: process.env.REACT_APP_MOMO_REDIRECT_URL,
         orderId: randomId,
-        amount: data.price,
+        amount: product.price,
         lang: "vi",
-        orderInfo: data.name,
+        orderInfo: product.name,
         requestId: randomId,
         extraData: "",
         signature: "",

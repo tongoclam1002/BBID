@@ -1,32 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { product } from "../interfaces/product.interface";
-import { NavLink } from "react-router-dom";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import { Product } from "../interfaces/product.interface";
 import ProductDetail from "../components/Product/ProductDetail";
-import { Skeleton } from "antd";
 import ProductDetailSkeleton from "../components/Product/ProductDetailSkeleton";
+import api from "../services/api";
 
 export default function ProductPage() {
-  const api = new Api();
-  const config = new Configuration();
   const { productId }: any = useParams();
-  const [product, setProduct] = useState<product>();
-  const [isFetching, setIsFetching] = useState(true);
+  const [product, setProduct] = useState<Product>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get(config.GET_PRODUCT_DETAIL_URL + productId)
-      .then((product) => {
-        setProduct(product);
-        setIsFetching(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsFetching(false);
-      });
-  }, []);
+    api.Product.details(productId).then(response => {
+      setProduct(response.data);
+    }).catch(error => console.log(error.response)).finally(() => setIsLoading(false))
+  }, [productId]);
 
-  return <>{product && !isFetching ? <ProductDetail product={product} /> : <ProductDetailSkeleton isFetching={isFetching} />}</>;
+  return <>{product && !isLoading ? <ProductDetail product={product} /> : <ProductDetailSkeleton isLoading={isLoading} />}</>;
 }

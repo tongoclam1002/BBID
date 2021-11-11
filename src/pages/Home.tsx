@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
-import Carousel from "../components/Carousel/Carousel";
-import ItemList from "../components/ItemList/ItemList";
-import Section from "../components/Section/Section";
+import Carousel from "../components/Common/Carousel";
+import ItemList from "../components/Common/ItemList/ItemList";
+import Section from "../components/Common/Section";
 import StoreItem from "../components/Store/StoreItem";
-import { store } from "../interfaces/store.interface";
-import Api from "../services/api";
-import Configuration from "../services/configuration";
+import { Store } from "../interfaces/store.interface";
+import api from "../services/api";
 
 export default function Home() {
-  const api = new Api();
-  const config = new Configuration();
-  const [stores, setStores] = useState<store[]>([]);
-  const [isFetching, setIsFetching] = useState(true);
+  const [stores, setStores] = useState<Store[] | null>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api.get(config.GET_ALL_STORE_URL).then((stores) => {
-      setStores(stores);
-      setIsFetching(false)
-    }).catch((error) => {
-      console.log(error);
-      setIsFetching(false)
+    api.Store.list().then(response => {
+      setStores(response.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -27,10 +21,10 @@ export default function Home() {
     <>
       <Carousel />
       <Section title="Khu Mua Sắm">
-      <ItemList title="Thời trang và phụ kiện" isFetching={isFetching}>
+        <ItemList title="Thời trang và phụ kiện" isLoading={isLoading}>
           {stores &&
             stores.map((store) => (
-              <StoreItem key={store.storeId} image={store.logo} storeId={store.storeId} name={store.name}/>
+              <StoreItem key={store.storeId} image={store.logo} storeId={store.storeId} name={store.name} />
             ))}
         </ItemList>
       </Section>

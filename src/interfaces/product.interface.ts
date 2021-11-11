@@ -1,4 +1,4 @@
-export interface product {
+export interface Product {
   isEnabled?: boolean;
   createdBy?: number;
   createdDate?: string;
@@ -14,10 +14,10 @@ export interface product {
   productTypeId?: number;
   caterogyId?: number;
   description?: string;
-  productProperty?: productProperty[];
+  productProperty?: ProductProperty[];
 }
 
-export interface productProperty {
+export interface ProductProperty {
   key?: string;
   value?: string;
 }

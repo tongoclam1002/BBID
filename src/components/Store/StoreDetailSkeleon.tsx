@@ -1,9 +1,9 @@
 import { Skeleton } from "antd";
 
-export default function StoreDetailSketon({ isFetching }) {
+export default function StoreDetailSketon({ isLoading }) {
   return (
     <>
-      {isFetching ? (
+      {isLoading ? (
         <div className="row">
           <div className="col-md-3 col-sm-4">
             <Skeleton.Image className="skeleton-image" />

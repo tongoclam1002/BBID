@@ -1,7 +1,8 @@
+import { Collapse } from "antd";
+import CollapsePanel from "antd/lib/collapse/CollapsePanel";
 import { NavLink } from "react-router-dom";
-import { product } from "../../interfaces/product.interface";
 
-export default function ProductDetail({product}) {
+export default function ProductDetail({ product }) {
   return (
     <>
       {product && (
@@ -43,23 +44,12 @@ export default function ProductDetail({product}) {
                   đ
                 </strong>
               </p>
-              <div>
-                <a className="link-showdhide">
-                <i className="fas fa-angle-right"></i> Chi tiết
-                </a>
-              </div>
-              <div className="box-display">
-                <p>{product.description}</p>
-              </div>
-              <div>
-                <a className="link-showdhide">
-                  <i className="fas fa-angle-right"></i> Nổi bật
-                </a>
-              </div>
-              <div className="box-display">
-                <p>Nội dung..</p>
-              </div>
-              <div className="row box-input">
+              <Collapse ghost>
+                <CollapsePanel header="Chi tiết" key="1">
+                  <p>{product.description}</p>
+                </CollapsePanel>
+              </Collapse>
+              {/* <div className="row box-input">
                 <div className="col-3">
                   <select className="form-control">
                     <option>1</option>
@@ -71,7 +61,7 @@ export default function ProductDetail({product}) {
                   <i className="fas fa-square-full is_gray"></i>
                   <i className="fas fa-square-full is_brown"></i>
                 </div>
-              </div>
+              </div> */}
               <p>
                 <NavLink
                   className="btn btn-primary green is-bigger"
@@ -85,7 +75,7 @@ export default function ProductDetail({product}) {
                   <i className="fas fa-cart-plus"></i>
                 </a>
               </p>
-              <p className="box-btn">
+              {/* <p className="box-btn">
                 <a
                   className="btn red sm-mb-15 sm-block"
                   href="#test"
@@ -96,7 +86,7 @@ export default function ProductDetail({product}) {
                 <a className="btn turquoise" href="#test" role="button">
                   <i className="fas fa-exchange-alt"></i>So sánh
                 </a>
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="row">

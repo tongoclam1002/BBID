@@ -9,15 +9,4 @@ document.onreadystatechange = function () {
         }
     }
 
-    document.querySelectorAll('.link-showdhide').forEach(function (item, i) {
-        item.addEventListener('click', function () {
-            var next = this.parentElement.nextElementSibling;
-            // this.childElement.classList.toggle('fas fa-angle-right fas fa-angle-down');
-            this.querySelector('i').classList.toggle('fa-angle-right');
-            this.querySelector('i').classList.toggle('fa-angle-down');
-            console.log();
-            next.classList.toggle('d-block');
-        });
-    });
-
 };

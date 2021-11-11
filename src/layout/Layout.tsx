@@ -1,5 +1,5 @@
-import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
-import Header from "../components/Header/Header";
+import BreadCrumbs from "../components/Common/BreadCrumbs";
+import Header from "../components/Common/Header";
 
 export default function Layout(props: layoutProps) {
   return (
