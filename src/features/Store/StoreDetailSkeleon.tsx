@@ -1,4 +1,5 @@
-import { Skeleton } from "antd";
+import { Empty, Skeleton } from "antd";
+import constant from "../../app/utils/constant";
 
 export default function StoreDetailSketon({ isLoading }) {
   return (
@@ -13,7 +14,7 @@ export default function StoreDetailSketon({ isLoading }) {
           </div>
         </div>
       ) : (
-        <div>Không tìm thấy cửa hàng</div>
+        <Empty description={constant.text.EMPTY_STORE} />
       )}
     </>
   );

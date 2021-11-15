@@ -6,7 +6,10 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-axios.interceptors.response.use(response => {
+const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
+
+axios.interceptors.response.use(async response => {
+  if (process.env.NODE_ENV === 'development') await sleep();
   return response
 }, (error: AxiosError) => {
   const { data, status } = error.response;
@@ -20,10 +23,10 @@ axios.interceptors.response.use(response => {
       break;
     case 500:
       toast.error(data.title);
-      history.push({
-        pathname: '/server-error',
-        state: {error: data}
-      }); 
+      // history.push({
+      //   pathname: '/server-error',
+      //   state: {error: data}
+      // }); 
       break;
     default:
       toast.error(data.title);
@@ -54,9 +57,9 @@ const Advertisement = {
 }
 
 const Cart = {
-  get: () => requests.get(`Business/GetCartDetail`),
-  addItem: (productId: number, quantity = 1) => requests.post(`Business/AddProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
-  removeItem: (productId: number) => requests.delete(`Business/DeleteProductInCart?cartId=${1}&productId=${productId}`)
+  get: () => requests.get(`Business/CartDetail`),
+  addItem: (productId: number, quantity = 1) => requests.post(`Business/ProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
+  removeItem: (productId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productId=${productId}`)
 }
 
 const api = {

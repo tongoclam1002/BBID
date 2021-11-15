@@ -1,6 +1,6 @@
 import Home from "./features/Home/Home";
 import Order from "./features/Order/OrderPage";
-import OrderSuccess from "./features/Order/OrderSuccessPage";
+import OrderSuccess from "./features/Order/OrderSuccess";
 import Payment from "./features/Payment/Payment";
 import StoreDetail from "./features/Store/StorePage";
 import ProductPage from "./features/Product/ProductPage";

@@ -7,9 +7,10 @@ export default function BreadCrumbs({ crumbs }) {
       <ol className="breadcrumb">
         {/* Link back to any previous steps of the breadcrumb. */}
         {crumbs.length <= 1 ? (
-          <li className="breadcrumb-item">
-            <span>Trang chủ</span>
-          </li>
+          // <li className="breadcrumb-item">
+          //   <span>Trang chủ</span>
+          // </li>
+          <></>
         ) : (
           crumbs.map(({ title, path }, key) =>
             key + 1 === crumbs.length ? (

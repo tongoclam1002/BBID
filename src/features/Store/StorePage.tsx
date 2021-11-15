@@ -8,10 +8,15 @@ import StoreDetailSketon from "./StoreDetailSkeleon";
 import StoreDetail from "./StoreDetail";
 import api from "../../app/api/api";
 import Section from "../../components/Section";
+import { Empty } from "antd";
+import constant from "../../app/utils/constant";
+import StoreProducts from "./StoreProducts";
+import ItemListSkeleton from "../../components/ItemList/ItemListSkeleton";
 
 export default function StorePage() {
   const { storeId } = useParams<{ storeId: string }>();
   const [products, setProducts] = useState<Product[]>([]);
+  const [isViewProduct, setIsViewProduct] = useState(false);
   const [store, setStore] = useState<Store>(null);
   const [isFetchingStore, setIsFetchingStore] = useState(true);
   const [isFetchingProducts, setIsFetchingProducts] = useState(true);
@@ -36,7 +41,7 @@ export default function StorePage() {
         setIsFetchingStore(false);
       });
   }, []);
-  
+
   return (
     <>
       {!isFetchingStore && store ? (
@@ -47,19 +52,20 @@ export default function StorePage() {
               <div className="col-12">
                 <div className="box-tab">
                   <ul className="nav nav-tabs">
-                    <li>
-                      <a href="#tab-shop">Cửa hàng</a>
+                    <li >
+                      <a href="#tab-shop" className={!isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(false)}>Cửa hàng</a>
                     </li>
                     <li>
-                      <a href="#tab-product">Sản phẩm</a>
+                      <a href="#tab-product" className={isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(true)}>Sản phẩm</a>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
+          {!isViewProduct ? 
           <Section title="Sản phẩm nổi bật">
-            {products.length ? (
+            {products && !isFetchingProducts ? (
               <ItemList title="Khu mua sắm" isLoading={isFetchingProducts}>
                 {products.map((product) => (
                   <ProductItem
@@ -73,10 +79,10 @@ export default function StorePage() {
                   />
                 ))}
               </ItemList>
-            ) : (
-              <div>Hiện tại chưa có sản phẩm nào</div>
-            )}
-          </Section>
+            ) : !isFetchingProducts ? (
+              <Empty description={constant.text.EMPTY_PRODUCT_LIST} />
+            ) : <ItemListSkeleton />}
+          </Section> : <StoreProducts products={products} isLoading={isFetchingProducts} />}
         </>
       ) : (
         <StoreDetailSketon isLoading={isFetchingStore} />

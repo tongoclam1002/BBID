@@ -2,11 +2,12 @@ import Header from "./Header";
 
 export default function Layout(props: layoutProps) {
   return (
-    <div className="box-content home">
+    <div className="box-content">
+      <Header />
       <div className="container">
         <div className="row">
           <div className="col col-12">
-            <Header />
+            
             {props.children}
           </div>
         </div>

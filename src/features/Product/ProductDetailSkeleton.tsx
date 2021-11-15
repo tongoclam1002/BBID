@@ -1,5 +1,5 @@
-import { Skeleton } from "antd";
-import { useEffect } from "react";
+import { Empty, Skeleton } from "antd";
+import constant from "../../app/utils/constant";
 
 export default function ProductDetailSkeleton({isLoading}) {
   return (
@@ -21,7 +21,7 @@ export default function ProductDetailSkeleton({isLoading}) {
           </div>
         </div>
       ) : (
-        <div>Không tìm thấy sản phẩm</div>
+        <Empty description={constant.text.EMPTY_PRODUCT} />
       )}
     </>
   );

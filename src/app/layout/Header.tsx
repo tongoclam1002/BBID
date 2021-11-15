@@ -3,12 +3,13 @@ import { useAppSelector } from "../store/configureStore";
 
 export default function Header() {
   const { cart } = useAppSelector(state => state.cart);
-  const itemCount = cart?.productLists.length;
+  const itemCount = cart?.productLists.length || 0;
   const quantityCount = cart?.productLists.reduce((sum, item) => sum + item.quantity, 0)
   return (
     <div id="header" className="clearfix">
+      <div className="container">
       <div className="box-logo">
-        <a href="#test"><i className="fas fa-bars"></i></a>
+        {/* <a href="#test"><i className="fas fa-bars"></i></a> */}
         <NavLink to="/"><strong>GigaMall</strong></NavLink>
       </div>
       <div className="box-icon clearfix">
@@ -20,12 +21,14 @@ export default function Header() {
       </div>
       <div className="box-search">
         <div className="input-group">
-          <span className="input-group-btn">
-            <button className="btn btn-primary green" type="button">Tìm kiếm</button>
-          </span>
           <input type="text" className="form-control" placeholder="Nhập từ khoá..." />
+          <span className="input-group-btn">
+            <button className="btn btn-primary green search-btn" type="button"><i className="fas fa-search"></i></button>
+          </span>
         </div>
       </div>
+      </div>
+
     </div>
   )
 }

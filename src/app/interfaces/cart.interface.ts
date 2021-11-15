@@ -5,6 +5,7 @@ export interface CartItem {
     storeId: string;
     image: string;
     quantity: number;
+    isSelected: boolean;
 }
 
 export interface Cart {

@@ -1,36 +1,16 @@
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 
-const error = (title, description?) => {
-    Modal.error({
-        title: title,
-        content: description,
-    });
+const success = (title, sec = 2) => {
+    message.success(title, sec);
 };
 
-const success = (title, description?) => {
-    Modal.success({
-        title: title,
-        content: description,
-    });
+const error = (title, sec = 2) => {
+    message.error(title, sec);
 };
-
-const successAutoClose = (sec, title, description?) => {
-    let secondsToGo = sec;
-    const modal = Modal.success({
-        title: title,
-        content: description,
-        centered: true,
-
-    });
-    setTimeout(() => {
-        modal.destroy();
-    }, secondsToGo * 1000);
-}
 
 const toast = {
     error,
-    success,
-    successAutoClose
+    success
 }
 
 export default toast
