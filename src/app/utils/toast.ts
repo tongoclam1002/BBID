@@ -1,4 +1,4 @@
-import { message, Modal } from "antd";
+import { message } from "antd";
 
 const success = (title, sec = 2) => {
     message.success(title, sec);

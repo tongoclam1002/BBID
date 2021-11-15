@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import CartItem from "./CartItem";
 import { useAppSelector } from "../../app/store/configureStore";
-import api from "../../app/api/api";
-import { Card, Col, Row, Space } from "antd";
+import { Button, Card, Col, Empty, Row } from "antd";
 import { groupBy } from "../../app/utils/utils";
+import constant from "../../app/utils/constant";
+import CartSkeleton from "./CartSkeleton";
 
 export default function CartPage() {
-  const { cart } = useAppSelector(state => state.cart);
-  const [isLoading, setIsLoading] = useState(true);
+  const { cart, status } = useAppSelector(state => state.cart);
   const groupByStoreItem = cart ? groupBy(cart?.productLists, "storeId") : [];
   const itemCount = cart?.productLists.reduce((sum, item) => sum + item.price, 0)
+
+  if (status.includes("pending"))
+    return <CartSkeleton />
 
   return (
     <Row gutter={10}>
       <Col lg={16} md={24}>
-
-        {groupByStoreItem?.map((store, key) => (
+        {groupByStoreItem.length ? groupByStoreItem.map((store, key) => (
           <Card key={key} className="mb-4">
             <p className="box-cart-shop clearfix">
               <input type="checkbox" value="" /><Link to={`/store/${store.storeId}`}>{store.storeId}</Link> <i className="fas fa-angle-right"></i>
@@ -40,18 +41,16 @@ export default function CartPage() {
                 </tbody>
               </table>
             </div>
-          </Card>))}
-
+          </Card>)) : <Card className="mb-4"><Empty description={constant.text.EMPTY_PRODUCT_IN_CART} /></Card>}
         <Link to="/" className="btn btn-primary green">Tiếp tục mua sắm</Link>
-
       </Col>
       <Col lg={8} md={24}>
         <Card className="box-total">
           <h4>Thông tin đơn hàng</h4>
           <p>Tổng tiền: <strong>{itemCount?.toLocaleString("vi-VN")}đ</strong></p>
-          <p><a className="btn btn-primary green" href="#test" role="button">Tiến hành đặt hàng</a></p>
+          {/* <Link to="/order" className="btn btn-primary green" role="button">Tiến hành đặt hàng</Link> */}
+          <Button className="btn btn-primary green text-white">Tiến hành đặt hàng</Button>
         </Card>
-
       </Col>
     </Row>
   )

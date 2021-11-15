@@ -14,6 +14,7 @@ const routes = [
     {path: "/store/:storeId", Component: StoreDetail, exact: true, title: "Cửa hàng"},
     {path: "/store/:storeId/product/:productId", Component:ProductPage, exact: true, title: "Chi tiết sản phẩm"},
     {path: "/product/:code", Component:ProductPosition, exact: true, title: "Chi tiết sản phẩm"},
+    {path: "/order", Component: Order, exact: true, title: "Đặt hàng"},
     {path: "/order/:productId", Component: Order, exact: true, title: "Đặt hàng"},
     {path: "/order/success", Component: OrderSuccess, exact: true},
     {path: "/order/payment/:productId", Component: Payment, exact: true, title: ""},

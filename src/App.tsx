@@ -7,20 +7,15 @@ import BreadCrumbs from "./app/layout/BreadCrumbs";
 import Video from "./features/VirtualMall/PanelPage";
 import NotFound from "./app/errors/NotFound";
 import { useAppDispatch } from './app/store/configureStore';
-import { useEffect, useState } from 'react';
-import api from './app/api/api';
-import { setCart } from './features/Cart/cartSlice';
+import { useEffect } from 'react';
+import { fetchCartAsync } from './features/Cart/cartSlice';
 
 function App() {
   const dispatch = useAppDispatch();
-  const [IsLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api.Cart.get()
-      .then(response => dispatch(setCart(response.data)))
-      .catch(error => console.log(error))
-      .finally(() => setIsLoading(false));
-  }, [setCart])
+    dispatch(fetchCartAsync())
+  }, [dispatch])
 
   return (
     <Switch>

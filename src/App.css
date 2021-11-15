@@ -73,6 +73,9 @@ ol {
 img {
   border: none;
 }
+label {
+  margin-bottom: 0;
+}
 .clearfix::after {
   content: "";
   clear: both;
@@ -586,9 +589,7 @@ img[usemap] {
 .box-info p {
   margin-bottom: 10px;
 }
-.box-info .btn {
-  line-height: 22px;
-}
+
 .box-info h4 .box-rate em {
   font-size: 11px;
   text-transform: lowercase;
@@ -829,8 +830,7 @@ img[usemap] {
 .box-order {
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  margin-top: 15px;
+  margin-bottom: 16px;
 }
 .box-cart-shop {
   padding: 0 15px 10px 0;

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { history } from "../..";
+// import { history } from "../..";
 import toast from "../utils/toast";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;

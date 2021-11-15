@@ -5,7 +5,7 @@ export const groupBy = (items, key) => {
     array.forEach(element => {
         const object = {
             [key]: element,
-            list: items.filter((value, index, self) => value[key] == element)
+            list: items.filter((value, index, self) => value[key] === element)
         }
         group.push(object)
     });

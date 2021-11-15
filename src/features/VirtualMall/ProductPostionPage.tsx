@@ -23,7 +23,7 @@ export default function ProductPosition() {
         console.log(error);
         setIsLoading(false);
       });
-  }, []);
+  }, [code]);
 
   return (
     <>

@@ -18,7 +18,7 @@ export default function Video() {
       setMedia(response.data);
       setFileType(media.mediaLink.split('.').pop());
     });
-  }, []);
+  }, [code, media.mediaLink]);
 
   return (
     <>{videoExtension.indexOf(fileType?.toUpperCase()) > -1 ?
@@ -38,7 +38,8 @@ export default function Video() {
         width: media.width ? media.width + "px" : "800px",
         height: media.height ? media.height + "px" : "auto",
       }}
-        src={media?.mediaLink} />}
+        src={media?.mediaLink}
+        alt="Panel" />}
     </>
   );
 }

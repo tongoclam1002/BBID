@@ -4,7 +4,7 @@ import { useAppSelector } from "../store/configureStore";
 export default function Header() {
   const { cart } = useAppSelector(state => state.cart);
   const itemCount = cart?.productLists.length || 0;
-  const quantityCount = cart?.productLists.reduce((sum, item) => sum + item.quantity, 0)
+  // const quantityCount = cart?.productLists.reduce((sum, item) => sum + item.quantity, 0)
   return (
     <div id="header" className="clearfix">
       <div className="container">

@@ -1,92 +1,80 @@
-import { Button, Card, Collapse, Space } from "antd";
-import CollapsePanel from "antd/lib/collapse/CollapsePanel";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { setCart } from "../Cart/cartSlice";
-import { useAppDispatch } from "../../app/store/configureStore";
-import api from "../../app/api/api";
-import toast from "../../app/utils/toast";
-import constant from "../../app/utils/constant";
+import { Button, Card } from "antd";
+import { addCartItemAsync } from "../Cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { history } from "../..";
 
 export default function ProductDetail({ product }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const { status } = useAppSelector(state => state.cart);
   const dispatch = useAppDispatch();
 
-  function handleAddItem(productId: number) {
-    setIsLoading(true);
-    api.Cart.addItem(productId)
-      .then(() => {
-        toast.success(constant.text.ADD_CART_ITEM_SUCCESS_MESSAGE, 0.5);
-        api.Cart.get().then(cart => dispatch(setCart(cart.data)))
-      }
-      )
-      .catch(error => console.log(error))
-      .finally(() => setIsLoading(false));
+  function handlePurchaseItem(productId: number) {
+    debugger;
+    dispatch(addCartItemAsync({ productId: product.productId }));
+    history.push(`/order/${productId}`)
   }
 
   return (
     <>
       {product && (
         <div className="box-shop">
-            <Card className="mb-3">
-              <div className="row">
-                <div className="col-md-6 col-sm-5">
-                  <p className="box-product-img">
-                    <img
-                      alt="logo1"
-                      src={product?.image}
-                    />
-                  </p>
+          <Card className="mb-3">
+            <div className="row">
+              <div className="col-md-6 col-sm-5">
+                <p className="box-product-img">
+                  <img
+                    alt="logo1"
+                    src={product?.image}
+                  />
+                </p>
+              </div>
+              <div className="col-md-6 col-sm-7 box-info d-flex flex-column justify-content-between">
+                <div>
+                  <h4 className="clearfix">
+                    <span className="float-left">
+                      {product?.name}
+                      <br />
+                      <span className="box-rate">
+                        <span className="fa fa-star checked"></span>
+                        <span className="fa fa-star checked"></span>
+                        <span className="fa fa-star checked"></span>
+                        <span className="fa fa-star"></span>
+                        <span className="fa fa-star"></span>
+                        <em>(123 bình luận)</em>
+                      </span>
+                    </span>
+                    <span className="float-right box-link360">
+                      <a className="link360" href="http://malldemo.bbid.vn/" role="button" target="_blank" rel="noreferrer">
+                        360<sup>o</sup>
+                      </a>
+                    </span>
+                  </h4>
+                  <div className="title">
+                    <strong>
+                      {product.price > 0
+                        ? product.price.toLocaleString("vi-VN")
+                        : 0}
+                      đ
+                    </strong>
+                  </div>
                 </div>
-                <div className="col-md-6 col-sm-7 box-info d-flex flex-column justify-content-between">
-                  <div>
-                    <h4 className="clearfix">
-                      <span className="float-left">
-                        {product?.name}
-                        <br />
-                        <span className="box-rate">
-                          <span className="fa fa-star checked"></span>
-                          <span className="fa fa-star checked"></span>
-                          <span className="fa fa-star checked"></span>
-                          <span className="fa fa-star"></span>
-                          <span className="fa fa-star"></span>
-                          <em>(123 bình luận)</em>
-                        </span>
-                      </span>
-                      <span className="float-right box-link360">
-                        <a className="link360" href="http://malldemo.bbid.vn/" role="button" target="_blank">
-                          360<sup>o</sup>
-                        </a>
-                      </span>
-                    </h4>
-                    <div className="title">
-                      <strong>
-                        {product.price > 0
-                          ? product.price.toLocaleString("vi-VN")
-                          : 0}
-                        đ
-                      </strong>
-                    </div>
-                    {/* <Collapse ghost>
-                  <CollapsePanel header="Chi tiết" key="1">
-                    <p>{product.description}</p>
-                  </CollapsePanel>
-                </Collapse> */}
-                  </div>
-                  <div style={{paddingBottom: '60px'}}>
-                    <NavLink
-                      className="btn btn-primary green is-bigger"
-                      href="#test"
-                      role="button"
-                      to={`/order/${product?.productId}`}
-                    >
-                      Mua ngay
-                    </NavLink>
-                    <Button className="icon-cart" size="large" icon={<i className="fas fa-cart-plus"></i>} loading={isLoading} onClick={() => handleAddItem(product.productId)} ghost>
-
-                    </Button>
-                  </div>
-                  {/* <p className="box-btn">
+                <div style={{ paddingBottom: '60px' }}>
+                  <Button
+                    className="btn btn-primary green text-white text-uppercase font-weight-bold"
+                    size='large'
+                    onClick={() => handlePurchaseItem(product?.productId)}
+                  >
+                    Mua ngay
+                  </Button>
+                  <Button
+                    className="icon-cart"
+                    size="large"
+                    icon={<i className="fas fa-cart-plus"></i>}
+                    loading={status.includes('pendingAddItem' + product.productId)}
+                    onClick={() => dispatch(addCartItemAsync({ productId: product.productId }))}
+                    style={{color: '#70b775'}}
+                    ghost />
+                </div>
+                {/* <p className="box-btn">
                 <a
                   className="btn red sm-mb-15 sm-block"
                   href="#test"
@@ -98,18 +86,18 @@ export default function ProductDetail({ product }) {
                   <i className="fas fa-exchange-alt"></i>So sánh
                 </a>
               </p> */}
-                </div>
               </div>
-            </Card>
+            </div>
+          </Card>
 
 
-            <Card title="CHI TIẾT SẢN PHẨM">
-              <div className="row">
-                <div className="col-12">
-                  <p>{product.description}</p>
-                </div>
+          <Card title="CHI TIẾT SẢN PHẨM">
+            <div className="row">
+              <div className="col-12">
+                <p>{product.description}</p>
               </div>
-            </Card>
+            </div>
+          </Card>
         </div>
       )}
     </>
