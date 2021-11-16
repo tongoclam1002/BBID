@@ -46,7 +46,6 @@ export const productSlice = createSlice({
             state.productsLoaded = true;
         });
         builder.addCase(fetchProductsAsync.rejected, (state, action) => {
-            console.log(action);
             state.status = "idle"
         });
         builder.addCase(fetchProductAsync.pending, (state) => {

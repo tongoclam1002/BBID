@@ -56,7 +56,6 @@ export const storeSlice = createSlice({
             state.status = "idle";
         });
         builder.addCase(fetchStoreAsync.rejected, (state, action) => {
-            console.log(action);
             state.status = "idle"
         })
     })

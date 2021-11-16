@@ -59,6 +59,7 @@ const Advertisement = {
 const Cart = {
   get: () => requests.get(`Business/CartDetail`),
   addItem: (productId: number, quantity = 1) => requests.post(`Business/ProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
+  updateItem: (productId: number, quantity : number) => requests.put(`Business/ProductCart/Quantity?productId=${productId}&quantity=${quantity}`, {}),
   removeItem: (productId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productId=${productId}`)
 }
 

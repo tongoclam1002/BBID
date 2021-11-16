@@ -9,9 +9,10 @@ import CartSkeleton from "./CartSkeleton";
 export default function CartPage() {
   const { cart, status } = useAppSelector(state => state.cart);
   const groupByStoreItem = cart ? groupBy(cart?.productLists, "storeId") : [];
-  const itemCount = cart?.productLists.reduce((sum, item) => sum + item.price, 0)
+  const selectedItem = cart?.productLists.filter(product => product.isSelected === true);
+  const totalPrice = selectedItem?.reduce((sum, item) => sum + (item.price * item.quantity), 0)
 
-  if (status.includes("pending"))
+  if (status.includes("pendingFetchCart"))
     return <CartSkeleton />
 
   return (
@@ -47,9 +48,9 @@ export default function CartPage() {
       <Col lg={8} md={24}>
         <Card className="box-total">
           <h4>Thông tin đơn hàng</h4>
-          <p>Tổng tiền: <strong>{itemCount?.toLocaleString("vi-VN")}đ</strong></p>
-          {/* <Link to="/order" className="btn btn-primary green" role="button">Tiến hành đặt hàng</Link> */}
-          <Button className="btn btn-primary green text-white">Tiến hành đặt hàng</Button>
+          <p>Tổng tiền: <strong>{totalPrice?.toLocaleString("vi-VN")}đ</strong></p>
+          <Link to="/order" className="btn btn-primary green" role="button">Tiến hành đặt hàng</Link>
+          {/* <Button className="btn btn-primary green text-white">Tiến hành đặt hàng</Button> */}
         </Card>
       </Col>
     </Row>

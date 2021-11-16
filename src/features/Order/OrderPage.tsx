@@ -5,14 +5,22 @@ import api from "../../app/api/api";
 import OrderItem from "./OrderItem";
 import { Card } from "antd";
 import AddressForm from "./AddressForm";
+import { useAppSelector } from "../../app/store/configureStore";
 
 export default function OrderPage() {
   const { productId }: any = useParams();
   const [product, setProduct] = useState<Product>();
   const [isMomo, setIsMomo] = useState(false);
+  const { cart, status } = useAppSelector(state => state.cart);
+  let productList = cart?.productLists.filter(product => product.isSelected === true);
+  const totalProductPrice = productList?.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  const totalShippingFee = 50000;
+  const totalPrice = totalProductPrice + totalShippingFee
 
   useEffect(() => {
-    api.Product.details(productId).then(response => setProduct(response.data))
+    if (productId) {
+      api.Product.details(productId).then(response => setProduct(response.data))
+    }
   }, [productId]);
 
   function changeMethod() {
@@ -22,21 +30,22 @@ export default function OrderPage() {
   return (
     <div className="row">
       <div className="col-12">
-        {/* <AddressForm /> */}
         <Card className="box-order">
           <h4 className="mb-4">Đơn hàng của bạn</h4>
           <Card className="mb-4">
             <p className="form-group clearfix">
               <strong>Địa chỉ nhận hàng</strong>
-              <span className="float-right">
+              {/* <span className="float-right">
                 <a href="#">Thay đổi</a>
-              </span>
+              </span> */}
             </p>
-            <p>Lê Lý </p>
+            {/* <p>Lê Lý </p>
             <p>SĐT: +(08) 9645452454</p>
             <p>
               Địa chỉ: 12 Phạm Văn Đồng, phường 12, quận Gò Vấp, tp.Hồ Chí Minh{" "}
-            </p></Card>
+            </p> */}
+            <AddressForm />
+          </Card>
           <Card>
             <p className="form-group">
               <strong>Sản phẩm</strong>
@@ -56,7 +65,9 @@ export default function OrderPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <OrderItem item={product} />
+                  {productList?.map(product => (
+                    <OrderItem item={product} />
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -128,16 +139,16 @@ export default function OrderPage() {
         <Card className="box-order form-group">
           <p className="clearfix">
             Tổng tiền hàng
-            <span className="float-right">720,000đ</span>
+            <span className="float-right">{totalProductPrice?.toLocaleString("vi-VN")}đ</span>
           </p>
           <p className="form-group clearfix">
             Tổng tiền vận chuyển
-            <span className="float-right">50,000đ</span>
+            <span className="float-right">{totalShippingFee?.toLocaleString("vi-VN")}đ</span>
           </p>
           <p className="border-top pt-2 clearfix">
             <strong>Tổng thanh toán</strong>
             <span className="float-right">
-              <strong className="is_red">770,000đ</strong>
+              <strong className="is_red">{totalPrice?.toLocaleString("vi-VN")}đ</strong>
             </span>
           </p>
           <div className="text-center mt-5">

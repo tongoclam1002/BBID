@@ -1,9 +1,9 @@
-import { Empty, Skeleton } from "antd";
+import { Card, Empty, Skeleton } from "antd";
 import constant from "../../app/utils/constant";
 
 export default function ProductDetailSkeleton({isLoading}) {
   return (
-    <>
+    <Card>
       {isLoading ? (
         <div className="box-shop">
           <div className="row">
@@ -23,6 +23,6 @@ export default function ProductDetailSkeleton({isLoading}) {
       ) : (
         <Empty description={constant.text.EMPTY_PRODUCT} />
       )}
-    </>
+    </Card>
   );
 }

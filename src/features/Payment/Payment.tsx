@@ -8,7 +8,7 @@ import api from "../../app/api/api";
 export default function Payment(props) {
   const { productId }: any = useParams();
   const [product, setProduct] = useState<Product>();
-  const MOMO_SECRECT_KEY = process.env.MOMO_SECRECT_KEY;
+  // const MOMO_SECRECT_KEY = process.env.MOMO_SECRECT_KEY;
   function generateUUID() {
     // Public Domain/MIT
     var d = new Date().getTime(); //Timestamp
@@ -92,7 +92,7 @@ export default function Payment(props) {
         })
         .catch((err) => console.log(err));
     });
-  }, []);
+  }, [product.name, product.price, productId]);
 
   const URL = "https://test-payment.momo.vn/v2/gateway/api/create";
 

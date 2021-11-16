@@ -1,9 +1,9 @@
-import { Empty, Skeleton } from "antd";
+import { Card, Empty, Skeleton } from "antd";
 import constant from "../../app/utils/constant";
 
 export default function StoreDetailSketon({ isLoading }) {
   return (
-    <>
+    <Card>
       {isLoading ? (
         <div className="row">
           <div className="col-md-3 col-sm-4">
@@ -16,6 +16,6 @@ export default function StoreDetailSketon({ isLoading }) {
       ) : (
         <Empty description={constant.text.EMPTY_STORE} />
       )}
-    </>
+    </Card>
   );
 }

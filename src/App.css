@@ -989,6 +989,70 @@ img[usemap] {
   font-size: 20px;
 }
 
+/********* INCREASE DECREASE INPUT STYLES *****************/
+.input-number-container {
+  /* width: 150px; */
+  text-align: center;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+}
+.input-number-container .value-button {
+  border: 1px solid #ddd;
+  margin: 0px;
+  width: 36px;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  background: #fafafa;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 1.2rem;
+}
+
+.input-number-container .value-button:hover {
+  cursor: pointer;
+}
+
+.input-number-container #decrease {
+  border-radius: 8px 0 0 8px;
+}
+
+.input-number-container #increase {
+  border-radius: 0 8px 8px 0;
+}
+
+.input-number-container #input-wrap {
+  margin: 0px;
+  padding: 0px;
+}
+
+.input-number-container input#number {
+  text-align: center;
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+  width: 40px;
+  height: 100%;
+}
+
+.input-number-container input#number:focus-visible {
+  outline: none;
+}
+
+.input-number-container input[type=number]::-webkit-inner-spin-button,
+.input-number-container input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/********* END INCREASE DECREASE INPUT STYLES *****************/
+
 /* from 1200 and up*/
 @media screen and (min-width: 1200px) {
   #header .box-search input {
