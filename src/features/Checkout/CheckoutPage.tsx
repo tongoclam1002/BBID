@@ -7,6 +7,7 @@ import AddressForm from "./AddressForm";
 import { useAppSelector } from "../../app/store/configureStore";
 import constant from "../../app/utils/constant";
 import { getTotalPriceInCart } from "../../app/utils/utils";
+import { history } from "../..";
 
 export default function CheckoutPage() {
   const { productId }: any = useParams();
@@ -23,24 +24,24 @@ export default function CheckoutPage() {
 
   const onFinish = (values: any) => {
     // console.log(values.user);
-    let productIds = [];
-    selectedStores.forEach(store => {
-      store.productList.forEach(product => {
-        productIds.push(product.productId)
-      })
-    });
-    const body = {
-      addressFrom: "string",
-      addressTo: values.user.address,
-      senderName: "string",
-      receiverName: values.user.name,
-      senderNumber: "string",
-      receiverNNumber: values.user.phone,
-      orderStatusId: 0,
-      customerId: 0,
-      "productList": productIds
-    }
-    
+    // let productIds = [];
+    // selectedStores.forEach(store => {
+    //   store.productList.forEach(product => {
+    //     productIds.push(product.productId)
+    //   })
+    // });
+    // const body = {
+    //   addressFrom: "string",
+    //   addressTo: values.user.address,
+    //   senderName: "string",
+    //   receiverName: values.user.name,
+    //   senderNumber: "string",
+    //   receiverNNumber: values.user.phone,
+    //   orderStatusId: 0,
+    //   customerId: 0,
+    //   "productList": productIds
+    // }
+    history.push('/checkout/success');
   };
 
   return (
@@ -159,14 +160,21 @@ export default function CheckoutPage() {
           </p>
           <div className="text-center mt-5">
             {!isMomo && (
-              <Button
+              // <Button
+              //   className="btn btn-primary green"
+              //   form="address-form"
+              //   htmlType="submit"
+              //   role="button"
+              // >
+              //   Xác nhận đặt hàng
+              // </Button>
+              <Link
                 className="btn btn-primary green"
-                form="address-form"
-                htmlType="submit"
+                to={`/checkout/success`}
                 role="button"
               >
                 Xác nhận đặt hàng
-              </Button>
+              </Link>
             )}
             {isMomo && (
               <Link

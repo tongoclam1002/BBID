@@ -8,9 +8,9 @@ export default function ProductDetail({ product }) {
   const dispatch = useAppDispatch();
 
   function handlePurchaseItem(productId: number) {
-    debugger;
+    // debugger;
     dispatch(addCartItemAsync({ productId: product.productId }));
-    history.push(`/order/${productId}`)
+    history.push(`/cart`)
   }
 
   return (
