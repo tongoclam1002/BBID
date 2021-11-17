@@ -88,9 +88,11 @@ export default function Payment(props) {
       })
         .then((response) => {
           window.location.assign(response.data.payUrl);
-          console.log(response.data.payUrl);
+          // console.log(response.data.payUrl);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {}
+        // console.log(err)
+        );
     });
   }, [product.name, product.price, productId]);
 

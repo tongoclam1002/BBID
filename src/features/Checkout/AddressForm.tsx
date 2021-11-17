@@ -1,8 +1,8 @@
-import { Form, Input, InputNumber, Button } from 'antd';
+import { Form, Input } from 'antd';
 
 
 
-export default function AddressForm() {
+export default function AddressForm({onFinish}) {
     const layout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 24 },
@@ -20,26 +20,18 @@ export default function AddressForm() {
         },
     };
     /* eslint-enable no-template-curly-in-string */
-    const onFinish = (values: any) => {
-        console.log(values);
-    };
 
     return (
-        <Form {...layout} layout="vertical" name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+        <Form id="address-form" {...layout} layout="vertical" name="nest-messages" onFinish={(values) => onFinish(values)} validateMessages={validateMessages}>
             <Form.Item name={['user', 'name']} label="Họ và tên người nhận" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-            <Form.Item name={['user', 'age']} label="Số điện thoại" rules={[{ type: 'number', required: true }]}>
+            <Form.Item name={['user', 'phone']} label="Số điện thoại" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-            <Form.Item name={['user', 'email']} label="Địa chỉ" rules={[{ type: 'email', required: true }]}>
+            <Form.Item name={['user', 'address']} label="Địa chỉ" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-            {/* <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                <Button type="primary" htmlType="submit">
-                    Xác nhận
-                </Button>
-            </Form.Item> */}
         </Form>
     );
 };

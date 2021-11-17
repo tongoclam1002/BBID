@@ -989,6 +989,19 @@ img[usemap] {
   font-size: 20px;
 }
 
+.ant-message {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#checkout-info {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 /********* INCREASE DECREASE INPUT STYLES *****************/
 .input-number-container {
   /* width: 150px; */

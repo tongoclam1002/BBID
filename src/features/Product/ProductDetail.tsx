@@ -43,7 +43,7 @@ export default function ProductDetail({ product }) {
                       </span>
                     </span>
                     <span className="float-right box-link360">
-                      <a className="link360" href="http://malldemo.bbid.vn/" role="button" target="_blank" rel="noreferrer">
+                      <a className="link360" href={process.env.REACT_APP_VIRTUAL_MALL_URL} role="button" target="_blank" rel="noreferrer">
                         360<sup>o</sup>
                       </a>
                     </span>

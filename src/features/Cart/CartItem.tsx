@@ -34,7 +34,8 @@ export default function CartItem({ item }) {
                     value={item.quantity}
                     increaseValue={() => updateCartItemQuantity(item?.productId, item.quantity + 1, "increase")}
                     decreaseValue={() => updateCartItemQuantity(item?.productId, item.quantity - 1, "decrease")} /></td>
-            <td><strong>{item.price?.toLocaleString("vi-VN")}đ</strong></td>
+            <td><strong>{(item.price)?.toLocaleString("vi-VN")}đ</strong></td>
+            <td><strong>{(item.price * item.quantity)?.toLocaleString("vi-VN")}đ</strong></td>
             <td><Button icon={<Text type="danger">Xóa</Text>} loading={status === "pendingRemoveItem" + item.productId} onClick={() => dispatch(removeCartItemAsync({ productId: item?.productId, quantity: item.quantity }))} style={{ padding: '4px 15px', width: 'auto' }} danger></Button></td>
         </tr>
     )

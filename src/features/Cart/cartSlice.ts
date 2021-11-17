@@ -1,36 +1,59 @@
-import { Cart, CartItem } from "../../app/interfaces/cart.interface";
+import { Cart, CartItem, CartStore } from "../../app/interfaces/cart.interface";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../app/api/api";
 import toast from "../../app/utils/toast";
 import constant from "../../app/utils/constant";
+import { groupBy } from "../../app/utils/utils";
+import { productSlice } from "../Product/productSlice";
 
 interface CartState {
     cart: Cart;
     status: string;
+    selectedStores: CartStore[];
 }
 
 const initialState: CartState = {
     cart: null,
-    status: 'idle'
+    status: 'idle',
+    selectedStores: []
 }
 
-export const fetchCartAsync = createAsyncThunk<Cart>(
+function filterSelected(cart) {
+    const selectedStores = cart?.storeList.filter((store) => {
+        let products = store.productList.filter(product => product.isSelected == true)
+        if (products.length == 0) {
+            return false
+        }
+        return store;
+    }).map(store => {
+        return {
+            ...store,
+            productList: store.productList.filter(product => product.isSelected == true)
+        }
+    });
+    return selectedStores
+}
+
+export const fetchCartAsync = createAsyncThunk<any>(
     'store/fetchCartAsync',
     async (_, thunkAPI) => {
         try {
-            return await api.Cart.get().then(response => response.data);
+            return await api.Cart.get().then(response => { return response.data });
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
         }
     }
 )
 
-export const addCartItemAsync = createAsyncThunk<Cart, { productId: number, quantity?: number }>(
+export const addCartItemAsync = createAsyncThunk<any, { productId: number, quantity?: number }>(
     'cart/addCartItemAsync',
     async ({ productId, quantity }, thunkAPI) => {
         try {
             return await api.Cart.addItem(productId, quantity).then(async () => {
-                return api.Cart.get().then(cart => { toast.success(constant.text.ADD_CART_ITEM_SUCCESS_MESSAGE); return cart.data });
+                return api.Cart.get().then(cart => {
+                    toast.success(constant.text.ADD_CART_ITEM_SUCCESS_MESSAGE, 0.5);
+                    return cart.data
+                });
             })
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
@@ -42,9 +65,7 @@ export const updateCartItemAsync = createAsyncThunk<Cart, { productId: number, q
     'cart/updateCartItemAsync',
     async ({ productId, quantity }, thunkAPI) => {
         try {
-            return await api.Cart.updateItem(productId, quantity).then(async () => {
-                return api.Cart.get().then(cart => { return cart.data });
-            })
+            return await api.Cart.updateItem(productId, quantity)
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
         }
@@ -67,16 +88,41 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         setCart: (state, action) => {
-            state.cart = action.payload
+            state.cart = {
+                ...state.cart,
+                cartId: action.payload.cartId,
+                storeList: groupBy(action.payload.productLists, "storeId", "productList")
+            }
         },
         selectItem: (state, action) => {
-            const itemIndex = state.cart?.productLists.findIndex(i => i.productId === action.payload);
-            if (itemIndex === -1 || itemIndex === undefined) return;
-            state.cart!.productLists[itemIndex] =
-            {
-                ...state.cart!.productLists[itemIndex],
-                isSelected: !state.cart!.productLists[itemIndex].isSelected
-            }
+            state.cart.storeList.forEach(store => {
+                const itemIndex = store.productList.findIndex(i => i.productId === action.payload);
+                if (itemIndex === -1 || itemIndex === undefined) return;
+                store.productList[itemIndex] =
+                {
+                    ...store.productList[itemIndex],
+                    isSelected: !store.productList[itemIndex].isSelected
+                }
+            })
+            state.selectedStores = filterSelected(state.cart);
+        },
+        selelctAllItemInStore: (state, action) => {
+            state.cart!.storeList = state.cart?.storeList.map(store => {
+                if (store.storeId == action.payload) {
+                    store.productList = store.productList.map(product => {
+                        return {
+                            ...product,
+                            isSelected: !store.isSelected
+                        }
+                    })
+                    return {
+                        ...store,
+                        isSelected: !store.isSelected
+                    }
+                }
+                return store
+            })
+            state.selectedStores = filterSelected(state.cart);
         }
     },
     extraReducers: (builder => {
@@ -84,11 +130,11 @@ export const cartSlice = createSlice({
             state.status = "pendingFetchCart";
         });
         builder.addCase(fetchCartAsync.fulfilled, (state, action) => {
-            let cart: CartItem = <CartItem>(action.payload.productLists[0]);
-            console.log(cart);
-            state.cart = action.payload;
-
-
+            state.cart = {
+                ...state.cart,
+                cartId: action.payload.cartId,
+                storeList: groupBy(action.payload.productLists, "storeId", "productList")
+            }
             state.status = "idle";
         });
         builder.addCase(fetchCartAsync.rejected, (state) => {
@@ -98,7 +144,11 @@ export const cartSlice = createSlice({
             state.status = "pendingAddItem" + action.meta.arg.productId;
         });
         builder.addCase(addCartItemAsync.fulfilled, (state, action) => {
-            state.cart = action.payload;
+            state.cart = {
+                ...state.cart,
+                cartId: action.payload.cartId,
+                storeList: groupBy(action.payload.productLists, "storeId", "productList")
+            }
             state.status = "idle";
         });
         builder.addCase(addCartItemAsync.rejected, (state) => {
@@ -109,13 +159,13 @@ export const cartSlice = createSlice({
             state.status = "pendingRemoveItem" + action.meta.arg.productId;
         });
         builder.addCase(removeCartItemAsync.fulfilled, (state, action) => {
-            const { productId, quantity } = action.meta.arg;
-            const itemIndex = state.cart?.productLists.findIndex(i => i.productId === productId);
-            if (itemIndex === -1 || itemIndex === undefined) return;
-            state.cart!.productLists[itemIndex].quantity -= quantity;
-            if (state.cart?.productLists[itemIndex].quantity === 0)
-                state.cart.productLists.splice(itemIndex, 1);
-            state.status = "idle";
+            state.cart.storeList.forEach((store, index) => {
+                const { productId } = action.meta.arg;
+                const itemIndex = store.productList.findIndex(i => i.productId === productId);
+                if (itemIndex === -1 || itemIndex === undefined) return;
+                store.productList.splice(itemIndex, 1);
+                if (store.productList.length == 0) state.cart.storeList.splice(index, 1);
+            })
         });
         builder.addCase(removeCartItemAsync.rejected, (state) => {
             state.status = "idle";
@@ -125,7 +175,12 @@ export const cartSlice = createSlice({
             state.status = "pendingUpdateItem" + action.meta.arg.productId + action.meta.arg.name;
         });
         builder.addCase(updateCartItemAsync.fulfilled, (state, action) => {
-            state.cart = action.payload;
+            const { productId, quantity } = action.meta.arg;
+            state.cart.storeList.forEach(store => {
+                const itemIndex = store.productList.findIndex(i => i.productId === productId);
+                if (itemIndex === -1 || itemIndex === undefined) return;
+                store.productList[itemIndex].quantity = quantity;
+            })
             state.status = "idle";
         });
         builder.addCase(updateCartItemAsync.rejected, (state) => {
@@ -134,4 +189,4 @@ export const cartSlice = createSlice({
     })
 })
 
-export const { setCart, selectItem } = cartSlice.actions;
+export const { setCart, selectItem, selelctAllItemInStore } = cartSlice.actions;

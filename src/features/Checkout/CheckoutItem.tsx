@@ -1,7 +1,7 @@
 import Text from "antd/lib/typography/Text";
 import { Link } from "react-router-dom";
 
-export default function OrderItem({ item }) {
+export default function CheckoutItem({ item }) {
 
     return (
         <>

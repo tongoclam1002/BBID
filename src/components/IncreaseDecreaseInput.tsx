@@ -6,7 +6,6 @@ export default function IncreaseDecreaseInput({ value, increaseValue, decreaseVa
     const [inputValue, setInputValue] = useState(0);
 
     function onChange(e) {
-        console.log(e);
         let value = e.target.value
         setInputValue(prevState => isNaN(value) ? prevState : e.target.value)
     }

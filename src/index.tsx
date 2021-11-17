@@ -7,6 +7,7 @@ import { createBrowserHistory } from "history";
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store/configureStore';
+import ScrollToTop from './components/ScrollToTop';
 
 export const history = createBrowserHistory();
 
@@ -15,6 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
       <Provider store={store}>
+        <ScrollToTop />
         <App />
       </Provider>
     </Router>

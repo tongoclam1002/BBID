@@ -5,7 +5,7 @@ import ProductItem from "../Product/ProductItem";
 import StoreDetailSketon from "./StoreDetailSkeleon";
 import StoreDetail from "./StoreDetail";
 import Section from "../../components/Section";
-import { Empty } from "antd";
+import { Button, Empty } from "antd";
 import constant from "../../app/utils/constant";
 import StoreProducts from "./StoreProducts";
 import ItemListSkeleton from "../../components/ItemList/ItemListSkeleton";
@@ -46,10 +46,10 @@ export default function StorePage() {
                 <div className="box-tab">
                   <ul className="nav nav-tabs">
                     <li >
-                      <a href="#tab-shop" className={!isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(false)}>Cửa hàng</a>
+                      <Button className={!isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(false)}>Cửa hàng</Button>
                     </li>
                     <li>
-                      <a href="#tab-product" className={isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(true)}>Sản phẩm</a>
+                      <Button className={isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(true)}>Sản phẩm</Button>
                     </li>
                   </ul>
                 </div>

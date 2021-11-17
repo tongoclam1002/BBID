@@ -28,7 +28,7 @@ export default function StoreDetail({ store }) {
               <span className="float-right box-link360">
                 <a
                   className="link360"
-                  href="http://malldemo.bbid.vn/"
+                  href={process.env.REACT_APP_VIRTUAL_MALL_URL}
                   role="button"
                 >
                   360<sup>o</sup>

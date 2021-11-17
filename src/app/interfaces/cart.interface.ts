@@ -9,7 +9,14 @@ export interface CartItem {
     isSelected: boolean;
 }
 
+export interface CartStore {
+    storeId: number;
+    name: string;
+    productList: CartItem[];
+    isSelected: boolean;
+}
+
 export interface Cart {
     cartId: number;
-    productLists: CartItem[];
+    storeList: CartStore[];
 }

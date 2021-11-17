@@ -63,6 +63,11 @@ const Cart = {
   removeItem: (productId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productId=${productId}`)
 }
 
+const Order = {
+  list: () => requests.get(`Business/Order`),
+  createOrder: (body: any) => requests.post(`Business/CartDetail`, body)
+}
+
 const api = {
   Store,
   Product,

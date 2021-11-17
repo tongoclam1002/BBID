@@ -5,7 +5,8 @@ const text = {
     EMPTY_PRODUCT: "Không tìm thấy sản phẩm",
     EMPTY_PRODUCT_LIST: "Hiện tại chưa có sản phẩm nào",
     EMPTY_PRODUCT_IN_CART: "Chưa có sản phẩm nào trong Giỏ hàng của bạn",
-    EMPTY_DESCRIPTION: "Chưa có mô tả"
+    EMPTY_DESCRIPTION: "Chưa có mô tả",
+    EMPTY_CART_ITEM_SELECTED: "Bạn vui lòng chọn sản phẩm để tiến hành đặt hàng"
 }
 
 const constant = {

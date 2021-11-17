@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Product } from "../../app/interfaces/product.interface";
 import api from "../../app/api/api";
-import OrderItem from "./OrderItem";
+import CheckoutItem from "./CheckoutItem";
 import { Card } from "antd";
 import AddressForm from "./AddressForm";
 import { useAppSelector } from "../../app/store/configureStore";
 
-export default function OrderPage() {
+export default function CheckoutPage() {
   const { productId }: any = useParams();
   const [product, setProduct] = useState<Product>();
   const [isMomo, setIsMomo] = useState(false);
   const { cart, status } = useAppSelector(state => state.cart);
-  let productList = cart?.productLists.filter(product => product.isSelected === true);
-  const totalProductPrice = productList?.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+//   let productList = cart?.productLists.filter(product => product.isSelected === true);
+//   const totalProductPrice = productList?.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   const totalShippingFee = 50000;
-  const totalPrice = totalProductPrice + totalShippingFee
+//   const totalPrice = totalProductPrice ? totalProductPrice : 0 + totalShippingFee 
 
   useEffect(() => {
     if (productId) {
@@ -35,16 +35,8 @@ export default function OrderPage() {
           <Card className="mb-4">
             <p className="form-group clearfix">
               <strong>Địa chỉ nhận hàng</strong>
-              {/* <span className="float-right">
-                <a href="#">Thay đổi</a>
-              </span> */}
             </p>
-            {/* <p>Lê Lý </p>
-            <p>SĐT: +(08) 9645452454</p>
-            <p>
-              Địa chỉ: 12 Phạm Văn Đồng, phường 12, quận Gò Vấp, tp.Hồ Chí Minh{" "}
-            </p> */}
-            <AddressForm />
+            {/* <AddressForm /> */}
           </Card>
           <Card>
             <p className="form-group">
@@ -65,9 +57,9 @@ export default function OrderPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {productList?.map(product => (
-                    <OrderItem item={product} />
-                  ))}
+                  {/* {productList?.map(product => (
+                    <CheckoutItem item={product} />
+                  ))} */}
                 </tbody>
               </table>
             </div>
@@ -139,7 +131,7 @@ export default function OrderPage() {
         <Card className="box-order form-group">
           <p className="clearfix">
             Tổng tiền hàng
-            <span className="float-right">{totalProductPrice?.toLocaleString("vi-VN")}đ</span>
+            {/* <span className="float-right">{totalProductPrice?.toLocaleString("vi-VN")}đ</span> */}
           </p>
           <p className="form-group clearfix">
             Tổng tiền vận chuyển
@@ -148,14 +140,14 @@ export default function OrderPage() {
           <p className="border-top pt-2 clearfix">
             <strong>Tổng thanh toán</strong>
             <span className="float-right">
-              <strong className="is_red">{totalPrice?.toLocaleString("vi-VN")}đ</strong>
+              {/* <strong className="is_red">{totalPrice?.toLocaleString("vi-VN")}đ</strong> */}
             </span>
           </p>
           <div className="text-center mt-5">
             {!isMomo && (
               <Link
                 className="btn btn-primary green"
-                to="success"
+                to="/checkout/success"
                 role="button"
               >
                 Xác nhận đặt hàng
