@@ -4,17 +4,19 @@ import api from "../../app/api/api";
 import CheckoutItem from "./CheckoutItem";
 import { Button, Card, Empty } from "antd";
 import AddressForm from "./AddressForm";
-import { useAppSelector } from "../../app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import constant from "../../app/utils/constant";
-import { getTotalPriceInCart } from "../../app/utils/utils";
+// import { getTotalPriceInCart } from "../../app/utils/utils";
 import { history } from "../..";
+import { fetchCartAsync } from "../Cart/cartSlice";
+import toast from "../../app/utils/toast";
 
 export default function CheckoutPage() {
   const { productId }: any = useParams();
   const [isMomo, setIsMomo] = useState(false);
-  const { selectedStores } = useAppSelector(state => state.cart);
-
-  const totalProductPrice = getTotalPriceInCart(selectedStores);
+  const { selectedCart, totalPrice: totalProductPrice} = useAppSelector(state => state.cart);
+  const dispatch = useAppDispatch();
+  // const totalProductPrice = getTotalPriceInCart(selectedCart);
   const totalShippingFee = 50000;
   const totalPrice = totalProductPrice ? totalProductPrice : 0 + totalShippingFee
 
@@ -23,26 +25,32 @@ export default function CheckoutPage() {
   }
 
   const onFinish = (values: any) => {
-    // console.log(values.user);
-    // let productIds = [];
-    // selectedStores.forEach(store => {
-    //   store.productList.forEach(product => {
-    //     productIds.push(product.productId)
-    //   })
-    // });
-    // const body = {
-    //   addressFrom: "string",
-    //   addressTo: values.user.address,
-    //   senderName: "string",
-    //   receiverName: values.user.name,
-    //   senderNumber: "string",
-    //   receiverNNumber: values.user.phone,
-    //   orderStatusId: 0,
-    //   customerId: 0,
-    //   "productList": productIds
-    // }
-    history.push('/checkout/success');
+    console.log(values.user);
+    let productIds = [];
+    selectedCart.forEach(store => {
+      store.productList.forEach(product => {
+        productIds.push(product.productId)
+      })
+    });
+    const body = {
+      addressTo: values.user.address,
+      receiverName: values.user.name,
+      receiverNNumber: values.user.phone,
+      productList: productIds
+    }
+    api.Order.createOrder(body)
+      .then(() => {
+        history.push('/checkout/success');
+        dispatch(fetchCartAsync());
+      })
+      .catch((error) => {
+        console.log("Create order error: " + error)
+      })
   };
+
+  const onFinishFailed = () => {
+    toast.warning(constant.text.EMPTY_CHECKOUT_INFO, 0.5)
+  }
 
   return (
     <div className="row">
@@ -53,9 +61,9 @@ export default function CheckoutPage() {
             <p className="form-group clearfix">
               <strong>Địa chỉ nhận hàng</strong>
             </p>
-            <AddressForm onFinish={onFinish} />
+            <AddressForm onFinish={onFinish} onFinishFailed={onFinishFailed}/>
           </Card>
-          {selectedStores.length > 0 ? selectedStores.map((store, key) => (
+          {selectedCart.length > 0 ? selectedCart.map((store, key) => (
             <Card key={key} className="mb-4">
               <p className="box-cart-shop clearfix">
                 {store.storeId}
@@ -78,7 +86,7 @@ export default function CheckoutPage() {
                 </table>
               </div>
 
-            </Card>)) : <Card className="mb-4"><Empty description={constant.text.EMPTY_PRODUCT_IN_CART} /></Card>}
+            </Card>)) : <Card className="mb-4"><Empty description={constant.text.EMPTY_SELECTED_PRODUCT_IN_CART} /></Card>}
           <p>Lời nhắc: </p>
           <p className="form-group">
             <textarea className="form-control form-control-sm"></textarea>
@@ -160,21 +168,22 @@ export default function CheckoutPage() {
           </p>
           <div className="text-center mt-5">
             {!isMomo && (
-              // <Button
-              //   className="btn btn-primary green"
-              //   form="address-form"
-              //   htmlType="submit"
-              //   role="button"
-              // >
-              //   Xác nhận đặt hàng
-              // </Button>
-              <Link
-                className="btn btn-primary green"
-                to={`/checkout/success`}
+              <Button
+                className="btn btn-primary green text-white text-uppercase font-weight-bold"
+                size="large"
+                form="address-form"
+                htmlType="submit"
                 role="button"
               >
                 Xác nhận đặt hàng
-              </Link>
+              </Button>
+              // <Link
+              //   className="btn btn-primary green"
+              //   to={`/checkout/success`}
+              //   role="button"
+              // >
+              //   Xác nhận đặt hàng
+              // </Link>
             )}
             {isMomo && (
               <Link

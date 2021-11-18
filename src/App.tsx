@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Layout from "./app/layout/Layout";
@@ -6,16 +6,17 @@ import routes from "./route-config";
 import BreadCrumbs from "./app/layout/BreadCrumbs";
 import Video from "./features/VirtualMall/PanelPage";
 import NotFound from "./app/errors/NotFound";
-import { useAppDispatch } from './app/store/configureStore';
-import { useEffect } from 'react';
-import { fetchCartAsync } from './features/Cart/cartSlice';
+import { useAppDispatch } from "./app/store/configureStore";
+import { useEffect } from "react";
+import { fetchCartAsync } from "./features/Cart/cartSlice";
+import ProfileLayout from "./app/layout/ProfileLayout";
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchCartAsync())
-  }, [dispatch])
+    dispatch(fetchCartAsync());
+  }, [dispatch]);
 
   return (
     <Switch>
@@ -30,10 +31,10 @@ function App() {
               .map(({ path, ...rest }) => ({
                 path: Object.keys(props.match.params).length
                   ? Object.keys(props.match.params).reduce(
-                    (path, param) =>
-                      path.replace(`:${param}`, props.match.params[param]),
-                    path
-                  )
+                      (path, param) =>
+                        path.replace(`:${param}`, props.match.params[param]),
+                      path
+                    )
                   : path,
                 ...rest,
               }));
@@ -43,15 +44,27 @@ function App() {
               <div key={route.path}>
                 <Layout>
                   <BreadCrumbs key={route.path} crumbs={crumbs} />
-                  <route.Component {...props} />
+                  {route.isProfile ? (
+                    <ProfileLayout>
+                      <route.Component {...props} />
+                    </ProfileLayout>
+                  ) : (
+                    <route.Component {...props} />
+                  )}
                 </Layout>
               </div>
             );
           }}
         </Route>
       ))}
-      <Route path="/video/:code" exact={true}><Video /></Route>
-      <Route><Layout><NotFound /></Layout></Route>
+      <Route path="/video/:code" exact={true}>
+        <Video />
+      </Route>
+      <Route>
+        <Layout>
+          <NotFound />
+        </Layout>
+      </Route>
     </Switch>
   );
 }

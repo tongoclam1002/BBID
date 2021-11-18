@@ -1,4 +1,4 @@
-import { Button, InputNumber } from "antd";
+import { Button } from "antd";
 import Text from "antd/lib/typography/Text";
 import { useEffect, useState } from "react";
 

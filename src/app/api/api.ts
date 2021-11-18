@@ -65,14 +65,15 @@ const Cart = {
 
 const Order = {
   list: () => requests.get(`Business/Order`),
-  createOrder: (body: any) => requests.post(`Business/CartDetail`, body)
+  createOrder: (body: any) => requests.post(`Business/Order`, body)
 }
 
 const api = {
   Store,
   Product,
   Advertisement,
-  Cart
+  Cart,
+  Order
 }
 
 export default api;

@@ -5,7 +5,7 @@ import ProductItem from "../Product/ProductItem";
 import StoreDetailSketon from "./StoreDetailSkeleon";
 import StoreDetail from "./StoreDetail";
 import Section from "../../components/Section";
-import { Button, Empty } from "antd";
+import { Button, Col, Empty } from "antd";
 import constant from "../../app/utils/constant";
 import StoreProducts from "./StoreProducts";
 import ItemListSkeleton from "../../components/ItemList/ItemListSkeleton";
@@ -15,23 +15,29 @@ import { fetchStoreAsync, storeSelectors } from "./storeSlice";
 
 export default function StorePage() {
   const { storeId } = useParams<{ storeId: string }>();
-  const products = useAppSelector(productSelectors.selectAll).filter(product => product.storeId === parseInt(storeId));
+  const products = useAppSelector(productSelectors.selectAll).filter(
+    (product) => product.storeId === parseInt(storeId)
+  );
   const dispatch = useAppDispatch();
-  const { productsLoaded, status } = useAppSelector(state => state.product);
-
+  const { productsLoaded, status } = useAppSelector((state) => state.product);
 
   const [isViewProduct, setIsViewProduct] = useState(false);
-  const store = useAppSelector(state => storeSelectors.selectById(state, storeId))
-  const { status: statusFetchStore } = useAppSelector(state => state.store);
+  const store = useAppSelector((state) =>
+    storeSelectors.selectById(state, storeId)
+  );
+  const { status: statusFetchStore } = useAppSelector((state) => state.store);
 
   useEffect(() => {
     if (Number.isInteger(parseInt(storeId))) {
-      if (!store) dispatch(fetchStoreAsync(parseInt(storeId))).then(() => {
-        if (products.length === 0) dispatch(fetchProductsAsync({ storeId: parseInt(storeId) }))
-      })
+      if (!store)
+        dispatch(fetchStoreAsync(parseInt(storeId))).then(() => {
+          if (products.length === 0)
+            dispatch(fetchProductsAsync({ storeId: parseInt(storeId) }));
+        });
     }
     if (Number.isInteger(parseInt(storeId))) {
-      if (products.length === 0) dispatch(fetchProductsAsync({ storeId: parseInt(storeId) }))
+      if (products.length === 0)
+        dispatch(fetchProductsAsync({ storeId: parseInt(storeId) }));
     }
   }, [productsLoaded, dispatch, products.length, store, storeId]);
 
@@ -45,37 +51,64 @@ export default function StorePage() {
               <div className="col-12">
                 <div className="box-tab">
                   <ul className="nav nav-tabs">
-                    <li >
-                      <Button className={!isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(false)}>Cửa hàng</Button>
+                    <li>
+                      <Button
+                        className={!isViewProduct ? "active" : ""}
+                        onClick={() => setIsViewProduct(false)}
+                      >
+                        Cửa hàng
+                      </Button>
                     </li>
                     <li>
-                      <Button className={isViewProduct ? "active" : ""} onClick={() => setIsViewProduct(true)}>Sản phẩm</Button>
+                      <Button
+                        className={isViewProduct ? "active" : ""}
+                        onClick={() => setIsViewProduct(true)}
+                      >
+                        Sản phẩm
+                      </Button>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-          {!isViewProduct ?
+          {!isViewProduct ? (
             <Section title="Sản phẩm nổi bật">
               {products && !status.includes("pending") ? (
-                <ItemList title="Khu mua sắm" isLoading={status.includes("pending")}>
+                <ItemList
+                  lg={6}
+                  md={12}
+                  sm={24}
+                  height={200}
+                  title="Khu mua sắm"
+                  isLoading={status.includes("pending")}
+                >
                   {products.map((product) => (
-                    <ProductItem
-                      key={product.productId}
-                      productId={product.productId}
-                      name={product.name}
-                      price={product.price}
-                      image={product.image}
-                      description={product.description}
-                      storeId={parseInt(storeId)}
-                    />
+                    <Col lg={6} md={12} sm={24} key={product.productId}>
+                      <ProductItem
+                        key={product.productId}
+                        productId={product.productId}
+                        name={product.name}
+                        price={product.price}
+                        image={product.image}
+                        description={product.description}
+                        storeId={parseInt(storeId)}
+                      />
+                    </Col>
                   ))}
                 </ItemList>
               ) : !status.includes("pending") ? (
                 <Empty description={constant.text.EMPTY_PRODUCT_LIST} />
-              ) : <ItemListSkeleton />}
-            </Section> : <StoreProducts products={products} isLoading={status.includes("pending")} />}
+              ) : (
+                <ItemListSkeleton lg={6} md={12} sm={24} height={200}/>
+              )}
+            </Section>
+          ) : (
+            <StoreProducts
+              products={products}
+              isLoading={status.includes("pending")}
+            />
+          )}
         </>
       ) : (
         <StoreDetailSketon isLoading={statusFetchStore.includes("pending")} />

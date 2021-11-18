@@ -1,6 +1,6 @@
 import { message } from "antd";
 
-const success = (title: string, sec = 2) => {
+const success = (title: string, sec = 0.5) => {
     message.success({
         content: title,
         className: "fixed-center",
@@ -8,15 +8,14 @@ const success = (title: string, sec = 2) => {
     });
 };
 
-const warning = (title: string, sec = 2) => {
+const warning = (title: string, sec = 0.5) => {
     message.warning({
         content: title,
-        className: "fixed-center",
         duration: sec
     });
 };
 
-const error = (title, sec = 2) => {
+const error = (title, sec = 0.5) => {
     message.error(title, sec);
 };
 

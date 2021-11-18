@@ -1,5 +1,3 @@
-import { CartStore } from "../interfaces/cart.interface";
-
 export const groupBy = (items, key, subKey) => {
     let array = items.map(item => item[key])
         .filter((value, index, self) => self.indexOf(value) === index)
@@ -14,9 +12,6 @@ export const groupBy = (items, key, subKey) => {
     return group;
 };
 
-export function getTotalPriceInCart (stores: CartStore[]) {
-    return stores.reduce((sum, store) =>
-    sum + store.productList.reduce((sum, product) =>
-      sum + (product.quantity * product.price), 0)
-    , 0)
+export function getPrice (price, discountPrice) {
+    return discountPrice < price && discountPrice > 0 ? discountPrice : price
 }

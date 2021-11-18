@@ -1,37 +1,22 @@
-import { Cart, CartItem, CartStore } from "../../app/interfaces/cart.interface";
+import { Cart, CartStore } from "../../app/interfaces/cart.interface";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../app/api/api";
 import toast from "../../app/utils/toast";
 import constant from "../../app/utils/constant";
-import { groupBy } from "../../app/utils/utils";
-import { productSlice } from "../Product/productSlice";
+import { getPrice, groupBy } from "../../app/utils/utils";
 
 interface CartState {
     cart: Cart;
     status: string;
-    selectedStores: CartStore[];
+    selectedCart: CartStore[];
+    totalPrice: number;
 }
 
 const initialState: CartState = {
     cart: null,
     status: 'idle',
-    selectedStores: []
-}
-
-function filterSelected(cart) {
-    const selectedStores = cart?.storeList.filter((store) => {
-        let products = store.productList.filter(product => product.isSelected == true)
-        if (products.length == 0) {
-            return false
-        }
-        return store;
-    }).map(store => {
-        return {
-            ...store,
-            productList: store.productList.filter(product => product.isSelected == true)
-        }
-    });
-    return selectedStores
+    selectedCart: [],
+    totalPrice: 0
 }
 
 export const fetchCartAsync = createAsyncThunk<any>(
@@ -74,7 +59,7 @@ export const updateCartItemAsync = createAsyncThunk<Cart, { productId: number, q
 
 export const removeCartItemAsync = createAsyncThunk<void, { productId: number, quantity?: number }>(
     'cart/removeCartItemAsync',
-    async ({ productId, quantity = 1 }, thunkAPI) => {
+    async ({ productId }, thunkAPI) => {
         try {
             await api.Cart.removeItem(productId);
         } catch (error) {
@@ -83,16 +68,45 @@ export const removeCartItemAsync = createAsyncThunk<void, { productId: number, q
     }
 )
 
+function getTotalPriceInCart (stores: CartStore[]) {
+    return stores.reduce((sum, store) =>
+    sum + store.productList.reduce((sum, product) =>
+      sum + (product.quantity * getPrice(product.price, product.discountPrice)), 0)
+    , 0)
+}
+
+function filterSelected(state) {
+    state.selectedCart = state.cart?.storeList.filter((store) => {
+        let products = store.productList.filter(product => product.isSelected === true)
+        if (products.length === 0) {
+            return false
+        }
+        return store;
+    }).map(store => {
+        return {
+            ...store,
+            productList: store.productList.filter(product => product.isSelected === true)
+        }
+    });
+    console.log(state.selectedCart);
+    state.totalPrice = getTotalPriceInCart(state.selectedCart)
+}
+
+function setCartState(state, action) {
+    state.cart = {
+        ...state.cart,
+        cartId: action.payload.cartId,
+        storeList: groupBy(action.payload.productLists, "storeId", "productList")
+    }
+    filterSelected(state);
+}
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
         setCart: (state, action) => {
-            state.cart = {
-                ...state.cart,
-                cartId: action.payload.cartId,
-                storeList: groupBy(action.payload.productLists, "storeId", "productList")
-            }
+            setCartState(state, action);
         },
         selectItem: (state, action) => {
             state.cart.storeList.forEach(store => {
@@ -104,11 +118,11 @@ export const cartSlice = createSlice({
                     isSelected: !store.productList[itemIndex].isSelected
                 }
             })
-            state.selectedStores = filterSelected(state.cart);
+            filterSelected(state);
         },
         selelctAllItemInStore: (state, action) => {
             state.cart!.storeList = state.cart?.storeList.map(store => {
-                if (store.storeId == action.payload) {
+                if (store.storeId === action.payload) {
                     store.productList = store.productList.map(product => {
                         return {
                             ...product,
@@ -122,39 +136,35 @@ export const cartSlice = createSlice({
                 }
                 return store
             })
-            state.selectedStores = filterSelected(state.cart);
+            filterSelected(state);
         }
     },
     extraReducers: (builder => {
+        //fetchCartAsync
         builder.addCase(fetchCartAsync.pending, (state) => {
             state.status = "pendingFetchCart";
         });
         builder.addCase(fetchCartAsync.fulfilled, (state, action) => {
-            state.cart = {
-                ...state.cart,
-                cartId: action.payload.cartId,
-                storeList: groupBy(action.payload.productLists, "storeId", "productList")
-            }
+            setCartState(state, action);
             state.status = "idle";
         });
         builder.addCase(fetchCartAsync.rejected, (state) => {
             state.status = "idle";
         });
+
+        //addCartItemAsync
         builder.addCase(addCartItemAsync.pending, (state, action) => {
             state.status = "pendingAddItem" + action.meta.arg.productId;
         });
         builder.addCase(addCartItemAsync.fulfilled, (state, action) => {
-            state.cart = {
-                ...state.cart,
-                cartId: action.payload.cartId,
-                storeList: groupBy(action.payload.productLists, "storeId", "productList")
-            }
+            setCartState(state, action);
             state.status = "idle";
         });
         builder.addCase(addCartItemAsync.rejected, (state) => {
             state.status = "idle";
         });
 
+        //removeCartItemAsync
         builder.addCase(removeCartItemAsync.pending, (state, action) => {
             state.status = "pendingRemoveItem" + action.meta.arg.productId;
         });
@@ -164,13 +174,16 @@ export const cartSlice = createSlice({
                 const itemIndex = store.productList.findIndex(i => i.productId === productId);
                 if (itemIndex === -1 || itemIndex === undefined) return;
                 store.productList.splice(itemIndex, 1);
-                if (store.productList.length == 0) state.cart.storeList.splice(index, 1);
-            })
+                if (store.productList.length === 0) state.cart.storeList.splice(index, 1);
+            });
+            filterSelected(state);
+            state.status = "idle";
         });
         builder.addCase(removeCartItemAsync.rejected, (state) => {
             state.status = "idle";
         });
 
+        //updateCartItemAsync
         builder.addCase(updateCartItemAsync.pending, (state, action) => {
             state.status = "pendingUpdateItem" + action.meta.arg.productId + action.meta.arg.name;
         });
@@ -180,7 +193,8 @@ export const cartSlice = createSlice({
                 const itemIndex = store.productList.findIndex(i => i.productId === productId);
                 if (itemIndex === -1 || itemIndex === undefined) return;
                 store.productList[itemIndex].quantity = quantity;
-            })
+            });
+            filterSelected(state);
             state.status = "idle";
         });
         builder.addCase(updateCartItemAsync.rejected, (state) => {
