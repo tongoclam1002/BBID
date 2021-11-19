@@ -15,7 +15,6 @@ const routes = [
     { path: "/", Component: Home, exact: true, title: "Trang chủ" },
     { path: "/store/:storeId", Component: StoreDetail, exact: true, title: "Cửa hàng" },
     { path: "/store/:storeId/product/:productId", Component: ProductPage, exact: true, title: "Chi tiết sản phẩm" },
-    { path: "/product/:code", Component: ProductPosition, exact: true, title: "Chi tiết sản phẩm" },
 
     //Cart routes
     { path: "/cart", Component: CartPage, exact: true, title: "Giỏ hàng của bạn" },

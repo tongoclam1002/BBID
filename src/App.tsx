@@ -10,6 +10,7 @@ import { useAppDispatch } from "./app/store/configureStore";
 import { useEffect } from "react";
 import { fetchCartAsync } from "./features/Cart/cartSlice";
 import ProfileLayout from "./app/layout/ProfileLayout";
+import ProductPosition from "./features/VirtualMall/ProductPostionPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -59,6 +60,9 @@ function App() {
       ))}
       <Route path="/video/:code" exact={true}>
         <Video />
+      </Route>
+      <Route path="/product/:code" exact={true}>
+        <ProductPosition />
       </Route>
       <Route>
         <Layout>

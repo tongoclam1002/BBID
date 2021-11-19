@@ -1,15 +1,15 @@
-import { Button, Card } from "antd";
+import { Button, Card, Collapse } from "antd";
 import { addCartItemAsync } from "../Cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { history } from "../..";
 
 export default function ProductDetail({ product }) {
-  const { status } = useAppSelector(state => state.cart);
+  const { status } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   function handlePurchaseItem(productId: number) {
     dispatch(addCartItemAsync({ productId: product.productId }));
-    history.push(`/cart`)
+    history.push(`/cart`);
   }
 
   return (
@@ -20,10 +20,7 @@ export default function ProductDetail({ product }) {
             <div className="row">
               <div className="col-md-6 col-sm-5">
                 <p className="box-product-img">
-                  <img
-                    alt="logo1"
-                    src={product?.image}
-                  />
+                  <img alt="logo1" src={product?.image} />
                 </p>
               </div>
               <div className="col-md-6 col-sm-7 box-info d-flex flex-column justify-content-between">
@@ -41,11 +38,17 @@ export default function ProductDetail({ product }) {
                         <em>(123 bình luận)</em>
                       </span>
                     </span>
-                    <span className="float-right box-link360">
-                      <a className="link360" href={process.env.REACT_APP_VIRTUAL_MALL_URL} role="button" target="_blank" rel="noreferrer">
+                    {/* <span className="float-right box-link360">
+                      <a
+                        className="link360"
+                        href={process.env.REACT_APP_VIRTUAL_MALL_URL}
+                        role="button"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         360<sup>o</sup>
                       </a>
-                    </span>
+                    </span> */}
                   </h4>
                   <div className="title">
                     <strong>
@@ -55,11 +58,20 @@ export default function ProductDetail({ product }) {
                       đ
                     </strong>
                   </div>
+                  <div className="mt-3">
+                    <strong>Chi tiết</strong>
+                    <div className="mt-2 mb-4">{product.description}</div>
+                  </div>
+                  {/* <Collapse defaultActiveKey={["1"]} ghost>
+                    <Collapse.Panel header="Chi tiết" key="1">
+                      
+                    </Collapse.Panel>
+                  </Collapse> */}
                 </div>
-                <div style={{ paddingBottom: '60px' }}>
+                <div style={{ paddingBottom: "60px" }}>
                   <Button
                     className="btn btn-primary green text-white text-uppercase font-weight-bold"
-                    size='large'
+                    size="large"
                     onClick={() => handlePurchaseItem(product?.productId)}
                   >
                     Mua ngay
@@ -68,10 +80,17 @@ export default function ProductDetail({ product }) {
                     className="icon-cart"
                     size="large"
                     icon={<i className="fas fa-cart-plus"></i>}
-                    loading={status.includes('pendingAddItem' + product.productId)}
-                    onClick={() => dispatch(addCartItemAsync({ productId: product.productId }))}
-                    style={{color: '#70b775'}}
-                    ghost />
+                    loading={status.includes(
+                      "pendingAddItem" + product.productId
+                    )}
+                    onClick={() =>
+                      dispatch(
+                        addCartItemAsync({ productId: product.productId })
+                      )
+                    }
+                    style={{ color: "#70b775" }}
+                    ghost
+                  />
                 </div>
                 {/* <p className="box-btn">
                 <a
@@ -89,14 +108,13 @@ export default function ProductDetail({ product }) {
             </div>
           </Card>
 
-
-          <Card title="CHI TIẾT SẢN PHẨM">
+          {/* <Card title="CHI TIẾT SẢN PHẨM">
             <div className="row">
               <div className="col-12">
                 <p>{product.description}</p>
               </div>
             </div>
-          </Card>
+          </Card> */}
         </div>
       )}
     </>

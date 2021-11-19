@@ -3,7 +3,7 @@ import constant from "../../app/utils/constant";
 
 export default function ProductDetailSkeleton({isLoading}) {
   return (
-    <Card>
+    <Card className="w-100">
       {isLoading ? (
         <div className="box-shop">
           <div className="row">

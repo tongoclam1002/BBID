@@ -21,7 +21,7 @@ export default function Home() {
       <Carousel />
       <Section title="Khu Mua Sắm">
         <ItemList
-          title="Thời trang và phụ kiện"
+          // title="Thời trang và phụ kiện"
           isLoading={status.includes("pending")}
           lg={6}
           md={12}
