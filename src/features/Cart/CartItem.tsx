@@ -51,7 +51,7 @@ export default function CartItem({ item }) {
       </td>
       <td>
         <Link to={`/store/${item.storeId}/product/${item.productId}`}>
-          <Text>{item.name}</Text>
+          <Text>{item.productName}</Text>
         </Link>
       </td>
       <td>

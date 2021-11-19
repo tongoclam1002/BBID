@@ -1022,6 +1022,10 @@ img[usemap] {
   width: 15vw;
 }
 
+.img-td {
+  width: 125px;
+}
+
 /*************** MENU STYLES **************/
 .menu-custom .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
 .menu-custom.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {

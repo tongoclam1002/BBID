@@ -48,7 +48,7 @@ export default function CartPage() {
                   <thead>
                     <tr>
                       <th></th>
-                      <th>Hình ảnh</th>
+                      <th className="img-td">Hình ảnh</th>
                       <th className="w-15vw">Tên sản phẩm</th>
                       <th>Số lượng</th>
                       <th>Đơn giá</th>

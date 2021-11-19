@@ -74,7 +74,7 @@ export default function StorePage() {
           </div>
           {!isViewProduct ? (
             <Section title="Sản phẩm nổi bật">
-              {products && !status.includes("pending") ? (
+              {products.length > 0 && !status.includes("pending") ? (
                 <ItemList
                   lg={6}
                   md={12}
@@ -100,7 +100,7 @@ export default function StorePage() {
               ) : !status.includes("pending") ? (
                 <Empty description={constant.text.EMPTY_PRODUCT_LIST} />
               ) : (
-                <ItemListSkeleton lg={6} md={12} sm={24} height={200}/>
+                <ItemListSkeleton lg={6} md={12} sm={24} height={200} />
               )}
             </Section>
           ) : (

@@ -8,6 +8,7 @@ import ServerError from "./app/errors/ServerError";
 import CheckoutSuccessPage from "./features/Checkout/CheckoutSuccessPage";
 import CheckoutPage from "./features/Checkout/CheckoutPage";
 import OrderPage from "./features/Order/OrderPage";
+import OrderDetailPage from "./features/Order/OrderDetailPage";
 
 //Routes with default layout
 const routes = [
@@ -27,6 +28,7 @@ const routes = [
 
     //Order routes
     { path: "/order", Component: OrderPage, exact: true, title: "Đơn hàng của bạn", isProfile: true},
+    { path: "/order/:orderId", Component: OrderDetailPage, exact: true, isProfile: true},
     //Error routes
     { path: "/server-error", Component: ServerError, exact: true, title: "" }
 ]

@@ -108,7 +108,7 @@ export default function StoreProducts({ products, isLoading }) {
         <div className="col-md-9 col-sm-8">
           <Card>
             <ItemList isLoading={isLoading} lg={8} md={12} sm={24} height={200}>
-              {products.map((product) => (
+              {products?.map((product) => (
                 <Col lg={8} md={12} sm={24}>
                   <ProductItem
                     key={product.productId}

@@ -36,7 +36,9 @@ export default function StoreDetail({ store }) {
               </span>
             </h4>
             <p>
-              {store?.description ? store.description : constant.text.EMPTY_DESCRIPTION}
+              {store?.description
+                ? store.description
+                : constant.text.EMPTY_DESCRIPTION}
             </p>
           </div>
         </div>

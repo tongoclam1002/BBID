@@ -7,8 +7,8 @@ export default function CheckoutSuccessPage() {
       <div>
         <h4>Chúc mừng bạn đặt hàng thành công</h4>
         <p>
-          Bạn có thể theo dõi đơn hàng theo link <br />
-          <Link to={`/order`}>{process.env.REACT_APP_CLIENT_URL}</Link>
+          Bạn có thể theo dõi đơn hàng 
+          <Link to={`/order`}> tại đây</Link>
         </p>
       </div>
     </Card>

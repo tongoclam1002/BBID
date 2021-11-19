@@ -8,12 +8,22 @@ import { fetchProductAsync, productSelectors } from "./productSlice";
 export default function ProductPage() {
   const { productId }: any = useParams();
   const dispatch = useAppDispatch();
-  const product = useAppSelector(state => productSelectors.selectById(state, productId));
-  const {status} = useAppSelector(state => state.product);
+  const product = useAppSelector((state) =>
+    productSelectors.selectById(state, productId)
+  );
+  const { status } = useAppSelector((state) => state.product);
 
   useEffect(() => {
-    if (!product) dispatch(fetchProductAsync(parseInt(productId)))
+    if (!product) dispatch(fetchProductAsync(parseInt(productId)));
   }, [productId, dispatch, product]);
 
-  return <>{product && !status.includes("pending") ? <ProductDetail product={product} /> : <ProductDetailSkeleton isLoading={status.includes("pending")} />}</>;
+  return (
+    <>
+      {product && !status.includes("pending") ? (
+        <ProductDetail product={product} />
+      ) : (
+        <ProductDetailSkeleton isLoading={status.includes("pending")} />
+      )}
+    </>
+  );
 }

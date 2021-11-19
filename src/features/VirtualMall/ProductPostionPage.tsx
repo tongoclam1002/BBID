@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductDetail from "../Product/ProductDetail";
 import ProductDetailSkeleton from "../Product/ProductDetailSkeleton";
@@ -9,15 +9,21 @@ import { fetchProductAsync, productSelectors } from "../Product/productSlice";
 export default function ProductPosition() {
   const { code }: any = useParams();
   const dispatch = useAppDispatch();
-  const product = useAppSelector(state => productSelectors.selectById(state, code));
-  const { status } = useAppSelector(state => state.product);
+  const [productId, setProductId] = useState();
+  const product = useAppSelector((state) =>
+    productSelectors.selectById(state, productId)
+  );
+
+  const { status } = useAppSelector((state) => state.product);
 
   useEffect(() => {
-    api.Product.details(code).then((response) => {
-      if (response.data.productId != null) {
-        if (!product) dispatch(fetchProductAsync(parseInt(code)))
-      }
-    })
+    api.Product.position(code)
+      .then((response) => {
+        if (response.data != null) {
+          setProductId(response.data);
+          if (!product) dispatch(fetchProductAsync(parseInt(response.data)));
+        }
+      })
       .catch((error) => {
         // console.log(error);
       });
@@ -25,9 +31,11 @@ export default function ProductPosition() {
 
   return (
     <>
-      {product !== null && !status.includes("pending") ? (
+      {product && !status.includes("pending") ? (
         <ProductDetail product={product} />
-      ) : <ProductDetailSkeleton isLoading={status.includes("pending")} />}
+      ) : (
+        <ProductDetailSkeleton isLoading={status.includes("pending")} />
+      )}
     </>
   );
 }

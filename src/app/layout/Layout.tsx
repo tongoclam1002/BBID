@@ -6,8 +6,7 @@ export default function Layout(props: layoutProps) {
       <Header />
       <div className="container main-content" id="main-content">
         <div className="row">
-          <div className="col col-12">
-            
+          <div className="col col-12">  
             {props.children}
           </div>
         </div>

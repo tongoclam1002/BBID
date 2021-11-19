@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { request } from "http";
 // import { history } from "../..";
 import toast from "../utils/toast";
 
@@ -44,7 +45,8 @@ const requests = {
 
 const Product = {
   list: (storeId: number) => requests.get(`Store/product/${storeId}`),
-  details: (productId: number) => requests.get(`Store/productdetail?productId=${productId}`)
+  details: (productId: number) => requests.get(`Store/productdetail?productId=${productId}`),
+  position: (code: string) => requests.get(`Advertise/ProductPosition/${code}`)
 }
 
 const Store = {
@@ -59,7 +61,7 @@ const Advertisement = {
 const Cart = {
   get: () => requests.get(`Business/CartDetail`),
   addItem: (productId: number, quantity = 1) => requests.post(`Business/ProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
-  updateItem: (productId: number, quantity : number) => requests.put(`Business/ProductCart/Quantity?productId=${productId}&quantity=${quantity}`, {}),
+  updateItem: (productId: number, quantity : number) => requests.put(`Business/ProductCart/Quantity?productDetailId=${productId}&quantity=${quantity}`, {}),
   removeItem: (productId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productId=${productId}`)
 }
 
