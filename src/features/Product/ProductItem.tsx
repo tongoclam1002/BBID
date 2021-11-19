@@ -6,7 +6,7 @@ import { Product } from "../../app/interfaces/product.interface";
 import Text from "antd/lib/typography/Text";
 
 export default function ProductItem(props: Props) {
-  const { status } = useAppSelector(state => state.cart);
+  const { status } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   return (
@@ -15,9 +15,10 @@ export default function ProductItem(props: Props) {
         <img alt="logo1" src={props.image} className="center-cropped" />
 
         <p className="title">
-          <Text>{props.name}</Text>         
-          <br />
-          <strong>{props.price.toLocaleString("vi-VN")}đ</strong>
+          <div className="mt-2" style={{ height: "35px", overflow: "hidden" }}>
+            <Text className="ellipsis-2">{props.name}</Text>
+          </div>
+          <div className="mt-2"><strong>{props.price.toLocaleString("vi-VN")}đ</strong></div>
         </p>
       </Link>
       <div className="rate">
@@ -29,13 +30,17 @@ export default function ProductItem(props: Props) {
           <span className="fa fa-star"></span>
           <br /> */}
         </span>
-        <Button icon={<i className="fas fa-cart-plus"></i>} className="btn btn-primary green text-white" loading={status === 'pendingAddItem' + props.productId} onClick={() => dispatch(addCartItemAsync({ productId: props.productId }))}>
-
-        </Button>
+        <Button
+          icon={<i className="fas fa-cart-plus"></i>}
+          className="btn btn-primary green text-white"
+          loading={status === "pendingAddItem" + props.productId}
+          onClick={() =>
+            dispatch(addCartItemAsync({ productId: props.productId }))
+          }
+        ></Button>
       </div>
-
     </li>
   );
 }
 
-interface Props extends Product { }
+interface Props extends Product {}

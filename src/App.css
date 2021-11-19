@@ -90,6 +90,14 @@ label {
 .fas {
   font-size: 36px;
 }
+
+.ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .btn.green {
   background-color: #70b775;
   border-color: #70b775;
