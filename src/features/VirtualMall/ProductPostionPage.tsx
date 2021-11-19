@@ -30,7 +30,7 @@ export default function ProductPosition() {
   }, [code, dispatch, product]);
 
   return (
-    <div className="d-flex align-items-center h-100 w-100">
+    <div>
       {product && !status.includes("pending") ? (
         <ProductDetail product={product} />
       ) : (
