@@ -2,8 +2,8 @@ import { Cart, CartStore } from "../../app/interfaces/cart.interface";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../app/api/api";
 import toast from "../../app/utils/toast";
-import constant from "../../app/utils/constant";
 import { getPrice, groupBy } from "../../app/utils/utils";
+import { t } from "i18next";
 
 interface CartState {
     cart: Cart;
@@ -36,7 +36,7 @@ export const addCartItemAsync = createAsyncThunk<any, { productId: number, quant
         try {
             return await api.Cart.addItem(productId, quantity).then(async () => {
                 return api.Cart.get().then(cart => {
-                    toast.success(constant.text.ADD_CART_ITEM_SUCCESS_MESSAGE, 0.5);
+                    toast.success(t("message.ADD_CART_ITEM_SUCCESS_MESSAGE"), 0.5);
                     return cart.data
                 });
             })

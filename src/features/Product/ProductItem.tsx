@@ -14,12 +14,12 @@ export default function ProductItem(props: Props) {
       <Link to={`/store/${props.storeId}/product/${props.productId}`}>
         <img alt="logo1" src={props.image} className="center-cropped" />
 
-        <p className="title">
+        <div className="title">
           <div className="mt-2" style={{ height: "35px", overflow: "hidden" }}>
             <Text className="ellipsis-2">{props.name}</Text>
           </div>
           <div className="mt-2"><strong>{props.price.toLocaleString("vi-VN")}đ</strong></div>
-        </p>
+        </div>
       </Link>
       <div className="rate">
         <span className="rate-left">

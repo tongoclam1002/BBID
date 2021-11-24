@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { Button, Card, Checkbox, Col, Empty, Row } from "antd";
-import constant from "../../app/utils/constant";
 import CartSkeleton from "./CartSkeleton";
 import { history } from "../..";
 import toast from "../../app/utils/toast";
 import { selelctAllItemInStore } from "./cartSlice";
+import GoBackButton from "../../components/GoBackButton";
+import { t } from "i18next";
 
 export default function CartPage() {
   const { cart, status, totalPrice } = useAppSelector((state) => state.cart);
@@ -21,7 +22,7 @@ export default function CartPage() {
     });
     selectedItem.length > 0
       ? history.push("/checkout")
-      : toast.warning(constant.text.EMPTY_CART_ITEM_SELECTED, 0.5);
+      : toast.warning(t("message.EMPTY_CART_ITEM_SELECTED"), 0.5);
   }
 
   if (status.includes("pendingFetchCart")) return <CartSkeleton />;
@@ -48,11 +49,11 @@ export default function CartPage() {
                   <thead>
                     <tr>
                       <th></th>
-                      <th className="img-td">Hình ảnh</th>
-                      <th className="w-15vw">Tên sản phẩm</th>
-                      <th>Số lượng</th>
-                      <th>Đơn giá</th>
-                      <th>Tạm tính</th>
+                      <th className="img-td">{t("product.IMAGE")}</th>
+                      <th className="w-15vw">{t("product.PRODUCT_NAME")}</th>
+                      <th>{t("product.QUANTITY")}</th>
+                      <th>{t("product.UNIT_PRICE")}</th>
+                      <th>{t("product.PRICE")}</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -67,29 +68,29 @@ export default function CartPage() {
           ))
         ) : (
           <Card className="mb-4">
-            <Empty description={constant.text.EMPTY_PRODUCT_IN_CART} />
+            <Empty description={t("message.EMPTY_PRODUCT_IN_CART")} />
           </Card>
         )}
       </Col>
       <Col span={24} id="checkout-info">
         <Card className="box-total" id="checkout-info">
             <Row className="container">
-              <Col span={16}>
+              <Col lg={16} md={24} sm={24}>
                 <div style={{ textAlign: "right", marginRight: "24px" }}>
-                  <h4>Thông tin đơn hàng</h4>
+                  <h4>{t("order.ORDER_INFORMATION")}</h4>
                   <div>
-                    Tổng tiền:{" "}
+                  {t("order.TOTAL_PRICE")}:{" "}
                     <strong>{totalPrice?.toLocaleString("vi-VN")}đ</strong>
                   </div>
                 </div>
               </Col>
-              <Col span={8} style={{ alignSelf: "center" }}>
+              <Col lg={8} md={24} sm={24} style={{ alignSelf: "center" }}>
                 <Button
                   size="large"
                   className="btn btn-primary green text-white text-uppercase w-100 font-weight-bold"
                   onClick={() => onCheckout()}
                 >
-                  Tiến hành đặt hàng
+                  {t("order.CHECKOUT")}
                 </Button>
               </Col>
             </Row>

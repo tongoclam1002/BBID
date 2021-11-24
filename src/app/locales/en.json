@@ -1,0 +1,79 @@
+{
+  "header": {
+    "INPUT_SEARCH": "Search..."
+  },
+  "section": {
+    "SHOPPING_AREA": "Shopping"
+  },
+  "page": {
+    "PRODUCT_DETAILS": "Product details",
+    "HOME": "Home",
+    "ORDER": "Order",
+    "CART": "Cart",
+    "STORE": "Store",
+    "CHECKOUT": "Checkout",
+    "CHECKOUT_SUCCESS": "Order success"
+  },
+  "store": {},
+  "product": {
+    "PRODUCT_NAME": "Product name",
+    "IMAGE": "Image",
+    "QUANTITY": "Quantity",
+    "UNIT_PRICE": "Unit price",
+    "PRICE": "Price"
+  },
+  "order": {
+    "TOTAL_PRICE": "Total price",
+    "ORDER_INFORMATION": "Order Information",
+    "CHECKOUT": "Check out",
+    "DELIVERY_ADDRESS": "Delivery address",
+    "FULL_NAME": "Full name",
+    "PHONE": "Phone number",
+    "ADDRESS": "Address",
+    "PLACE_ORDER": "Place order",
+    "NOTES": "Notes",
+    "PAYMENT_METHODS": "Payment methods",
+    "COD_PAYMENT": "Cash on Delivery",
+    "ORDER_TOTAL": "Order total",
+    "SHIPPING_FEE": "Shipping fee"
+  },
+  "orderStatus": {
+    "ALL": "All",
+    "AWATING_CONFIRMATION": "Awaiting confirmation",
+    "AWATING_DELIVERY": "Awaiting delivery",
+    "DELIVERING": "Delivering",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled"
+  },
+  "profileMenu": {
+    "ORDER": "My Orders"
+  },
+  "common": {
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+    "STORE": "Store",
+    "PRODUCTS": "Product",
+    "FEARTURED_PRODUCTS": "Featured products",
+    "BUY_NOW": "Buy now",
+    "BACK": "Back",
+    "DELETE": "Delete",
+    "DETAILS": "Details"
+  },
+  "validationMessage": {
+    "EMPTY_RECEIVER_NAME": "Please fill out Full name",
+    "EMPTY_ADDRESS": "Please fill out Address",
+    "EMPTY_PHONE": "Please fill out Phone number"
+  },
+  "message": {
+    "ADD_CART_ITEM_SUCCESS_MESSAGE": "The product has been added to Cart",
+    "REMOVE_CART_ITEM_SUCCESS": "Product has been removed from Cart",
+    "EMPTY_STORE": "Store not found",
+    "EMPTY_PRODUCT": "No products found",
+    "EMPTY_PRODUCT_LIST": "There are currently no products",
+    "EMPTY_PRODUCT_IN_CART": "There are no products in your Cart yet",
+    "EMPTY_SELECTED_PRODUCT_IN_CART": "There are no products selected in your shopping cart",
+    "EMPTY_DESCRIPTION": "No description yet",
+    "EMPTY_CART_ITEM_SELECTED": "Please select a product to check out",
+    "EMPTY_CHECKOUT_INFO": "Please fill in the delivery information completely"
+  }
+}

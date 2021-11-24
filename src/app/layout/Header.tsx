@@ -1,4 +1,7 @@
+import { Dropdown, Menu } from "antd";
+import { t } from "i18next";
 import { Link, NavLink } from "react-router-dom";
+import DropdownLanguage from "../../components/DropdownLanguage";
 import { useAppSelector } from "../store/configureStore";
 
 export default function Header() {
@@ -7,9 +10,19 @@ export default function Header() {
     (sum, item) => sum + item.productList.length,
     0
   );
+  const menu = (
+    <Menu className="bg-white">
+      <Menu.Item key="1">
+        <Link to="/order">{t("profileMenu.ORDER")}</Link>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <div id="header" className="clearfix">
       <div className="container">
+        <div className="top-header">
+          <DropdownLanguage />
+        </div>
         <div className="box-logo">
           {/* <a href="#test"><i className="fas fa-bars"></i></a> */}
           <NavLink to="/">
@@ -27,11 +40,10 @@ export default function Header() {
                 <em>{itemCount ? itemCount : 0}</em>
               </Link>
             </li>
-            <li className="is-user">
-              <Link to="/order">
+            <li className="is-user cursor-pointer">
+              <Dropdown overlay={menu} trigger={["click"]}>
                 <i className="fas fa-user-circle"></i>
-                <em>Lê Lý</em>
-              </Link>
+              </Dropdown>
             </li>
           </ul>
         </div>
@@ -40,7 +52,7 @@ export default function Header() {
             <input
               type="text"
               className="form-control"
-              placeholder="Nhập từ khoá..."
+              placeholder={t("header.INPUT_SEARCH")}
             />
             <span className="input-group-btn">
               <button

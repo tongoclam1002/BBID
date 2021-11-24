@@ -1,55 +1,70 @@
-import { Form, Input } from "antd";
+import { ErrorMessage, Field, Formik, Form } from "Formik";
+import { t } from "i18next";
+import * as Yup from "yup";
 
-export default function AddressForm({ onFinish, onFinishFailed }) {
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 24 },
-  };
+const CheckoutSchema = Yup.object().shape({
+  name: Yup.string().required(t("validationMessage.EMPTY_RECEIVER_NAME")),
+  address: Yup.string().required(t("validationMessage.EMPTY_ADDRESS")),
+  phone: Yup.string().required(t("validationMessage.EMPTY_PHONE")),
+});
 
-  /* eslint-disable no-template-curly-in-string */
-  const validateMessages = {
-    required: "Vui lòng nhập ${label}.",
-    types: {
-      email: "${label} is not a valid email!",
-      number: "${label} is not a valid number!",
-    },
-    number: {
-      range: "${label} must be between ${min} and ${max}",
-    },
-  };
-  /* eslint-enable no-template-curly-in-string */
-
+export default function AddressForm({ onFinish, onFinishFailed, form }) {
   return (
-    <Form
-      id="address-form"
-      {...layout}
-      layout="vertical"
-      name="nest-messages"
-      onFinish={(values) => onFinish(values)}
-      onFinishFailed={() => onFinishFailed()}
-      validateMessages={validateMessages}
-    >
-      <Form.Item
-        name={["user", "name"]}
-        label="Họ và tên người nhận"
-        rules={[{ required: true }]}
+    <>
+      <Formik
+        initialValues={{
+          name: "",
+          phone: "",
+          address: "",
+        }}
+        validationSchema={CheckoutSchema}
+        onSubmit={onFinish}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name={["user", "phone"]}
-        label="Số điện thoại"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name={["user", "address"]}
-        label="Địa chỉ"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
-    </Form>
+        {({ errors, touched }) => (
+          <Form id="address-form">
+            <div className="form-group">
+              <label className="form-label">{t("order.FULL_NAME")}</label>
+              <Field
+                name="name"
+                className={`form-control ${
+                  errors.name && touched.name ? "is-invalid" : ""
+                }`}
+              />
+              <div className="invalid-feedback">
+                <ErrorMessage name="name" />
+              </div>
+            </div>
+            {errors.name && touched.name ? (
+              <div className="invalid-feedback">{errors.name}</div>
+            ) : null}
+
+            <div className="form-group">
+              <label className="form-label">{t("order.PHONE")}</label>
+              <Field
+                name="phone"
+                className={`form-control ${
+                  errors.phone && touched.phone ? "is-invalid" : ""
+                }`}
+              />
+              <div className="invalid-feedback">
+                <ErrorMessage name="phone" />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label">{t("order.ADDRESS")}</label>
+              <Field
+                name="address"
+                className={`form-control ${
+                  errors.address && touched.address ? "is-invalid" : ""
+                }`}
+              />
+              <div className="invalid-feedback">
+                <ErrorMessage name="address" />
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 }

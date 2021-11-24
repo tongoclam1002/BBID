@@ -6,14 +6,15 @@ import StoreDetailSketon from "./StoreDetailSkeleon";
 import StoreDetail from "./StoreDetail";
 import Section from "../../components/Section";
 import { Button, Col, Empty } from "antd";
-import constant from "../../app/utils/constant";
 import StoreProducts from "./StoreProducts";
 import ItemListSkeleton from "../../components/ItemList/ItemListSkeleton";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchProductsAsync, productSelectors } from "../Product/productSlice";
 import { fetchStoreAsync, storeSelectors } from "./storeSlice";
+import { useTranslation } from "react-i18next";
 
 export default function StorePage() {
+  const { t } = useTranslation();
   const { storeId } = useParams<{ storeId: string }>();
   const products = useAppSelector(productSelectors.selectAll).filter(
     (product) => product.storeId === parseInt(storeId)
@@ -56,7 +57,7 @@ export default function StorePage() {
                         className={!isViewProduct ? "active" : ""}
                         onClick={() => setIsViewProduct(false)}
                       >
-                        Cửa hàng
+                        {t("common.STORE")}
                       </Button>
                     </li>
                     <li>
@@ -64,7 +65,7 @@ export default function StorePage() {
                         className={isViewProduct ? "active" : ""}
                         onClick={() => setIsViewProduct(true)}
                       >
-                        Sản phẩm
+                        {t("common.PRODUCTS")}
                       </Button>
                     </li>
                   </ul>
@@ -73,14 +74,13 @@ export default function StorePage() {
             </div>
           </div>
           {!isViewProduct ? (
-            <Section title="Sản phẩm nổi bật">
+            <Section title={t("common.FEARTURED_PRODUCTS")}>
               {products.length > 0 && !status.includes("pending") ? (
                 <ItemList
                   lg={6}
                   md={12}
                   sm={24}
                   height={200}
-                  title="Khu mua sắm"
                   isLoading={status.includes("pending")}
                 >
                   {products.map((product) => (
@@ -98,7 +98,7 @@ export default function StorePage() {
                   ))}
                 </ItemList>
               ) : !status.includes("pending") ? (
-                <Empty description={constant.text.EMPTY_PRODUCT_LIST} />
+                <Empty description={t("message.EMPTY_PRODUCT_LIST")} />
               ) : (
                 <ItemListSkeleton lg={6} md={12} sm={24} height={200} />
               )}

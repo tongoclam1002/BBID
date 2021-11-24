@@ -1,5 +1,5 @@
 import { Card } from "antd";
-import constant from "../../app/utils/constant";
+import { t } from "i18next";
 
 export default function StoreDetail({ store }) {
   return (
@@ -10,7 +10,7 @@ export default function StoreDetail({ store }) {
             <p className="box-shop-name">
               <img alt="logo1" src={store?.logo} />
             </p>
-            <p className="box-rate text-center">
+            {/* <p className="box-rate text-center">
               <span>
                 <span className="fa fa-star checked"></span>
                 <span className="fa fa-star checked"></span>
@@ -20,7 +20,7 @@ export default function StoreDetail({ store }) {
                 <br />
                 <em>(123 bình luận)</em>
               </span>
-            </p>
+            </p> */}
           </div>
           <div className="col-md-9 col-sm-8 box-info">
             <h4 className="clearfix">
@@ -38,7 +38,7 @@ export default function StoreDetail({ store }) {
             <p>
               {store?.description
                 ? store.description
-                : constant.text.EMPTY_DESCRIPTION}
+                : t("message.EMPTY_DESCRIPTION")}
             </p>
           </div>
         </div>

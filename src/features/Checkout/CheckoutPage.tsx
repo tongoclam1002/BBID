@@ -2,97 +2,116 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../app/api/api";
 import CheckoutItem from "./CheckoutItem";
-import { Button, Card, Empty } from "antd";
+import { Button, Card, Empty, Form } from "antd";
 import AddressForm from "./AddressForm";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import constant from "../../app/utils/constant";
-// import { getTotalPriceInCart } from "../../app/utils/utils";
 import { history } from "../..";
 import { fetchCartAsync } from "../Cart/cartSlice";
 import toast from "../../app/utils/toast";
+import { t } from "i18next";
 
 export default function CheckoutPage() {
   const { productId }: any = useParams();
+  const [form] = Form.useForm();
   const [isMomo, setIsMomo] = useState(false);
-  const { selectedCart, totalPrice: totalProductPrice} = useAppSelector(state => state.cart);
+  const { selectedCart, totalPrice: totalProductPrice } = useAppSelector(
+    (state) => state.cart
+  );
   const dispatch = useAppDispatch();
-  // const totalProductPrice = getTotalPriceInCart(selectedCart);
   const totalShippingFee = 50000;
-  const totalPrice = totalProductPrice ? totalProductPrice : 0 + totalShippingFee
+  const totalPrice = totalProductPrice
+    ? totalProductPrice
+    : 0 + totalShippingFee;
 
   function changeMethod() {
     setIsMomo(!isMomo);
   }
 
   const onFinish = (values: any) => {
-    console.log(values.user);
+    console.log(values);
     let productIds = [];
-    selectedCart.forEach(store => {
-      store.productList.forEach(product => {
-        productIds.push(product.productId)
-      })
+    selectedCart.forEach((store) => {
+      store.productList.forEach((product) => {
+        productIds.push(product.productId);
+      });
     });
     const body = {
-      addressTo: values.user.address,
-      receiverName: values.user.name,
-      receiverNNumber: values.user.phone,
-      productList: productIds
+      addressTo: values.address,
+      receiverName: values.name,
+      receiverNNumber: values.phone,
+      productList: productIds,
+    };
+    if (productIds === []) {
+      api.Order.createOrder(body)
+        .then(() => {
+          history.push("/checkout/success");
+          dispatch(fetchCartAsync());
+        })
+        .catch((error) => {
+          console.log("Create order error: " + error);
+        });
+    } else {
+      toast.warning(t("message.EMPTY_SELECTED_PRODUCT_IN_CART"), 0.5);
     }
-    api.Order.createOrder(body)
-      .then(() => {
-        history.push('/checkout/success');
-        dispatch(fetchCartAsync());
-      })
-      .catch((error) => {
-        console.log("Create order error: " + error)
-      })
   };
 
   const onFinishFailed = () => {
-    toast.warning(constant.text.EMPTY_CHECKOUT_INFO, 0.5)
-  }
+    toast.warning(t("message.EMPTY_CHECKOUT_INFO"), 0.5);
+  };
 
   return (
     <div className="row">
       <div className="col-12">
         <Card className="box-order">
-          <h4 className="mb-4">Đơn hàng của bạn</h4>
+          <h4 className="mb-4">{t("order.ORDER_INFORMATION")}</h4>
           <Card className="mb-4">
             <p className="form-group clearfix">
-              <strong>Địa chỉ nhận hàng</strong>
+              <strong>{t("order.DELIVERY_ADDRESS")}</strong>
             </p>
-            <AddressForm onFinish={onFinish} onFinishFailed={onFinishFailed}/>
+            <AddressForm
+              form={form}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            />
           </Card>
-          {selectedCart.length > 0 ? selectedCart.map((store, key) => (
-            <Card key={key} className="mb-4">
-              <p className="box-cart-shop clearfix">
-                {store.storeId}
-              </p>
-              <div className="table-responsive">
-                <table className="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th className="is-img">Hình ảnh</th>
-                      <th className="no-break">Tên sản phẩm</th>
-                      <th className="is-count">Số lượng</th>
-                      <th className="no-break">Tạm tính</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {store?.productList?.map((item, key) => (
-                      <CheckoutItem key={key} item={item} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-            </Card>)) : <Card className="mb-4"><Empty description={constant.text.EMPTY_SELECTED_PRODUCT_IN_CART} /></Card>}
-          <p>Lời nhắc: </p>
+          {selectedCart.length > 0 ? (
+            selectedCart.map((store, key) => (
+              <Card key={key} className="mb-4">
+                <p className="box-cart-shop clearfix">{store.storeId}</p>
+                <div className="table-responsive">
+                  <table className="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th className="is-img">{t("product.IMAGE")}</th>
+                        <th className="no-break">
+                          {t("product.PRODUCT_NAME")}
+                        </th>
+                        <th className="is-count">{t("product.QUANTITY")}</th>
+                        <th className="no-break">{t("product.PRICE")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {store?.productList?.map((item, key) => (
+                        <CheckoutItem key={key} item={item} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            ))
+          ) : (
+            <Card className="mb-4">
+              <Empty
+                description={t("message.EMPTY_SELECTED_PRODUCT_IN_CART")}
+              />
+            </Card>
+          )}
+          <p>{t("order.NOTES")}: </p>
           <p className="form-group">
             <textarea className="form-control form-control-sm"></textarea>
           </p>
         </Card>
-        <Card className="box-order">
+        {/* <Card className="box-order">
           <p className="form-group">
             <strong>Thời gian nhận hàng</strong>
           </p>
@@ -112,18 +131,12 @@ export default function CheckoutPage() {
               </select>
             </div>
           </div>
-        </Card>
+        </Card> */}
         <Card className="box-order">
           <p className="form-group">
-            <strong>Hình thức thanh toán</strong>
+            <strong>{t("order.PAYMENT_METHODS")}</strong>
           </p>
           {/* <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" />
-          <label className="form-check-label" htmlFor="gridRadios1">
-            Thanh toán bằng thẻ
-          </label>
-        </div> */}
-          <div className="form-check">
             <input
               className="form-check-input"
               type="radio"
@@ -135,7 +148,7 @@ export default function CheckoutPage() {
             <label className="form-check-label" htmlFor="gridRadios2">
               Thanh toán bằng ví Momo
             </label>
-          </div>
+          </div> */}
           <div className="form-check">
             <input
               className="form-check-input"
@@ -147,23 +160,29 @@ export default function CheckoutPage() {
               onChange={changeMethod}
             />
             <label className="form-check-label" htmlFor="gridRadios3">
-              Thanht toán COD
+              {t("order.COD_PAYMENT")}
             </label>
           </div>
         </Card>
         <Card className="box-order form-group">
           <p className="clearfix">
-            Tổng tiền hàng
-            <span className="float-right">{totalProductPrice?.toLocaleString("vi-VN")}đ</span>
+            {t("order.TOTAL_PRICE")}
+            <span className="float-right">
+              {totalProductPrice?.toLocaleString("vi-VN")}đ
+            </span>
           </p>
           <p className="form-group clearfix">
-            Tổng tiền vận chuyển
-            <span className="float-right">{totalShippingFee?.toLocaleString("vi-VN")}đ</span>
+          {t("order.SHIPPING_FEE")}
+            <span className="float-right">
+              {totalShippingFee?.toLocaleString("vi-VN")}đ
+            </span>
           </p>
           <p className="border-top pt-2 clearfix">
-            <strong>Tổng thanh toán</strong>
+            <strong>{t("order.ORDER_TOTAL")}</strong>
             <span className="float-right">
-              <strong className="is_red">{totalPrice?.toLocaleString("vi-VN")}đ</strong>
+              <strong className="is_red">
+                {totalPrice?.toLocaleString("vi-VN")}đ
+              </strong>
             </span>
           </p>
           <div className="text-center mt-5">
@@ -173,9 +192,8 @@ export default function CheckoutPage() {
                 size="large"
                 form="address-form"
                 htmlType="submit"
-                role="button"
               >
-                Xác nhận đặt hàng
+                {t("order.PLACE_ORDER")}
               </Button>
               // <Link
               //   className="btn btn-primary green"
@@ -191,14 +209,12 @@ export default function CheckoutPage() {
                 to={`payment/${productId}`}
                 role="button"
               >
-                Xác nhận đặt hàng
+                {t("order.PLACE_ORDER")}
               </Link>
             )}
           </div>
-
         </Card>
-
       </div>
-    </div >
+    </div>
   );
 }

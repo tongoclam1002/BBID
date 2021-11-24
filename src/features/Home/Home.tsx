@@ -6,6 +6,7 @@ import Section from "../../components/Section";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchStoresAsync, storeSelectors } from "../Store/storeSlice";
 import { Col } from "antd";
+import { t } from "i18next";
 
 export default function Home() {
   const stores = useAppSelector(storeSelectors.selectAll);
@@ -19,7 +20,7 @@ export default function Home() {
   return (
     <>
       <Carousel />
-      <Section title="Khu Mua Sắm">
+      <Section title={t("section.SHOPPING_AREA")}>
         <ItemList
           // title="Thời trang và phụ kiện"
           isLoading={status.includes("pending")}

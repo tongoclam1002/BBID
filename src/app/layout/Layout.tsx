@@ -6,9 +6,7 @@ export default function Layout(props: layoutProps) {
       <Header />
       <div className="container main-content" id="main-content">
         <div className="row">
-          <div className="col col-12">  
-            {props.children}
-          </div>
+          <div className="col col-12">{props.children}</div>
         </div>
       </div>
     </div>
@@ -16,5 +14,5 @@ export default function Layout(props: layoutProps) {
 }
 
 interface layoutProps {
-    children?: React.ReactNode
+  children?: React.ReactNode;
 }

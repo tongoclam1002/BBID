@@ -1,0 +1,79 @@
+{
+  "header": {
+    "INPUT_SEARCH": "Nhập từ khóa..."
+  },
+  "section": {
+    "SHOPPING_AREA": "Khu mua sắm"
+  },
+  "page": {
+    "PRODUCT_DETAILS": "Chi tiết sản phẩm",
+    "HOME": "Trang chủ",
+    "ORDER": "Đơn hàng của bạn",
+    "CART": "Giỏ hàng của bạn",
+    "STORE": "Cửa hàng",
+    "CHECKOUT": "Đặt hàng",
+    "CHECKOUT_SUCCESS": "Đặt hàng thành công"
+  },
+  "store": {},
+  "product": {
+    "PRODUCT_NAME": "Tên sản phẩm",
+    "IMAGE": "Hình ảnh",
+    "QUANTITY": "Số lượng",
+    "UNIT_PRICE": "Đơn giá",
+    "PRICE": "Tạm tính"
+  },
+  "order": {
+    "TOTAL_PRICE": "Tổng tiền",
+    "ORDER_INFORMATION": "Thông tin đơn hàng",
+    "CHECKOUT": "Tiến hành đặt hàng",
+    "DELIVERY_ADDRESS": "Địa chỉ nhận hàng",
+    "FULL_NAME": "Họ và tên người nhận",
+    "PHONE": "Số điện thoại",
+    "ADDRESS": "Địa chỉ",
+    "PLACE_ORDER": "Xác nhận đặt hàng",
+    "NOTES": "Lời nhắc",
+    "PAYMENT_METHODS": "Phương thức thanh toán",
+    "COD_PAYMENT": "Thanh toán COD",
+    "ORDER_TOTAL": "Tổng tiền thanh toán",
+    "SHIPPING_FEE": "Tổng tiền vận chuyển"
+  },
+  "orderStatus": {
+    "ALL": "Tất cả",
+    "AWATING_CONFIRMATION": "Chờ xác nhận",
+    "AWATING_DELIVERY": "Chờ giao",
+    "DELIVERING": "Đang giao",
+    "COMPLETED": "Đã giao",
+    "CANCELLED": "Đã hủy"
+  },
+  "profileMenu": {
+    "ORDER": "Đơn hàng của tôi"
+  },
+  "common": {
+    "COMMENT": "bình luận",
+    "COMMENTS": "bình luận",
+    "STORE": "Cửa hàng",
+    "PRODUCTS": "Sản phẩm",
+    "FEARTURED_PRODUCTS": "Sản phẩm nổi bật",
+    "BUY_NOW": "Mua ngay",
+    "BACK": "Trở về",
+    "DELETE": "Xóa",
+    "DETAILS": "Chi tiết"
+  },
+  "validationMessage": {
+    "EMPTY_RECEIVER_NAME": "Vui lòng nhập Họ và tên người nhận",
+    "EMPTY_ADDRESS": "Vui lòng nhập Địa chỉ",
+    "EMPTY_PHONE": "Vui lòng nhập Số điện thoại"
+  },
+  "message": {
+    "ADD_CART_ITEM_SUCCESS_MESSAGE": "Sản phẩm đã được thêm vào Giỏ hàng",
+    "REMOVE_CART_ITEM_SUCCESS": "Sản phẩm đã được xóa khỏi Giỏ hàng",
+    "EMPTY_STORE": "Không tìm thấy cửa hàng",
+    "EMPTY_PRODUCT": "Không tìm thấy sản phẩm",
+    "EMPTY_PRODUCT_LIST": "Hiện tại chưa có sản phẩm nào",
+    "EMPTY_PRODUCT_IN_CART": "Chưa có sản phẩm nào trong Giỏ hàng của bạn",
+    "EMPTY_SELECTED_PRODUCT_IN_CART": "Chưa có sản phẩm nào được chọn trong Giỏ hàng của bạn",
+    "EMPTY_DESCRIPTION": "Chưa có mô tả",
+    "EMPTY_CART_ITEM_SELECTED": "Bạn vui lòng chọn sản phẩm để tiến hành đặt hàng",
+    "EMPTY_CHECKOUT_INFO": "Bạn vui lòng điền đầy đủ thông tin nhận hàng"
+  }
+}

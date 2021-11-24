@@ -1,7 +1,8 @@
-import { Button, Card, Collapse } from "antd";
+import { Button, Card } from "antd";
 import { addCartItemAsync } from "../Cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { history } from "../..";
+import { t } from "i18next";
+// import { history } from "../..";
 
 export default function ProductDetail({ product }) {
   const { status } = useAppSelector((state) => state.cart);
@@ -9,7 +10,8 @@ export default function ProductDetail({ product }) {
 
   function handlePurchaseItem(productId: number) {
     dispatch(addCartItemAsync({ productId: product.productId }));
-    history.push(`/cart`);
+    // history.push(`/cart`);
+    window.open(`/cart`);
   }
 
   return (
@@ -29,14 +31,14 @@ export default function ProductDetail({ product }) {
                     <span className="float-left">
                       {product?.name}
                       <br />
-                      <span className="box-rate">
+                      {/* <span className="box-rate">
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star"></span>
                         <span className="fa fa-star"></span>
                         <em>(123 bình luận)</em>
-                      </span>
+                      </span> */}
                     </span>
                     {/* <span className="float-right box-link360">
                       <a
@@ -59,7 +61,7 @@ export default function ProductDetail({ product }) {
                     </strong>
                   </div>
                   <div className="mt-3">
-                    <strong>Chi tiết</strong>
+                    <strong>{t("common.DETAILS")}</strong>
                     <div className="mt-2 mb-4">{product.description}</div>
                   </div>
                   {/* <Collapse defaultActiveKey={["1"]} ghost>
@@ -74,7 +76,7 @@ export default function ProductDetail({ product }) {
                     size="large"
                     onClick={() => handlePurchaseItem(product?.productId)}
                   >
-                    Mua ngay
+                    {t("common.BUY_NOW")}
                   </Button>
                   <Button
                     className="icon-cart"

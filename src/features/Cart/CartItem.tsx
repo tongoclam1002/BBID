@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import IncreaseDecreaseInput from "../../components/IncreaseDecreaseInput";
 import PriceAndDiscountPrice from "../../components/PriceAndDiscountPrice";
 import { getPrice } from "../../app/utils/utils";
+import { t } from "i18next";
 
 export default function CartItem({ item }) {
   const dispatch = useAppDispatch();
@@ -96,7 +97,7 @@ export default function CartItem({ item }) {
       </td>
       <td>
         <Button
-          icon={<Text type="danger">Xóa</Text>}
+          icon={<Text type="danger">{t("common.DELETE")}</Text>}
           loading={status === "pendingRemoveItem" + item.productId}
           onClick={() =>
             dispatch(

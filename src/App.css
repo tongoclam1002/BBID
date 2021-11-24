@@ -541,11 +541,11 @@ img[usemap] {
 .box-list-main li .box-more:hover i {
   color: #007d1a;
 }
-.box-list-main li p.title {
+.box-list-main li .title {
   padding: 5px 0;
   font-size: 13px;
 }
-.box-list-main li p.title strong {
+.box-list-main li .title strong {
   font-size: 16px;
   color: #c82f2f;
 }
@@ -1032,6 +1032,38 @@ img[usemap] {
 
 .img-td {
   width: 125px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.top-header {
+  text-align: right;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.top-header i {
+  font-size: 14px;
+  color: #000000;
+}
+
+.tabs-custom.ant-tabs-top > .ant-tabs-nav,
+.tabs-custom.ant-tabs-bottom > .ant-tabs-nav,
+.tabs-custom.ant-tabs-top > div > .ant-tabs-nav,
+.tabs-custom.ant-tabs-bottom > div > .ant-tabs-nav {
+  margin: 0;
+}
+
+.ant-card.p-0 .ant-card-body {
+  padding: 0 42px;
+}
+
+.ant-tabs-nav-list {
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
 }
 
 /*************** MENU STYLES **************/

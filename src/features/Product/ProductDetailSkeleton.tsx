@@ -1,5 +1,5 @@
 import { Card, Empty, Skeleton } from "antd";
-import constant from "../../app/utils/constant";
+import { t } from "i18next";
 
 export default function ProductDetailSkeleton({isLoading}) {
   return (
@@ -21,7 +21,7 @@ export default function ProductDetailSkeleton({isLoading}) {
           </div>
         </div>
       ) : (
-        <Empty description={constant.text.EMPTY_PRODUCT} />
+        <Empty description={t("message.EMPTY_PRODUCT")} />
       )}
     </Card>
   );

@@ -1,5 +1,5 @@
 import { Card, Empty, Skeleton } from "antd";
-import constant from "../../app/utils/constant";
+import { t } from "i18next";
 
 export default function StoreDetailSketon({ isLoading }) {
   return (
@@ -14,7 +14,7 @@ export default function StoreDetailSketon({ isLoading }) {
           </div>
         </div>
       ) : (
-        <Empty description={constant.text.EMPTY_STORE} />
+        <Empty description={t("message.EMPTY_STORE")} />
       )}
     </Card>
   );
