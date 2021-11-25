@@ -1,7 +1,7 @@
 import { Dropdown, Menu } from "antd";
 import { t } from "i18next";
 import { Link, NavLink } from "react-router-dom";
-import DropdownLanguage from "../../components/DropdownLanguage";
+// import DropdownLanguage from "../../components/DropdownLanguage";
 import { useAppSelector } from "../store/configureStore";
 
 export default function Header() {
@@ -20,9 +20,9 @@ export default function Header() {
   return (
     <div id="header" className="clearfix">
       <div className="container">
-        <div className="top-header">
+        {/* <div className="top-header">
           <DropdownLanguage />
-        </div>
+        </div> */}
         <div className="box-logo">
           {/* <a href="#test"><i className="fas fa-bars"></i></a> */}
           <NavLink to="/">

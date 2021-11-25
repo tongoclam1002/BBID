@@ -15,9 +15,6 @@ export default function DropdownLanguage() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     window.location.reload();
-    console.log(
-      languages.find((language) => language.key === i18n.language).value
-    );
   };
 
   const handleVisibleChange = (flag) => {
@@ -41,7 +38,9 @@ export default function DropdownLanguage() {
       visible={visible}
     >
       <span className="cursor-pointer">
-        {languages.find((language) => language.key === i18n.language).value}
+        {languages.find((language) => language.key === i18n.language)
+          ? languages.find((language) => language.key === i18n.language).value
+          : changeLanguage("vi")}
         <i className="ml-1 fas fa-chevron-down"></i>
       </span>
     </Dropdown>

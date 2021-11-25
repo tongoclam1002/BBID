@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Formik, Form } from "Formik";
+import { ErrorMessage, Field, Formik, Form } from "formik";
 import { t } from "i18next";
 import * as Yup from "yup";
 

@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationVI from "./app/locales/vi.json";
 import translationEN from "./app/locales/en.json";
-import LanguageDetector from 'i18next-browser-languagedetector';
+import LanguageDetector from "i18next-browser-languagedetector";
 // the translations
 const resources = {
   vi: {
@@ -26,11 +26,13 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
+    lng: "vi",
     resources,
-    fallbackLng: "vi",
-    debug: true,
-    interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
-    },
+    // fallbackLng: "vi",
+    debug: process.env.NODE_ENV === "development",
+    // interpolation: {
+    //   escapeValue: false, // not needed for react as it escapes by default
+    // },
+
   });
 export default i18n;

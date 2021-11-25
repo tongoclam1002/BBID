@@ -6,7 +6,7 @@ import CartSkeleton from "./CartSkeleton";
 import { history } from "../..";
 import toast from "../../app/utils/toast";
 import { selelctAllItemInStore } from "./cartSlice";
-import GoBackButton from "../../components/GoBackButton";
+// import GoBackButton from "../../components/GoBackButton";
 import { t } from "i18next";
 
 export default function CartPage() {

@@ -88,7 +88,6 @@ function filterSelected(state) {
             productList: store.productList.filter(product => product.isSelected === true)
         }
     });
-    console.log(state.selectedCart);
     state.totalPrice = getTotalPriceInCart(state.selectedCart)
 }
 
