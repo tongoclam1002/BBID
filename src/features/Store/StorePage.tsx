@@ -84,7 +84,7 @@ export default function StorePage() {
                   isLoading={status.includes("pending")}
                 >
                   {products.map((product) => (
-                    <Col lg={6} md={12} sm={24} key={product.productId}>
+                    <Col lg={6} md={12} sm={24} xs={24} key={product.productId}>
                       <ProductItem
                         key={product.productId}
                         productId={product.productId}

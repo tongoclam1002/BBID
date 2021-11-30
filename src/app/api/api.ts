@@ -44,7 +44,7 @@ const requests = {
 
 const Product = {
   list: (storeId: number) => requests.get(`Store/product/${storeId}`),
-  details: (productId: number) => requests.get(`Store/productdetail?productId=${productId}`),
+  details: (productId: number) => requests.get(`Store/Product?productId=${productId}`),
   position: (code: string) => requests.get(`Advertise/ProductPosition/${code}`)
 }
 
@@ -59,9 +59,9 @@ const Advertisement = {
 
 const Cart = {
   get: () => requests.get(`Business/CartDetail`),
-  addItem: (productId: number, quantity = 1) => requests.post(`Business/ProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}`, {}),
-  updateItem: (productId: number, quantity : number) => requests.put(`Business/ProductCart/Quantity?productDetailId=${productId}&quantity=${quantity}`, {}),
-  removeItem: (productId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productId=${productId}`)
+  addItem: (productId: number, quantity = 1, productDetailId: number) => requests.post(`Business/ProductToCart?cartId=${1}&productId=${productId}&quantity=${quantity}&productDetailId=${productDetailId}`, {}),
+  updateItem: (productDetailId: number, quantity : number) => requests.put(`Business/ProductCart/Quantity?productDetailId=${productDetailId}&quantity=${quantity}`, {}),
+  removeItem: (productDetailId: number) => requests.delete(`Business/ProductInCart?cartId=${1}&productDetailId=${productDetailId}`)
 }
 
 const Order = {

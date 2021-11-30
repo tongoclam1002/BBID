@@ -712,7 +712,6 @@ img[usemap] {
   clear: both;
 }
 .box-filter {
-  padding: 0 15px 15px 15px;
   border: 1px solid #e9e9e9;
   border-radius: 5px;
 }
@@ -1228,10 +1227,6 @@ img[usemap] {
   }
   #header .box-search {
     margin: 0;
-  }
-
-  .box-list-main.product li {
-    width: auto;
   }
   .box-info {
     margin-top: 15px;

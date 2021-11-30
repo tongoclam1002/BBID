@@ -28,20 +28,21 @@ export default function CheckoutPage() {
   }
 
   const onFinish = (values: any) => {
-    console.log(values);
+    // console.log(values);
     let productIds = [];
+    console.log(selectedCart);
     selectedCart.forEach((store) => {
       store.productList.forEach((product) => {
-        productIds.push(product.productId);
+        productIds.push(product.productDetailId);
       });
     });
     const body = {
       addressTo: values.address,
       receiverName: values.name,
       receiverNNumber: values.phone,
-      productList: productIds,
+      productDetails: productIds,
     };
-    if (productIds === []) {
+    if (productIds !== []) {
       api.Order.createOrder(body)
         .then(() => {
           history.push("/checkout/success");
@@ -172,7 +173,7 @@ export default function CheckoutPage() {
             </span>
           </p>
           <p className="form-group clearfix">
-          {t("order.SHIPPING_FEE")}
+            {t("order.SHIPPING_FEE")}
             <span className="float-right">
               {totalShippingFee?.toLocaleString("vi-VN")}đ
             </span>

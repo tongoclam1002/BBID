@@ -1,7 +1,9 @@
 import { Card, Col, Row, Tabs } from "antd";
+import Text from "antd/lib/typography/Text";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 import api from "../../app/api/api";
+import PriceAndDiscountPrice from "../../components/PriceAndDiscountPrice";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState(null);
@@ -18,7 +20,12 @@ export default function OrderPage() {
     <>
       {/* <Card className="box-process mb-3 w-100"> */}
       <Card className="mb-3 p-0">
-        <Tabs className="tabs-custom" defaultActiveKey="1" onChange={callback} size="large">
+        <Tabs
+          className="tabs-custom"
+          defaultActiveKey="1"
+          onChange={callback}
+          size="large"
+        >
           <TabPane tab={t("orderStatus.ALL")} key="1">
             {/* Content of Tab Pane 1 */}
           </TabPane>
@@ -87,7 +94,16 @@ export default function OrderPage() {
                               src={product.mediaLink}
                             />
                           </td>
-                          <td>{product.name}</td>
+                          <td>
+                            {product.name}
+                            <div>
+                              <Text type="secondary">
+                                {`${product.color ? product.color : ""} ${
+                                  product.size && product.color ? "-" : ""
+                                } ${product.size ? product.size : ""}`}
+                              </Text>
+                            </div>
+                          </td>
                           {/* <td>
                             <span className="box-input">
                               <i className="fas fa-square-full is_brown"></i>
@@ -95,12 +111,10 @@ export default function OrderPage() {
                           </td> */}
                           <td>{product.quantity}</td>
                           <td>
-                            <strong>
-                              {(
-                                product.quantity * product.price
-                              ).toLocaleString("vi-VN")}
-                              đ
-                            </strong>
+                            <PriceAndDiscountPrice
+                              price={product.quantity * product.price}
+                              discountPrice={product.quantity * product.discountPrice}
+                            />
                           </td>
                         </tr>
                       ))}

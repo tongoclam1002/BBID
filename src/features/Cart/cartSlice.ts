@@ -30,11 +30,11 @@ export const fetchCartAsync = createAsyncThunk<any>(
     }
 )
 
-export const addCartItemAsync = createAsyncThunk<any, { productId: number, quantity?: number }>(
+export const addCartItemAsync = createAsyncThunk<any, { productId: number, quantity?: number, productDetailId: number }>(
     'cart/addCartItemAsync',
-    async ({ productId, quantity }, thunkAPI) => {
+    async ({ productId, quantity, productDetailId }, thunkAPI) => {
         try {
-            return await api.Cart.addItem(productId, quantity).then(async () => {
+            return await api.Cart.addItem(productId, quantity, productDetailId).then(async () => {
                 return api.Cart.get().then(cart => {
                     toast.success(t("message.ADD_CART_ITEM_SUCCESS_MESSAGE"), 0.5);
                     return cart.data
@@ -46,22 +46,22 @@ export const addCartItemAsync = createAsyncThunk<any, { productId: number, quant
     }
 )
 
-export const updateCartItemAsync = createAsyncThunk<Cart, { productId: number, quantity: number, name?: string }>(
+export const updateCartItemAsync = createAsyncThunk<Cart, { productDetailId: number, quantity: number, name?: string }>(
     'cart/updateCartItemAsync',
-    async ({ productId, quantity }, thunkAPI) => {
+    async ({ productDetailId, quantity }, thunkAPI) => {
         try {
-            return await api.Cart.updateItem(productId, quantity)
+            return await api.Cart.updateItem(productDetailId, quantity)
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
         }
     }
 )
 
-export const removeCartItemAsync = createAsyncThunk<void, { productId: number, quantity?: number }>(
+export const removeCartItemAsync = createAsyncThunk<void, { productDetailId: number, quantity?: number }>(
     'cart/removeCartItemAsync',
-    async ({ productId }, thunkAPI) => {
+    async ({ productDetailId }, thunkAPI) => {
         try {
-            await api.Cart.removeItem(productId);
+            await api.Cart.removeItem(productDetailId);
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
         }
@@ -98,6 +98,7 @@ function setCartState(state, action) {
         storeList: groupBy(action.payload.productLists, "storeId", "productList")
     }
     filterSelected(state);
+    console.log(state.cart);
 }
 
 export const cartSlice = createSlice({
@@ -109,7 +110,7 @@ export const cartSlice = createSlice({
         },
         selectItem: (state, action) => {
             state.cart.storeList.forEach(store => {
-                const itemIndex = store.productList.findIndex(i => i.productId === action.payload);
+                const itemIndex = store.productList.findIndex(i => i.productDetailId === action.payload);
                 if (itemIndex === -1 || itemIndex === undefined) return;
                 store.productList[itemIndex] =
                 {
@@ -165,12 +166,12 @@ export const cartSlice = createSlice({
 
         //removeCartItemAsync
         builder.addCase(removeCartItemAsync.pending, (state, action) => {
-            state.status = "pendingRemoveItem" + action.meta.arg.productId;
+            state.status = "pendingRemoveItem" + action.meta.arg.productDetailId;
         });
         builder.addCase(removeCartItemAsync.fulfilled, (state, action) => {
             state.cart.storeList.forEach((store, index) => {
-                const { productId } = action.meta.arg;
-                const itemIndex = store.productList.findIndex(i => i.productId === productId);
+                const { productDetailId } = action.meta.arg;
+                const itemIndex = store.productList.findIndex(i => i.productDetailId === productDetailId);
                 if (itemIndex === -1 || itemIndex === undefined) return;
                 store.productList.splice(itemIndex, 1);
                 if (store.productList.length === 0) state.cart.storeList.splice(index, 1);
@@ -184,12 +185,12 @@ export const cartSlice = createSlice({
 
         //updateCartItemAsync
         builder.addCase(updateCartItemAsync.pending, (state, action) => {
-            state.status = "pendingUpdateItem" + action.meta.arg.productId + action.meta.arg.name;
+            state.status = "pendingUpdateItem" + action.meta.arg.productDetailId + action.meta.arg.name;
         });
         builder.addCase(updateCartItemAsync.fulfilled, (state, action) => {
-            const { productId, quantity } = action.meta.arg;
+            const { productDetailId, quantity } = action.meta.arg;
             state.cart.storeList.forEach(store => {
-                const itemIndex = store.productList.findIndex(i => i.productId === productId);
+                const itemIndex = store.productList.findIndex(i => i.productDetailId === productDetailId);
                 if (itemIndex === -1 || itemIndex === undefined) return;
                 store.productList[itemIndex].quantity = quantity;
             });

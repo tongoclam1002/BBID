@@ -31,7 +31,7 @@ export default function Home() {
         >
           {stores &&
             stores.map((store) => (
-              <Col lg={6} md={12} sm={24} key={store.storeId}>
+              <Col lg={6} md={12} sm={24} xs={24} key={store.storeId}>
                 <StoreItem
                   key={store.storeId}
                   image={store.logo}

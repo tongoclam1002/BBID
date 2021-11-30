@@ -20,17 +20,17 @@ export default function CartItem({ item }) {
     if (e.target.value > 0 && value !== e.target.value)
       dispatch(
         updateCartItemAsync({
-          productId: item?.productId,
+          productDetailId: item?.productDetailId,
           quantity: e.target.value,
         })
       );
   }
 
-  function updateCartItemQuantity(productId, quantity, name) {
+  function updateCartItemQuantity(productDetailId, quantity, name) {
     if (quantity > 0)
       dispatch(
         updateCartItemAsync({
-          productId: productId,
+          productDetailId: productDetailId,
           quantity: quantity,
           name: name,
         })
@@ -42,7 +42,7 @@ export default function CartItem({ item }) {
       <td>
         <Checkbox
           checked={item.isSelected}
-          onChange={() => dispatch(selectItem(item.productId))}
+          onChange={() => dispatch(selectItem(item.productDetailId))}
         ></Checkbox>
       </td>
       <td>
@@ -54,27 +54,32 @@ export default function CartItem({ item }) {
         <Link to={`/store/${item.storeId}/product/${item.productId}`}>
           <Text>{item.productName}</Text>
         </Link>
+        <div>
+          <Text type="secondary">{`${item.color ? item.color : ""} ${
+            item.size && item.color ? "-" : ""
+          } ${item.size ? item.size : ""}`}</Text>
+        </div>
       </td>
       <td>
         <IncreaseDecreaseInput
           onBlur={(e) => onBlur(e, item.quantity)}
           loadingIncrease={
-            status === "pendingUpdateItem" + item.productId + "increase"
+            status === "pendingUpdateItem" + item.productDetailId + "increase"
           }
           loadingDecrease={
-            status === "pendingUpdateItem" + item.productId + "decrease"
+            status === "pendingUpdateItem" + item.productDetailId + "decrease"
           }
           value={item.quantity}
           increaseValue={() =>
             updateCartItemQuantity(
-              item?.productId,
+              item?.productDetailId,
               item.quantity + 1,
               "increase"
             )
           }
           decreaseValue={() =>
             updateCartItemQuantity(
-              item?.productId,
+              item?.productDetailId,
               item.quantity - 1,
               "decrease"
             )
@@ -98,11 +103,11 @@ export default function CartItem({ item }) {
       <td>
         <Button
           icon={<Text type="danger">{t("common.DELETE")}</Text>}
-          loading={status === "pendingRemoveItem" + item.productId}
+          loading={status === "pendingRemoveItem" + item.productDetailId}
           onClick={() =>
             dispatch(
               removeCartItemAsync({
-                productId: item?.productId,
+                productDetailId: item?.productDetailId,
                 quantity: item.quantity,
               })
             )

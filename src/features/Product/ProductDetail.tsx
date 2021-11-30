@@ -1,17 +1,28 @@
-import { Button, Card } from "antd";
+import { Button, Card, Select } from "antd";
 import { addCartItemAsync } from "../Cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { t } from "i18next";
+import { useEffect, useState } from "react";
 // import { history } from "../..";
 
 export default function ProductDetail({ product }) {
   const { status } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
+  const { Option } = Select;
+  const [productDetailIdSelected, setproductDetailIdSelected] = useState();
 
-  function handlePurchaseItem(productId: number) {
-    dispatch(addCartItemAsync({ productId: product.productId }));
-    // history.push(`/cart`);
+  function handlePurchaseItem() {
+    dispatch(
+      addCartItemAsync({
+        productId: product.productId,
+        productDetailId: productDetailIdSelected,
+      })
+    );
     window.open(`/cart`);
+  }
+
+  function handleChange(value) {
+    setproductDetailIdSelected(value);
   }
 
   return (
@@ -63,6 +74,20 @@ export default function ProductDetail({ product }) {
                   <div className="mt-3">
                     <strong>{t("common.DETAILS")}</strong>
                     <div className="mt-2 mb-4">{product.description}</div>
+                    <Select
+                      defaultValue="Chọn phân loại hàng"
+                      style={{ width: 120 }}
+                      onChange={handleChange}
+                      className="mb-2"
+                    >
+                      {product.productDetails?.map((detail, key) => (
+                        <Option key={key} value={detail.productDetailId}>{`${
+                          detail.color ? detail.color : ""
+                        } ${detail.size && detail.color ? "-" : ""} ${
+                          detail.size ? detail.size : ""
+                        }`}</Option>
+                      ))}
+                    </Select>
                   </div>
                   {/* <Collapse defaultActiveKey={["1"]} ghost>
                     <Collapse.Panel header="Chi tiết" key="1">
@@ -74,7 +99,7 @@ export default function ProductDetail({ product }) {
                   <Button
                     className="btn btn-primary green text-white text-uppercase font-weight-bold"
                     size="large"
-                    onClick={() => handlePurchaseItem(product?.productId)}
+                    onClick={() => handlePurchaseItem()}
                   >
                     {t("common.BUY_NOW")}
                   </Button>
@@ -87,7 +112,10 @@ export default function ProductDetail({ product }) {
                     )}
                     onClick={() =>
                       dispatch(
-                        addCartItemAsync({ productId: product.productId })
+                        addCartItemAsync({
+                          productId: product.productId,
+                          productDetailId: productDetailIdSelected,
+                        })
                       )
                     }
                     style={{ color: "#70b775" }}
