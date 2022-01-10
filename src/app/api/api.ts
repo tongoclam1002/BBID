@@ -110,7 +110,7 @@ const Order = {
 
 const Account = {
   login: (values: any) => requests.post(`Account`, values),
-  register: (values: any) => requests.post(``, values),
+  register: (values: any) => requests.post(`Account/Register`, values),
   get: () => requests.get(``),
   logout: () => requests.post(``, {}),
   currentUser: () => requests.get(`Account/GetUserInfo`),

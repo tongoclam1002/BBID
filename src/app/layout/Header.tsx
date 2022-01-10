@@ -36,7 +36,7 @@ export default function Header({ showModal }) {
               <SignedInMenu />
             ) : (
               <li>
-                <Button type="link" onClick={showModal}>
+                <Button className="primary-color"  type="link" onClick={showModal}>
                   {t("auth.SIGN_IN")}
                 </Button>
               </li>

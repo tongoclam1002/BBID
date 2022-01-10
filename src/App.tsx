@@ -6,7 +6,7 @@ import routes from "./route-config";
 import BreadCrumbs from "./app/layout/BreadCrumbs";
 import Video from "./features/VirtualMall/PanelPage";
 import NotFound from "./app/errors/NotFound";
-import { useAppDispatch } from "./app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "./app/store/configureStore";
 import { useCallback, useEffect } from "react";
 import { fetchCartAsync } from "./features/Cart/cartSlice";
 import ProfileLayout from "./app/layout/ProfileLayout";
@@ -15,7 +15,7 @@ import { fetchCurrentUser } from "./features/Account/accountSlice";
 
 function App() {
   const dispatch = useAppDispatch();
-
+  const { user } = useAppSelector((state) => state.account);
   const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
@@ -53,12 +53,14 @@ function App() {
             // crumbs.map(({ title, path }) => console.log({ title, path }));
             return (
               <div key={route.path}>
-                <Layout>
+                <Layout isOpenLoginModal={route.isProfile && !user}>
                   <BreadCrumbs key={route.path} crumbs={crumbs} />
                   {route.isProfile ? (
-                    <ProfileLayout>
-                      <route.Component {...props} />
-                    </ProfileLayout>
+                    !user ? null : (
+                      <ProfileLayout>
+                        <route.Component {...props} />
+                      </ProfileLayout>
+                    )
                   ) : (
                     <route.Component {...props} />
                   )}
@@ -75,7 +77,7 @@ function App() {
         <ProductPosition />
       </Route>
       <Route>
-        <Layout>
+        <Layout isOpenLoginModal={false}>
           <NotFound />
         </Layout>
       </Route>

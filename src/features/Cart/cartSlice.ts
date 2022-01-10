@@ -135,6 +135,9 @@ export const cartSlice = createSlice({
     setCart: (state, action) => {
       setCartState(state, action);
     },
+    clearCart: (state) => {
+      state.cart = null;
+    },
     selectItem: (state, action) => {
       state.cart.storeList.forEach((store) => {
         const itemIndex = store.productList.findIndex(
@@ -239,4 +242,4 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { setCart, selectItem, selelctAllItemInStore } = cartSlice.actions;
+export const { setCart, selectItem, selelctAllItemInStore, clearCart } = cartSlice.actions;

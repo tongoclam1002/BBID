@@ -1,19 +1,24 @@
-import { Modal } from "antd";
+import { Modal, Typography } from "antd";
 import { t } from "i18next";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { login } from "../../features/Account/accountSlice";
 import LoginForm from "../../features/Account/LoginForm";
+import RegisterForm from "../../features/Account/RegisterForm";
+import { fetchCartAsync } from "../../features/Cart/cartSlice";
+import api from "../api/api";
 import { useAppDispatch } from "../store/configureStore";
 import toast from "../utils/toast";
 import Header from "./Header";
 
 export default function Layout(props: layoutProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { Link } = Typography;
+  const [isModalVisible, setIsModalVisible] = useState(props.isOpenLoginModal);
   const [errorLogin, setErrorLogin] = useState();
+  const [isRegister, setRegister] = useState(false);
   const dispatch = useAppDispatch();
 
-  async function submitForm(data: FieldValues) {
+  async function submitLogin(data: FieldValues) {
     await dispatch(login(data))
       .then((response: any) => {
         if (!response.payload.token) {
@@ -21,9 +26,14 @@ export default function Layout(props: layoutProps) {
         } else {
           setErrorLogin(null);
           handleCancel();
+          dispatch(fetchCartAsync());
         }
       })
       .catch((error) => console.log(error));
+  }
+
+  async function submitRegister(data: FieldValues) {
+    await api.Account.register(data).then(() => console.log("success"));
   }
 
   const onFinishFailed = () => {
@@ -41,6 +51,10 @@ export default function Layout(props: layoutProps) {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const onChangeRegister = () => {
+    setRegister(!isRegister);
   };
 
   // async function onFinish(data: FieldValues) {
@@ -66,12 +80,41 @@ export default function Layout(props: layoutProps) {
         onCancel={handleCancel}
         footer={null}
       >
-        <LoginForm
-          onFinish={submitForm}
-          onFinishFailed={onFinishFailed}
-          error={errorLogin}
-          // form = {{register, handleSubmit, formState: {isSubmitting}}}
-        />
+        {!isRegister ? (
+          <>
+            <LoginForm
+              onFinish={submitLogin}
+              onFinishFailed={onFinishFailed}
+              error={errorLogin}
+            />
+            <div className="text-center">
+              {t("auth.DO_NOT_HAVE_AN_ACCOUNT")}{" "}
+              <Link
+                className="primary-color"
+                onClick={() => onChangeRegister()}
+              >
+                {t("auth.REGISTER")}
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <RegisterForm
+              onFinish={submitRegister}
+              onFinishFailed={onFinishFailed}
+              error={errorLogin}
+            />
+            <div className="text-center">
+              {t("auth.ALREADY_HAVE_AN_ACCOUNT")}{" "}
+              <Link
+                className="primary-color"
+                onClick={() => onChangeRegister()}
+              >
+                {t("auth.SIGN_IN")}
+              </Link>
+            </div>
+          </>
+        )}
       </Modal>
     </>
   );
@@ -79,4 +122,5 @@ export default function Layout(props: layoutProps) {
 
 interface layoutProps {
   children?: React.ReactNode;
+  isOpenLoginModal: boolean;
 }

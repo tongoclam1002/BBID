@@ -2,6 +2,8 @@ import api from "../../app/api/api";
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { FieldValues } from "react-hook-form";
 import { User } from "../../app/interfaces/user.interface";
+import { fetchCartAsync } from "../Cart/cartSlice";
+import { useAppDispatch } from "../../app/store/configureStore";
 
 const token = JSON.parse(localStorage.getItem("token"));
 
@@ -73,17 +75,16 @@ export const accountSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchCurrentUser.rejected, (state) => {
+      state.user = null;
+      localStorage.removeItem("user");
+    });
     builder.addMatcher(isAnyOf(login.fulfilled), (state, action) => {
       state.user = action.payload;
     });
     builder.addMatcher(isAnyOf(login.rejected), (state, action) => {
       console.log(action.payload);
     });
-
-    builder.addCase(fetchCurrentUser.rejected, (state) => {
-      state.user = null;
-      localStorage.removeItem("user");
-    })
   },
 });
 

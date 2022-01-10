@@ -51,7 +51,9 @@
     "PASSWORD": "Mật khẩu",
     "CONFIRM_PASSWORD": "Xác nhận mật khẩu",
     "REGISTER": "Đăng ký",
-    "SIGN_OUT": "Đăng xuất"
+    "SIGN_OUT": "Đăng xuất",
+    "ALREADY_HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?",
+    "DO_NOT_HAVE_AN_ACCOUNT": "Bạn chưa có tài khoản?"
   },
   "profileMenu": {
     "ORDER": "Đơn hàng của tôi"

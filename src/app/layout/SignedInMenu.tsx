@@ -2,6 +2,7 @@ import { Dropdown, Menu } from "antd";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { signOut } from "../../features/Account/accountSlice";
+import { clearCart } from "../../features/Cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
 
 export default function SignedInMenu() {
@@ -13,7 +14,13 @@ export default function SignedInMenu() {
       <Menu.Item key="1">
         <Link to="/order">{t("profileMenu.ORDER")}</Link>
       </Menu.Item>
-      <Menu.Item key="2" onClick={() => dispatch(signOut())}>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          dispatch(signOut());
+          dispatch(clearCart());
+        }}
+      >
         {t("auth.SIGN_OUT")}
       </Menu.Item>
     </Menu>
