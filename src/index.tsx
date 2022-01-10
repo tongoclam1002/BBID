@@ -9,9 +9,11 @@ import { Provider } from 'react-redux';
 import { store } from './app/store/configureStore';
 import ScrollToTop from './components/ScrollToTop';
 import './i18n';
+import { injectStore } from './app/api/api';
 
 export const history = createBrowserHistory();
 
+injectStore(store);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,7 +2,10 @@ import { Button, Card, Select } from "antd";
 import { addCartItemAsync } from "../Cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { t } from "i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { ProductDetail as ProductDetailInterface } from "../../app/interfaces/product.interface";
+import toast from "../../app/utils/toast";
+
 // import { history } from "../..";
 
 export default function ProductDetail({ product }) {
@@ -10,19 +13,41 @@ export default function ProductDetail({ product }) {
   const dispatch = useAppDispatch();
   const { Option } = Select;
   const [productDetailIdSelected, setproductDetailIdSelected] = useState();
+  const [productDetailSelected, setproductDetailSelected] =
+    useState<ProductDetailInterface>();
 
   function handlePurchaseItem() {
-    dispatch(
-      addCartItemAsync({
-        productId: product.productId,
-        productDetailId: productDetailIdSelected,
-      })
-    );
-    window.open(`/cart`);
+    if (productDetailIdSelected) {
+      dispatch(
+        addCartItemAsync({
+          productId: product.productId,
+          productDetailId: productDetailIdSelected,
+        })
+      );
+      window.open(`/cart`);
+    } else {
+      toast.warning(t("message.EMPTY_PRODUCT_TYPE"), 0.5);
+    }
+  }
+
+  function addProductToCart() {
+    if (productDetailIdSelected) {
+      dispatch(
+        addCartItemAsync({
+          productId: product.productId,
+          productDetailId: productDetailIdSelected,
+        })
+      );
+    } else {
+      toast.warning(t("message.EMPTY_PRODUCT_TYPE"), 0.5);
+    }
   }
 
   function handleChange(value) {
     setproductDetailIdSelected(value);
+    setproductDetailSelected(
+      product.productDetails.find((detail) => detail.productDetailId === value)
+    );
   }
 
   return (
@@ -65,7 +90,11 @@ export default function ProductDetail({ product }) {
                   </h4>
                   <div className="title">
                     <strong>
-                      {product.price > 0
+                      {productDetailSelected
+                        ? productDetailSelected.price > 0
+                          ? productDetailSelected.price.toLocaleString("vi-VN")
+                          : 0
+                        : product.price > 0
                         ? product.price.toLocaleString("vi-VN")
                         : 0}
                       đ
@@ -75,8 +104,8 @@ export default function ProductDetail({ product }) {
                     <strong>{t("common.DETAILS")}</strong>
                     <div className="mt-2 mb-4">{product.description}</div>
                     <Select
-                      defaultValue="Chọn phân loại hàng"
-                      style={{ width: 120 }}
+                      defaultValue="Chọn loại"
+                      style={{ width: 200 }}
                       onChange={handleChange}
                       className="mb-2"
                     >
@@ -110,14 +139,7 @@ export default function ProductDetail({ product }) {
                     loading={status.includes(
                       "pendingAddItem" + product.productId
                     )}
-                    onClick={() =>
-                      dispatch(
-                        addCartItemAsync({
-                          productId: product.productId,
-                          productDetailId: productDetailIdSelected,
-                        })
-                      )
-                    }
+                    onClick={() => addProductToCart()}
                     style={{ color: "#70b775" }}
                     ghost
                   />
@@ -137,14 +159,6 @@ export default function ProductDetail({ product }) {
               </div>
             </div>
           </Card>
-
-          {/* <Card title="CHI TIẾT SẢN PHẨM">
-            <div className="row">
-              <div className="col-12">
-                <p>{product.description}</p>
-              </div>
-            </div>
-          </Card> */}
         </div>
       )}
     </>

@@ -45,8 +45,21 @@
     "COMPLETED": "Đã giao",
     "CANCELLED": "Đã hủy"
   },
+  "auth": {
+    "SIGN_IN": "Đăng nhập",
+    "USERNAME": "Tên đăng nhập",
+    "PASSWORD": "Mật khẩu",
+    "CONFIRM_PASSWORD": "Xác nhận mật khẩu",
+    "REGISTER": "Đăng ký",
+    "SIGN_OUT": "Đăng xuất"
+  },
   "profileMenu": {
     "ORDER": "Đơn hàng của tôi"
+  },
+  "comment": {
+    "TEXTAREA_COMMENT": "Hãy viết nhận xét của bạn về sản phẩm...",
+    "POST": "Đánh giá"
+
   },
   "common": {
     "COMMENT": "bình luận",
@@ -62,7 +75,10 @@
   "validationMessage": {
     "EMPTY_RECEIVER_NAME": "Vui lòng nhập Họ và tên người nhận",
     "EMPTY_ADDRESS": "Vui lòng nhập Địa chỉ",
-    "EMPTY_PHONE": "Vui lòng nhập Số điện thoại"
+    "EMPTY_PHONE": "Vui lòng nhập Số điện thoại",
+    "EMPTY_USERNAME": "Vui lòng nhập Tên đăng nhập",
+    "EMPTY_PASSWORD": "Vui lòng nhập Mật khẩu",
+    "EMPTY_CONFIRM_PASSWORD": "Vui lòng xác nhận lại mật khẩu"
   },
   "message": {
     "ADD_CART_ITEM_SUCCESS_MESSAGE": "Sản phẩm đã được thêm vào Giỏ hàng",
@@ -74,6 +90,10 @@
     "EMPTY_SELECTED_PRODUCT_IN_CART": "Chưa có sản phẩm nào được chọn trong Giỏ hàng của bạn",
     "EMPTY_DESCRIPTION": "Chưa có mô tả",
     "EMPTY_CART_ITEM_SELECTED": "Bạn vui lòng chọn sản phẩm để tiến hành đặt hàng",
-    "EMPTY_CHECKOUT_INFO": "Bạn vui lòng điền đầy đủ thông tin nhận hàng"
+    "EMPTY_CHECKOUT_INFO": "Bạn vui lòng điền đầy đủ thông tin nhận hàng",
+    "EMPTY_PRODUCT_TYPE": "Vui lòng chọn loại sản phẩm"
+  },
+  "errorMessage": {
+    "INCORRECT_AUTHENCTICATION": "Tên đăng nhập hoặc mật khẩu không chính xác"
   }
 }

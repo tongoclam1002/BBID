@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Formik, Form } from "formik";
 import { t } from "i18next";
 import * as Yup from "yup";
 
-const CheckoutSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   name: Yup.string().required(t("validationMessage.EMPTY_RECEIVER_NAME")),
   address: Yup.string().required(t("validationMessage.EMPTY_ADDRESS")),
   phone: Yup.string().required(t("validationMessage.EMPTY_PHONE")),
@@ -17,7 +17,7 @@ export default function AddressForm({ onFinish, onFinishFailed, form }) {
           phone: "",
           address: "",
         }}
-        validationSchema={CheckoutSchema}
+        validationSchema={validationSchema}
         onSubmit={onFinish}
       >
         {({ errors, touched }) => (

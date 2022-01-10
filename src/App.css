@@ -1244,3 +1244,15 @@ img[usemap] {
     margin: 0;
   }
 }
+
+/****** CUSTOM MODAL STYLES ******/
+.modal-custom .ant-modal-title {
+  font-weight: bold;
+}
+/*****END CUSTOM MODAL STYLES ******/
+
+/****** CUSTOM FORM STYLES ******/
+.form-custom label {
+  font-weight: bold;
+}
+/*****END CUSTOM FORM STYLES ******/

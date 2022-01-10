@@ -36,14 +36,14 @@ export default function CheckoutPage() {
         productIds.push(product.productDetailId);
       });
     });
-    const body = {
-      addressTo: values.address,
-      receiverName: values.name,
-      receiverNNumber: values.phone,
-      productDetails: productIds,
-    };
+
     if (productIds !== []) {
-      api.Order.createOrder(body)
+      api.Order.createOrder(
+        values.address,
+        values.name,
+        values.phone,
+        productIds
+      )
         .then(() => {
           history.push("/checkout/success");
           dispatch(fetchCartAsync());

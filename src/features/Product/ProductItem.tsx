@@ -1,13 +1,8 @@
-// import { Button } from "antd";
 import { Link } from "react-router-dom";
-// import { addCartItemAsync } from "../Cart/cartSlice";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { Product } from "../../app/interfaces/product.interface";
 import Text from "antd/lib/typography/Text";
 
 export default function ProductItem(props: Props) {
-  const { status } = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
 
   return (
     <li>

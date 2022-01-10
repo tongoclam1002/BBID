@@ -25,11 +25,11 @@ export const fetchOrdersAsync = createAsyncThunk(
     }
 )
 
-export const createOrderAsync = createAsyncThunk(
+export const createOrderAsync = createAsyncThunk<any, {addressTo, receiverName, receiverNNumber, productDetails}>(
     'order/createOrderAsync',
-    async (body, thunkAPI) => {
+    async ({addressTo, receiverName, receiverNNumber, productDetails}, thunkAPI) => {
         try {
-            return await api.Order.createOrder(body).then(response => response.data)
+            return await api.Order.createOrder(addressTo, receiverName, receiverNNumber, productDetails).then(response => response.data)
         } catch (error) {
             return thunkAPI.rejectWithValue({error: error.data})
         }

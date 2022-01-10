@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { Button, Card, Checkbox, Col, Empty, Row } from "antd";
+import { Button, Card, Checkbox, Col, Empty, Input, Row } from "antd";
 import CartSkeleton from "./CartSkeleton";
 import { history } from "../..";
 import toast from "../../app/utils/toast";
@@ -74,26 +74,31 @@ export default function CartPage() {
       </Col>
       <Col span={24} id="checkout-info">
         <Card className="box-total" id="checkout-info">
-            <Row className="container">
-              <Col lg={16} md={24} sm={24}>
-                <div style={{ textAlign: "right", marginRight: "24px" }}>
-                  <h4>{t("order.ORDER_INFORMATION")}</h4>
-                  <div>
-                  {t("order.TOTAL_PRICE")}:{" "}
-                    <strong>{totalPrice?.toLocaleString("vi-VN")}đ</strong>
-                  </div>
+          <Row className="container">
+            <Col lg={16} md={24} sm={24}>
+              <div style={{ textAlign: "right", marginRight: "24px" }}>
+                <h4>{t("order.ORDER_INFORMATION")}</h4>
+                <div className="mb-2">
+                  <span className="mr-2">Mã giảm giá:</span>
+                  <Input className="mr-2" style={{ width: 200 }}></Input>
+                  <Button>Áp dụng</Button>
                 </div>
-              </Col>
-              <Col lg={8} md={24} sm={24} style={{ alignSelf: "center" }}>
-                <Button
-                  size="large"
-                  className="btn btn-primary green text-white text-uppercase w-100 font-weight-bold"
-                  onClick={() => onCheckout()}
-                >
-                  {t("order.CHECKOUT")}
-                </Button>
-              </Col>
-            </Row>
+                <div>
+                  {t("order.TOTAL_PRICE")}:{" "}
+                  <strong>{totalPrice?.toLocaleString("vi-VN")}đ</strong>
+                </div>
+              </div>
+            </Col>
+            <Col lg={8} md={24} sm={24} style={{ alignSelf: "center" }}>
+              <Button
+                size="large"
+                className="btn btn-primary green text-white text-uppercase w-100 font-weight-bold"
+                onClick={() => onCheckout()}
+              >
+                {t("order.CHECKOUT")}
+              </Button>
+            </Col>
+          </Row>
         </Card>
       </Col>
     </Row>

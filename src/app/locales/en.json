@@ -45,8 +45,20 @@
     "COMPLETED": "Completed",
     "CANCELLED": "Cancelled"
   },
+  "auth": {
+    "SIGN_IN": "Sign in",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "REGISTER": "Register",
+    "SIGN_OUT": "Sign out"
+  },
   "profileMenu": {
     "ORDER": "My Orders"
+  },
+  "comment": {
+    "TEXTAREA_COMMENT": "Write your reviews about the product...",
+    "POST": "Post"
   },
   "common": {
     "COMMENT": "comment",
@@ -62,7 +74,10 @@
   "validationMessage": {
     "EMPTY_RECEIVER_NAME": "Please fill out Full name",
     "EMPTY_ADDRESS": "Please fill out Address",
-    "EMPTY_PHONE": "Please fill out Phone number"
+    "EMPTY_PHONE": "Please fill out Phone number",
+    "EMPTY_USERNAME": "Please fill out Username",
+    "EMPTY_PASSWORD": "Please fill out Password",
+    "EMPTY_CONFIRM_PASSWORD": "Please confirm the password"
   },
   "message": {
     "ADD_CART_ITEM_SUCCESS_MESSAGE": "The product has been added to Cart",
@@ -74,6 +89,10 @@
     "EMPTY_SELECTED_PRODUCT_IN_CART": "There are no products selected in your shopping cart",
     "EMPTY_DESCRIPTION": "No description yet",
     "EMPTY_CART_ITEM_SELECTED": "Please select a product to check out",
-    "EMPTY_CHECKOUT_INFO": "Please fill in the delivery information completely"
+    "EMPTY_CHECKOUT_INFO": "Please fill in the delivery information completely",
+    "EMPTY_PRODUCT_TYPE": "Please select product type"
+  },
+  "errorMessage": {
+    "INCORRECT_AUTHENCTICATION": "Username or password incorrect                                            "
   }
 }

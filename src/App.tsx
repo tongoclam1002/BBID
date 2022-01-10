@@ -7,17 +7,27 @@ import BreadCrumbs from "./app/layout/BreadCrumbs";
 import Video from "./features/VirtualMall/PanelPage";
 import NotFound from "./app/errors/NotFound";
 import { useAppDispatch } from "./app/store/configureStore";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { fetchCartAsync } from "./features/Cart/cartSlice";
 import ProfileLayout from "./app/layout/ProfileLayout";
 import ProductPosition from "./features/VirtualMall/ProductPostionPage";
+import { fetchCurrentUser } from "./features/Account/accountSlice";
 
 function App() {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchCartAsync());
+  const initApp = useCallback(async () => {
+    try {
+      await dispatch(fetchCurrentUser());
+      await dispatch(fetchCartAsync());
+    } catch (error) {
+      console.log(error);
+    }
   }, [dispatch]);
+
+  useEffect(() => {
+    initApp();
+  }, [initApp]);
 
   return (
     <Switch>
