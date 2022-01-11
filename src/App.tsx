@@ -7,19 +7,27 @@ import BreadCrumbs from "./app/layout/BreadCrumbs";
 import Video from "./features/VirtualMall/PanelPage";
 import NotFound from "./app/errors/NotFound";
 import { useAppDispatch, useAppSelector } from "./app/store/configureStore";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchCartAsync } from "./features/Cart/cartSlice";
 import ProfileLayout from "./app/layout/ProfileLayout";
 import ProductPosition from "./features/VirtualMall/ProductPostionPage";
 import { fetchCurrentUser } from "./features/Account/accountSlice";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
+const antIcon = (
+  <LoadingOutlined style={{ fontSize: 24, color: "#70b775" }} spin />
+);
 
 function App() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.account);
+  const [isLoading, setIsLoading] = useState(true);
   const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
       await dispatch(fetchCartAsync());
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -53,18 +61,29 @@ function App() {
             // crumbs.map(({ title, path }) => console.log({ title, path }));
             return (
               <div key={route.path}>
-                <Layout isOpenLoginModal={route.isProfile && !user}>
-                  <BreadCrumbs key={route.path} crumbs={crumbs} />
-                  {route.isProfile ? (
-                    !user ? null : (
-                      <ProfileLayout>
+                {!isLoading ? (
+                  <>
+                    <Layout
+                      isOpenLoginModal={!isLoading && route.isPrivate && !user}
+                    >
+                      <BreadCrumbs key={route.path} crumbs={crumbs} />
+                      {route.isPrivate && !user ? null : route.isProfile ? (
+                        <ProfileLayout>
+                          <route.Component {...props} />
+                        </ProfileLayout>
+                      ) : (
                         <route.Component {...props} />
-                      </ProfileLayout>
-                    )
-                  ) : (
-                    <route.Component {...props} />
-                  )}
-                </Layout>
+                      )}
+                    </Layout>
+                  </>
+                ) : (
+                  <div
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ height: "75vh" }}
+                  >
+                    <Spin indicator={antIcon} />
+                  </div>
+                )}
               </div>
             );
           }}

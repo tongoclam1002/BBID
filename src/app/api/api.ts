@@ -66,6 +66,16 @@ const Product = {
     requests.get(`Store/Product?productId=${productId}`),
   position: (code: string) => requests.get(`Advertise/ProductPosition/${code}`),
   rate: () => requests.post(``, {}),
+  search: (
+    productKeyword: string,
+    categoryIds: number[],
+    SortType: string,
+    PageNumber: number,
+    PageSize: number
+  ) =>
+    requests.get(
+      `Store/Product/Filter?productKeyword=${productKeyword}&categoryIds=1&categoryIds=2&SortType=${SortType}&PageNumber=${PageNumber}&PageSize=${PageSize}`
+    ),
 };
 
 const Store = {

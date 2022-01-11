@@ -5,6 +5,7 @@ import { storeSlice } from "../../features/Store/storeSlice";
 import { productSlice } from "../../features/Product/productSlice";
 import { commentSlice } from "../../features/Rating/commentSlice";
 import { accountSlice } from "../../features/Account/accountSlice";
+import { searchSlice } from "../../features/Product/searchSlice";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         product: productSlice.reducer,
         comment: commentSlice.reducer,
         account: accountSlice.reducer,
+        search: searchSlice.reducer
     }
 })
 

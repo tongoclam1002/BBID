@@ -33,6 +33,7 @@ const routes = [
     Component: CartPage,
     exact: true,
     title: i18n.t("page.CART"),
+    isPrivate: true,
   },
 
   //Checkout routes
@@ -41,19 +42,27 @@ const routes = [
     Component: CheckoutPage,
     exact: true,
     title: i18n.t("page.CHECKOUT"),
+    isPrivate: true,
   },
   {
     path: "/checkout/success",
     Component: CheckoutSuccessPage,
     exact: true,
     title: i18n.t("page.CHECKOUT_SUCCESS"),
+    isPrivate: true,
   },
   {
     path: "/checkout/product/:productId",
     Component: CheckoutPage,
     exact: true,
+    isPrivate: true,
   },
-  { path: "/checkout/payment/:productId", Component: Payment, exact: true },
+  {
+    path: "/checkout/payment/:productId",
+    Component: Payment,
+    exact: true,
+    isPrivate: true,
+  },
 
   //Order routes
   {
@@ -62,12 +71,14 @@ const routes = [
     exact: true,
     title: i18n.t("page.ORDER"),
     isProfile: true,
+    isPrivate: true,
   },
   {
     path: "/order/:orderId",
     Component: OrderDetailPage,
     exact: true,
     isProfile: true,
+    isPrivate: true,
   },
   //Error routes
   { path: "/server-error", Component: ServerError, exact: true, title: "" },

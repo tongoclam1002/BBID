@@ -9,10 +9,10 @@ import { history } from "../..";
 import { fetchCartAsync } from "../Cart/cartSlice";
 import toast from "../../app/utils/toast";
 import { t } from "i18next";
+import { useForm } from "react-hook-form";
 
 export default function CheckoutPage() {
   const { productId }: any = useParams();
-  const [form] = Form.useForm();
   const [isMomo, setIsMomo] = useState(false);
   const { selectedCart, totalPrice: totalProductPrice } = useAppSelector(
     (state) => state.cart
@@ -26,6 +26,14 @@ export default function CheckoutPage() {
   function changeMethod() {
     setIsMomo(!isMomo);
   }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors, isValid },
+  } = useForm({
+    mode: "all",
+  });
 
   const onFinish = (values: any) => {
     // console.log(values);
@@ -70,9 +78,11 @@ export default function CheckoutPage() {
               <strong>{t("order.DELIVERY_ADDRESS")}</strong>
             </p>
             <AddressForm
-              form={form}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
+              register={register}
+              handleSubmit={handleSubmit}
+              formState={{isSubmitting, errors, isValid}}
             />
           </Card>
           {selectedCart.length > 0 ? (
@@ -193,6 +203,7 @@ export default function CheckoutPage() {
                 size="large"
                 form="address-form"
                 htmlType="submit"
+                loading={isSubmitting}
               >
                 {t("order.PLACE_ORDER")}
               </Button>
